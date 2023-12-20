@@ -71,7 +71,6 @@ const Main = () => {
         <Route path="/board/*" element={<Board />} />
         <Route path="/dashboard" element={<DashBoard />} />
         <Route path="/adminLogin" element={<AdminLogin />} />
-
         {/* 
       <Header />
       <Footer /> */}

@@ -113,14 +113,11 @@ const Header = () => {
         />
         <Link to="/">PepeDooly</Link> {/* Link 컴포넌트로 변경 */}
       </div>
+
       <ul>
-        <li>
-          <a href="/MEMES"></a>MEMES
-        </li>
-        <li>MEMECHAT</li>
-        <li>DASHBOARD</li>
         <li onClick={logout}>로그아웃</li>
       </ul>
+
       <RightMenu>
         <MenuItem>
           <Link to="/board">게시판</Link> {/* Link 컴포넌트로 변경 */}
