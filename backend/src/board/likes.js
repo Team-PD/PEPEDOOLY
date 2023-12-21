@@ -41,10 +41,10 @@ module.exports = (sequelize, DataTypes) => {
       as: "Board",
     });
 
-    // Likes.belongsTo(models.Users, {
-    //   foreignKey: "Users_uid", // 'Users_uid'를 외래 키로 사용합니다.
-    //   as: "User",
-    // });
+    Likes.belongsTo(models.Users, {
+      foreignKey: "Users_id", // 'Users_uid'를 외래 키로 사용합니다.
+      as: "Users",
+    });
   };
 
   return Likes;

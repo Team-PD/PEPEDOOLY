@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         autoIncrement: true,
       },
-      Users_uid: {
+      Users_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
@@ -40,6 +40,10 @@ module.exports = (sequelize, DataTypes) => {
     Boards.hasMany(models.Images, {
       foreignKey: "Boards_id", // 'Boards_id'를 외래 키로 지정합니다.
       as: "Images",
+    });
+    Boards.belongsTo(models.Users, {
+      foreignKey: "Users_id", // Board 모델의 Users_id 필드가 User 모델의 Users_id 필드를 참조한다.
+      as: "Users", // 관계 이름 설정
     });
   };
 

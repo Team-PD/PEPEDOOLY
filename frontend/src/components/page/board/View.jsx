@@ -11,7 +11,7 @@ const View = () => {
   useEffect(() => {
     const fetchBoard = async () => {
       const { data } = await axios.get(`http://localhost:4000/boards/${id}`);
-      console.log(data);
+      // console.log(data);
       setBoard(data);
     };
 

@@ -68,29 +68,86 @@
   font-size: 0.9em;
 }
 
-/* Pagenation Style */
-
+/* 페이지네이션 스타일 */
 .pagination {
   display: flex;
   justify-content: center;
-  list-style: none;
-  padding: 0;
+  margin: 20px 0;
 }
 
-.pageItem {
-  margin: 0 5px;
-}
-
-.pageLink {
+.pageArrow {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 5px 10px;
   color: #007bff;
-  padding: 8px 12px;
-  text-decoration: none;
-  border-radius: 5px;
-  border: 1px solid #007bff;
-  transition: background-color 0.2s, color 0.2s;
 }
 
-.pageLink:hover {
+.pageArrow:disabled {
+  color: #ccc;
+}
+
+.pageNumber {
+  background-color: transparent;
+  border: none;
+  padding: 5px 10px;
+  margin: 0 5px;
+  cursor: pointer;
+  color: #007bff;
+}
+
+.pageNumber:hover,
+.activePage {
   background-color: #007bff;
   color: white;
+}
+
+/* 글 작성 버튼 및 검색 영역 스타일 */
+.searchAndCreate {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+}
+
+.createButton {
+  background-color: #4caf50; /* 녹색 톤 */
+  color: white;
+  padding: 10px 20px;
+  margin-left: 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.createButton:hover {
+  background-color: #45a049; /* 마우스 오버시 색상 변경 */
+}
+
+/* 로그인 알림 스타일 */
+.loginAlert {
+  color: red;
+  animation: fadeInOut 3s ease-in-out;
+}
+
+@keyframes fadeInOut {
+  0%,
+  100% {
+    opacity: 0;
+  }
+  30%,
+  70% {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInOut {
+  0%,
+  100% {
+    opacity: 0;
+  }
+  30%,
+  70% {
+    opacity: 1;
+  }
 }

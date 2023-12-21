@@ -15,7 +15,6 @@ const sequelize = new Sequelize(
 
 const entityList = [
   `../admin/admin`,
-  `../user/user`,
   `../notice/notice`,
   // `../comment/comment`,
   "../user/user",
@@ -29,14 +28,14 @@ entityList.forEach((entity) => {
   db[model.name] = model;
 });
 
-// db["Comment"].belongsTo(db["Users"], { foreignKey: "Users_uid", as: "User" });
+// db["Comment"].belongsTo(db["Users"], { foreignKey: "Users_id", as: "User" });
 // // db["Comment"].belongsTo(db["Boards"], { foreignKey: "Boards_id", as: "Board" });
 // db["Comment"].hasMany(db["Comment"], {
-//     as: "Replies",
-//     foreignKey: {
-//         name: "fk_comment_replies", // 올바른 외래 키 이름 지정
-//         field: "ParentCommentId", // 실제 데이터베이스에서 사용될 컬럼 이름
-//     },
+//   as: "Replies",
+//   foreignKey: {
+//     name: "fk_comment_replies", // 올바른 외래 키 이름 지정
+//     field: "ParentCommentId", // 실제 데이터베이스에서 사용될 컬럼 이름
+//   },
 // });
 
 // db["Comment"].belongsTo(db["Comment"], {
