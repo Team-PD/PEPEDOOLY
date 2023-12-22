@@ -1,8 +1,4 @@
-const {
-  AdminLoginRequestDTO,
-  AdminInfoRequestDTO,
-  AdminUpdateRequestDTO,
-} = require("./dto/admin.dto");
+const { AdminLoginRequestDTO } = require("./dto/admin.dto");
 const { BadRequest } = require("../lib/customException");
 
 class AdminController {
@@ -33,12 +29,6 @@ class AdminController {
     } catch (e) {
       next(e);
     }
-  }
-
-  async getAdmin(req, res) {
-    const adminInfoRequestDTO = new AdminInfoRequestDTO(req.admin);
-    const admin = await this.service.getAdminById(adminInfoRequestDTO);
-    res.json(admin);
   }
 
   async putAdmin(req, res) {

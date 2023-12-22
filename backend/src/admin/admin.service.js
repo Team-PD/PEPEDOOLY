@@ -29,22 +29,6 @@ class AdminService {
     }
   }
 
-  async getAdminById(adminInfoRequestDTO) {
-    const admin = await this.admin.findOne({
-      where: { Admin_uid: adminInfoRequestDTO.adminUid },
-    });
-    const adminInfo = admin.dataValues;
-    return adminInfo;
-  }
-
-  async getAdminData(decoded) {
-    const admin = await this.admin.findOne({
-      where: { Admin_uid: decoded.payload.adminUid },
-    });
-    const adminInfo = admin.dataValues;
-    return adminInfo;
-  }
-
   async updateAdmin(adminData) {
     try {
       await this.admin.update(

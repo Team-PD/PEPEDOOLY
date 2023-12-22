@@ -11,13 +11,8 @@ const putAdmin = adminController.putAdmin.bind(adminController);
 
 adminRouter.post("/login", login);
 adminRouter.get("/logout", logout);
-adminRouter.get("/info", /* AuthMiddleware.adminAuth, */ getAdmin);
-adminRouter.put(
-  "/edit",
-  //   AuthMiddleware.adminAuth,
-  upload.single("image"),
-  putAdmin
-);
+adminRouter.get("/info", getAdmin);
+adminRouter.put("/edit", upload.single("image"), putAdmin);
 adminRouter.post("/image", upload.single("image"), (req, res) => {
   if (!req.file) {
     return res
