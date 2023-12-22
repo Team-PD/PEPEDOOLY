@@ -14,9 +14,7 @@ import { useEffect } from "react";
 
 export function useUserState() {
   const [user, setUser] = useRecoilState(userState);
-  useEffect(() => {
-    console.log(user);
-  }, [user]);
+  useEffect(() => {}, [user]);
   const setLoggedInUser = (userData) => {
     setUser({ isLoggedIn: true, userData });
   };
@@ -27,3 +25,17 @@ export function useUserState() {
 
   return { user, setLoggedInUser, logout };
 }
+
+// export function useAdminState() {
+//   const [admin, setAdmin] = useRecoilState(userState);
+
+//   const setLoggedInAdmin = (adminData) => {
+//     setAdmin({ isLoggedIn: true, adminData });
+//   };
+
+//   const logout = () => {
+//     setAdmin({ isLoggedIn: false, adminData: null });
+//   };
+
+//   return { admin, setLoggedInAdmin, logout };
+// }

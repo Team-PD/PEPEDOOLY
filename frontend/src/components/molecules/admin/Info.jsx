@@ -3,6 +3,7 @@ import EditForm from "../../molecules/admin/EditForm";
 import ProfileImage from "../../atoms/admin/ProfileImage";
 import styled from "styled-components";
 import { FormBtn } from "../../atoms/admin/FormBtn";
+import { useUserState } from "../../../hooks/useUserState";
 import axios from "axios";
 
 const Container = styled.div`
@@ -43,30 +44,28 @@ const ButtonContainer = styled.div`
   width: 100%;
 `;
 
-const DeleteButton = (props) => (
-  <FormBtn {...props} background="red" color="white" />
-);
-
 const EditButton = (props) => (
   <FormBtn {...props} background="#aeaeae" color="black" />
 );
-const Info = ({ isEdit, data }) => {
-  console.log(data);
+
+const Info = ({ isEdit }) => {
   const [isEditState, setIsEdit] = useState(isEdit);
   const [imageUrl, setImageUrl] = useState("");
-  const [fields, setFields] = useState(null);
-  const token = localStorage.getItem("token");
-
+  const [fields, setFields] = useState([]);
+  const { user, setLoggedInUser } = useUserState();
+  const { Admin_id, Admin_name, Admin_nickname, Admin_uid } =
+    (user && user.userData) || {};
   useEffect(() => {
-    if (data) {
+    console.log(user);
+    if (user) {
       setFields([
-        { id: 1, label: "", value: data.Admin_id || "" },
-        { id: 2, label: "", value: data.Admin_name || "" },
-        { id: 3, label: "", value: data.Admin_nickname || "" },
-        { id: 4, label: "", value: "", isPassword: true },
+        { id: 1, label: "Admin_id", value: Admin_id || "" },
+        { id: 2, label: "Admin_name", value: Admin_name || "" },
+        { id: 3, label: "Admin_nickname", value: Admin_nickname || "" },
+        { id: 4, label: "Admin_password", value: "", isPassword: true },
       ]);
     }
-  }, [data]);
+  }, [user]);
 
   const handleInputChangeLocal = (id, value) => {
     setFields(
@@ -76,10 +75,26 @@ const Info = ({ isEdit, data }) => {
 
   const handleEditClick = () => {
     if (isEditState) {
+      const formData = new FormData();
+      const file = document.querySelector('input[type="file"]').files[0];
+      if (file) {
+        formData.append("image", file);
+      }
+      formData.append("id", Admin_id);
+      formData.append("name", Admin_name);
+      formData.append("uid", Admin_uid);
+      fields.forEach((field) => {
+        if (field.label) {
+          formData.append(field.label, field.value);
+        }
+      });
       axios
-        .put(`/admin/edit`, fields)
+        .put(`http://localhost:4000/admin/edit`, formData, {
+          withCredentials: true,
+        })
         .then((response) => {
           setFields(response.data);
+          setLoggedInUser(response.data);
         })
         .catch((error) => {
           console.error("Error updating admin info:", error);
@@ -90,11 +105,15 @@ const Info = ({ isEdit, data }) => {
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
+    console.log(file);
+    if (!file) {
+      console.error("No file selected");
+      return;
+    }
     const formData = new FormData();
     formData.append("image", file);
-
     axios
-      .post(`/admin/${data}/image`, formData)
+      .post(`http://localhost:4000/admin/image`, formData)
       .then((response) => {
         setImageUrl(response.data.imageUrl);
       })
@@ -110,7 +129,7 @@ const Info = ({ isEdit, data }) => {
           <FieldContainer>
             <ProfileImage
               onImageChange={handleImageChange}
-              imageUrl={imageUrl}
+              admin={user && user.userData}
               isEdit={isEditState}
             />
             <FieldWrapper>

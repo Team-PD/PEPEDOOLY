@@ -3,15 +3,15 @@ import Button from "../atoms/login/Button";
 import Input from "../atoms/login/Input";
 import { useEffect, useState } from "react";
 import axios from "axios";
-
 import { useNavigate } from "react-router-dom";
 import Header from "../Layout/Header";
+import { useUserState } from "../../hooks/useUserState";
 
 function AdminLogin() {
   const navigate = useNavigate();
   const [adminId, setAdminId] = useState("");
   const [adminPassword, setAdminPassword] = useState("");
-  const movePage = useNavigate();
+  const { setLoggedInUser } = useUserState();
 
   function handleIdChange(event) {
     setAdminId(event.target.value);
@@ -21,7 +21,7 @@ function AdminLogin() {
     setAdminPassword(event.target.value);
   }
 
-  function loginAdmin(adminId, adminPassword) {
+  function loginAdmin() {
     const loginData = {
       adminId: adminId,
       adminPassword: adminPassword,
@@ -32,11 +32,10 @@ function AdminLogin() {
         withCredentials: "include",
       })
       .then((response) => {
-        console.log("로그인 성공", response);
-        localStorage.setItem("token", response.data.token);
-        localStorage.setItem("admin", true);
-        localStorage.setItem("loggedIn", true);
+        setLoggedInUser(response.data);
+
         navigate("/");
+        console.log("로그인 성공", response);
       })
       .catch((error) => {
         console.error("로그인 실패", error);
@@ -49,11 +48,7 @@ function AdminLogin() {
       <MainContainer
         onSubmit={(e) => {
           e.preventDefault();
-          const {
-            adminId: adminIdElement,
-            adminPassword: adminPasswordElement,
-          } = e.target.elements;
-          loginAdmin(adminIdElement.value, adminPasswordElement.value);
+          loginAdmin();
         }}
       >
         <WelcomeText>
@@ -79,7 +74,7 @@ function AdminLogin() {
         <ButtonContainer>
           <Button content="Login" />
         </ButtonContainer>
-        <ReturnUserLogin onClick={() => movePage("/login")}>
+        <ReturnUserLogin onClick={() => navigate("/login")}>
           RETURN USER LOGIN
         </ReturnUserLogin>
       </MainContainer>

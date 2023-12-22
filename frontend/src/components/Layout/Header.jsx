@@ -2,6 +2,7 @@ import React from "react";
 import styled, { keyframes } from "styled-components";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
+import { useUserState } from "../../hooks/useUserState";
 
 const fadeIn = keyframes`
   from {
@@ -62,12 +63,22 @@ const MenuItem = styled.li`
   }
 `;
 
+const Logout = styled.button`
+  width: 70px;
+  height: 40px;
+`;
+
 const Header = () => {
   const navigate = useNavigate();
-  const logout = async () => {
+
+  const { logout } = useUserState();
+
+  const handleLogout = async () => {
     try {
-      await axios.get("http://localhost:4000/admin/logout");
-      localStorage.clear();
+      await axios.get("http://localhost:4000/admin/logout", {
+        withCredentials: true,
+      });
+      logout(); // Recoil 상태 업데이트
       navigate("/");
     } catch (error) {
       console.error("로그아웃 요청 실패", error);
@@ -82,11 +93,7 @@ const Header = () => {
           alt="PepeDoooly"
         />
       </LogoLink>
-
-      <ul>
-        <li onClick={logout}>로그아웃</li>
-      </ul>
-
+      <Logout onClick={handleLogout}>로그아웃</Logout>
       <RightMenu>
         <MenuItem>
           <Link to="/board">게시판</Link>

@@ -11,18 +11,22 @@ const Main = () => {
 
   const LoginRedirect = () => {
     if (user.isLoggedIn) return <Navigate to={"/"} />;
+
     return <Login />;
   };
   console.log("메인페이지 : ", user);
-
   const headerHandler = () => {
     return (
       user &&
       user.userData && (
         <div>
-          메인페이지{" "}
+          메인페이지
           {user && user.isLoggedIn && user.userData && (
-            <div>메인페이지 {user?.userData?.Users_nickname}</div>
+            <div>
+              {user.userData.Admin_role
+                ? `관리자 : ${user.userData.Admin_nickname}`
+                : `유저 : ${user.userData.Users_nickname}`}
+            </div>
           )}
         </div>
       )

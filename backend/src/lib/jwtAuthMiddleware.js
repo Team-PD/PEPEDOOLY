@@ -24,7 +24,6 @@ class AuthMiddleware {
       }
 
       const adminInfo = await adminService.getAdminData(decoded);
-      console.log(adminInfo);
       if (!adminInfo) {
         throw new Error("admin not found");
       }
