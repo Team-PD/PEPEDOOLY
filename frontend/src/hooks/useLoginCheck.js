@@ -1,13 +1,8 @@
 import React, { useEffect } from "react";
 import axios from "axios";
 import { useUserState } from "./useUserState";
-import { useRecoilValue } from "recoil";
-import { userState } from "../components/recoils/user";
 export const useLoginCheck = () => {
-    const atk = useRecoilValue(userState);
-    console.log(atk);
     // hooks
-    // frontend/src/components/recoils/user.js
     // 쿠키가 있다면 and 로그인이 안되어있다면
     // 쿠키가 있으면 로그인 요청 보내서
     // 다시 유저정보 가져오고
