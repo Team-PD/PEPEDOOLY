@@ -16,6 +16,7 @@ export default function List() {
     async function fetchPosts() {
       try {
         const response = await axios.get("http://localhost:4000/boards");
+        console.log("List.jsx / response : ", response);
         setPosts(response.data);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -75,6 +76,19 @@ export default function List() {
         {currentPosts.map((post) => (
           <div key={post.Boards_id} className={styles.post}>
             <Link to={`/board/view/${post.Boards_id}`}>
+              {post.Images && post.Images.length > 0 ? (
+                <img
+                  src={post.Images[0].Images_url} // 첫 번째 이미지 사용
+                  alt="Post"
+                  className={styles.postImage}
+                />
+              ) : (
+                <img
+                  src="https://ichef.bbci.co.uk/images/ic/640x360/p0gvfn2w.jpg" // 기본 이미지 URL
+                  alt="Default"
+                  className={styles.postImage}
+                />
+              )}
               <h2 className={styles.title}>{post.Boards_title}</h2>
             </Link>
             <div className={styles["post-info"]}>

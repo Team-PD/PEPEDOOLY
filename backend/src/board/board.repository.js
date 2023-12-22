@@ -1,8 +1,20 @@
-const db = require("../lib/db.js"); // 여기서 경로는 실제 db.js 파일의 위치에 맞게 조정해야 함
-const Board = db.Boards; // db 객체에서 Boards 모델을 가져옴
+const db = require("../lib/db.js");
+const Board = db.Boards;
+const Users = db.Users;
+const Images = db.Images;
 
 const getBoardList = async () => {
-  return await Board.findAll();
+  return await Board.findAll({
+    include: [
+      {
+        model: Images,
+        as: "Images",
+        limit: 1,
+        attributes: ["Images_url"],
+      },
+    ],
+    order: [["Boards_created_at", "DESC"]],
+  });
 };
 
 const createBoard = async (boardData) => {
@@ -10,9 +22,20 @@ const createBoard = async (boardData) => {
 };
 
 const getBoardById = async (id) => {
-  // const returnData = await Board.findByPk(id);
-  // console.log("board.repository getBoardById : ", returnData);
-  return await Board.findByPk(id);
+  return await Board.findByPk(id, {
+    include: [
+      {
+        model: Users,
+        as: "Users",
+        attributes: ["Users_nickname"],
+      },
+      {
+        model: Images,
+        as: "Images", // 모든 이미지 정보를 포함시키는 설정
+        attributes: ["Images_uid", "Images_url"],
+      },
+    ],
+  });
 };
 
 const updateBoard = async (id, boardData) => {

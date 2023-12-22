@@ -1,5 +1,5 @@
 .createButton {
-  background-color: #4caf50; /* 녹색 톤 */
+  background-color: #4caf50;
   color: white;
   padding: 10px 20px;
   margin: 10px 0;
@@ -10,43 +10,60 @@
 }
 
 .createButton:hover {
-  background-color: #45a049; /* 마우스 오버시 색상 변경 */
+  background-color: #45a049;
 }
 
 .board {
-  max-width: 800px;
+  max-width: 1200px; /* 넓이 조정 */
   margin: 0 auto;
   padding: 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+/* 반응형 그리드 스타일 */
 .posts {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(250px, 1fr)
+  ); /* 반응형 그리드, 컬럼의 최소 크기 조정 */
   gap: 20px;
 }
-
+/* 개별 게시물 스타일 */
 .post {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 15px;
   border: 1px solid #eaeaea;
   border-radius: 8px;
   background-color: white;
+  overflow: hidden; /* 이미지가 컨테이너를 넘어가지 않도록 설정 */
+  transition: transform 0.3s ease-in-out;
 }
+
+.post:hover {
+  transform: scale(1.05); /* 마우스 호버시 스케일 증가 */
+}
+
 .post a {
   text-decoration: none;
   color: inherit;
 }
 
-.post-image {
-  width: 100%;
-  height: auto;
-  object-fit: cover;
+/* 이미지 스타일 */
+.postImage {
+  width: 100%; /* 컨테이너 너비에 맞게 */
+  max-height: 200px; /* 최대 높이 설정 */
+  object-fit: contain; /* 비율을 유지하며 적절히 축소 또는 확대 */
   border-radius: 4px;
+  transition: opacity 0.3s ease;
 }
 
+.post-image:hover {
+  opacity: 0.8;
+}
+
+/* 게시물 정보 스타일 */
 .post-info {
   display: flex;
   flex-direction: column;
@@ -109,45 +126,25 @@
   margin-bottom: 20px;
 }
 
-.createButton {
-  background-color: #4caf50; /* 녹색 톤 */
-  color: white;
-  padding: 10px 20px;
-  margin-left: 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.createButton:hover {
-  background-color: #45a049; /* 마우스 오버시 색상 변경 */
-}
-
 /* 로그인 알림 스타일 */
 .loginAlert {
   color: red;
   animation: fadeInOut 3s ease-in-out;
 }
 
-@keyframes fadeInOut {
-  0%,
-  100% {
-    opacity: 0;
+/* 미디어 쿼리를 사용하여 화면 크기에 따른 스타일 조정 */
+@media (max-width: 768px) {
+  .posts {
+    grid-template-columns: repeat(2, 1fr); /* 화면이 작을 때 2열로 표시 */
   }
-  30%,
-  70% {
-    opacity: 1;
+
+  .post {
+    margin-bottom: 20px;
   }
 }
 
-@keyframes fadeInOut {
-  0%,
-  100% {
-    opacity: 0;
-  }
-  30%,
-  70% {
-    opacity: 1;
+@media (max-width: 480px) {
+  .posts {
+    grid-template-columns: 1fr; /* 가장 작은 화면에서는 1열로 표시 */
   }
 }
