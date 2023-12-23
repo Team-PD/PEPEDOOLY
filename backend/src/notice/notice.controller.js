@@ -12,15 +12,9 @@ class NoticeController {
 
   async postNotice(req, res, next) {
     try {
-      const adminId = req.admin;
-      if (!adminId) {
-        throw new Error("Invalid admin ID");
-      }
-
-      const noticeCreateRequestDTO = new NoticeCreateRequestDTO(
-        req.body,
-        req.admin
-      );
+      console.log(req.body);
+      console.log(req.cookie);
+      const noticeCreateRequestDTO = new NoticeCreateRequestDTO(req.body);
       const noticeCreateResponseDTO = await this.service.createNotice(
         noticeCreateRequestDTO
       );

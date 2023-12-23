@@ -25,17 +25,3 @@ export function useUserState() {
 
   return { user, setLoggedInUser, logout };
 }
-
-// export function useAdminState() {
-//   const [admin, setAdmin] = useRecoilState(userState);
-
-//   const setLoggedInAdmin = (adminData) => {
-//     setAdmin({ isLoggedIn: true, adminData });
-//   };
-
-//   const logout = () => {
-//     setAdmin({ isLoggedIn: false, adminData: null });
-//   };
-
-//   return { admin, setLoggedInAdmin, logout };
-// }
