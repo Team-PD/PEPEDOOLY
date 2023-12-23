@@ -19,6 +19,13 @@ export const Manage = () => {
       Users_created_at: "2022-01-01",
     },
     {
+      Users_uid: 1,
+      Users_email: "user1@example.com",
+      Users_name: "User One",
+      Users_nickname: "user1",
+      Users_created_at: "2022-01-01",
+    },
+    {
       Users_uid: 2,
       Users_email: "user2@example.com",
       Users_name: "User Two",
