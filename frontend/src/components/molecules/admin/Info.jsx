@@ -1,10 +1,10 @@
+// Info.jsx
 import React, { useState, useEffect } from "react";
-import EditForm from "../../molecules/admin/EditForm";
-import ProfileImage from "../../atoms/admin/ProfileImage";
-import styled from "styled-components";
-import { FormBtn } from "../../atoms/admin/FormBtn";
-import { useUserState } from "../../../hooks/useUserState";
 import axios from "axios";
+import { useUserState } from "../../../hooks/useUserState";
+import FieldContainer from "./FieldContainer";
+import ButtonContainer from "./ButtonContainer";
+import styled from "styled-components";
 
 const Container = styled.div`
   display: flex;
@@ -19,34 +19,8 @@ const FieldContainerWrapper = styled.div`
   height: 100%; // 추가
 `;
 
-const FieldContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  padding: 0 20px;
-  margin-bottom: 20px;
-  gap: 0 120px;
-  justify-content: center;
-`;
-
-const FieldWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-left: 20px;
-`;
-
-const ButtonContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  gap: 50px;
-  justify-content: flex-end;
-  align-items: flex-end;
-  width: 100%;
-`;
-
-const EditButton = (props) => (
-  <FormBtn {...props} background="#aeaeae" color="black" />
-);
+const ADMIN_EDIT_URL = `http://localhost:4000/admin/edit`;
+const ADMIN_IMAGE_URL = `http://localhost:4000/admin/image`;
 
 const Info = ({ isEdit }) => {
   const [isEditState, setIsEdit] = useState(isEdit);
@@ -55,8 +29,8 @@ const Info = ({ isEdit }) => {
   const { user, setLoggedInUser } = useUserState();
   const { Admin_id, Admin_name, Admin_nickname, Admin_uid } =
     (user && user.userData) || {};
+
   useEffect(() => {
-    console.log(user);
     if (user) {
       setFields([
         { id: 1, label: "Admin_id", value: Admin_id || "" },
@@ -75,32 +49,41 @@ const Info = ({ isEdit }) => {
 
   const handleEditClick = () => {
     if (isEditState) {
-      const formData = new FormData();
-      const file = document.querySelector('input[type="file"]').files[0];
-      if (file) {
-        formData.append("image", file);
-      }
-      formData.append("id", Admin_id);
-      formData.append("name", Admin_name);
-      formData.append("uid", Admin_uid);
-      fields.forEach((field) => {
-        if (field.label) {
-          formData.append(field.label, field.value);
-        }
-      });
-      axios
-        .put(`http://localhost:4000/admin/edit`, formData, {
-          withCredentials: true,
-        })
-        .then((response) => {
-          setFields(response.data);
-          setLoggedInUser(response.data);
-        })
-        .catch((error) => {
-          console.error("Error updating admin info:", error);
-        });
+      const formData = createFormData();
+      updateAdminInfo(formData);
     }
     setIsEdit(!isEditState);
+  };
+
+  const createFormData = () => {
+    const formData = new FormData();
+    const file = document.querySelector('input[type="file"]').files[0];
+    if (file) {
+      formData.append("image", file);
+    }
+    formData.append("id", Admin_id);
+    formData.append("name", Admin_name);
+    formData.append("uid", Admin_uid);
+    fields.forEach((field) => {
+      if (field.label) {
+        formData.append(field.label, field.value);
+      }
+    });
+    return formData;
+  };
+
+  const updateAdminInfo = (formData) => {
+    axios
+      .put(ADMIN_EDIT_URL, formData, {
+        withCredentials: true,
+      })
+      .then((response) => {
+        setFields(response.data);
+        setLoggedInUser(response.data);
+      })
+      .catch((error) => {
+        console.error("Error updating admin info:", error);
+      });
   };
 
   const handleImageChange = (e) => {
@@ -113,7 +96,7 @@ const Info = ({ isEdit }) => {
     const formData = new FormData();
     formData.append("image", file);
     axios
-      .post(`http://localhost:4000/admin/image`, formData)
+      .post(ADMIN_IMAGE_URL, formData)
       .then((response) => {
         setImageUrl(response.data.imageUrl);
       })
@@ -126,38 +109,21 @@ const Info = ({ isEdit }) => {
     <>
       <Container>
         <FieldContainerWrapper>
-          <FieldContainer>
-            <ProfileImage
-              onImageChange={handleImageChange}
-              admin={user && user.userData}
-              isEdit={isEditState}
-            />
-            <FieldWrapper>
-              {fields &&
-                fields.map(
-                  (field) =>
-                    (!field.isPassword || isEditState) && (
-                      <EditForm
-                        key={field.id}
-                        isEdit={isEditState}
-                        labelContent={field.label}
-                        onInputChange={(e) =>
-                          handleInputChangeLocal(field.id, e.target.value)
-                        }
-                        inputValue={field.value}
-                      />
-                    )
-                )}
-            </FieldWrapper>
-          </FieldContainer>
+          <FieldContainer
+            admin={user && user.userData}
+            isEdit={isEditState}
+            fields={fields}
+            handleInputChangeLocal={handleInputChangeLocal}
+            handleImageChange={handleImageChange}
+          />
         </FieldContainerWrapper>
-        <ButtonContainer>
-          <EditButton onClick={handleEditClick}>
-            {isEditState ? "저장" : "수정"}
-          </EditButton>{" "}
-        </ButtonContainer>
+        <ButtonContainer
+          isEdit={isEditState}
+          handleEditClick={handleEditClick}
+        />
       </Container>
     </>
   );
 };
+
 export default Info;

@@ -3,7 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import styles from "./Create.module.css";
 
-export default function Create() {
+export default function Create({ heading = "게시글 작성" }) {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [author, setAuthor] = useState("");
@@ -26,7 +26,7 @@ export default function Create() {
 
   return (
     <div className={`createForm ${styles.animate}`}>
-      <h1 className={styles.heading}>게시글 작성</h1>
+      <h1 className={styles.heading}>{heading}</h1>
       <form onSubmit={handleSubmit} className={styles.form}>
         {/* 각 입력 필드를 formGroup 대신 inputContainer로 변경 */}
         <div className={styles.inputContainer}>

@@ -6,12 +6,10 @@ const upload = multer({ dest: "uploads/" });
 
 const login = adminController.login.bind(adminController);
 const logout = adminController.logout.bind(adminController);
-const getAdmin = adminController.getAdmin.bind(adminController);
 const putAdmin = adminController.putAdmin.bind(adminController);
 
 adminRouter.post("/login", login);
 adminRouter.get("/logout", logout);
-adminRouter.get("/info", getAdmin);
 adminRouter.put("/edit", upload.single("image"), putAdmin);
 adminRouter.post("/image", upload.single("image"), (req, res) => {
   if (!req.file) {
