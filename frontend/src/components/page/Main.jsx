@@ -1,17 +1,20 @@
 import React, { useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Login from "./Login";
-import Admin from "./Admin";
+import Admin from "./admin/Admin";
 import Register from "./Register";
 import Comments from "../organisms/comments/Comments";
 import Board from "../board/Board";
-import AdminLogin from "./AdminLogin";
+import AdminLogin from "./admin/AdminLogin";
+import Notice from "./notice/Notice";
 // import Header from "../Layout/Header";
 import MainComponent from "../organisms/main/Main";
 import Header from "../Layout/Header";
 import DashBoard from "./DashBoard";
 import { useUserState } from "../../hooks/useUserState";
 import UserDash from "./UserDash";
+import NoticeView from "./notice/NoticeView";
+import { NoticeUpdate } from "./notice/NoticeUpdate";
 // import Footer from "../Layout/Footer";
 
 const Main = () => {
@@ -61,6 +64,9 @@ const Main = () => {
         <Route path="/userDash" element={<UserDash />} />
         <Route path="/login" element={<LoginRedirect />} />
         <Route path="/admin" element={<Admin />} />
+        <Route path="/notice" element={<Notice />} />
+        <Route path="/notice/:id" element={<NoticeView />} />
+        <Route path="notice/edit/:id" element={<NoticeUpdate />} />
         <Route path="/register" element={<Register />} />
         <Route path="/comments" element={<Comments />} />
         <Route path="/board/*" element={<Board />} />

@@ -1,23 +1,30 @@
 // Create.jsx
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { InputField } from "../../atoms/sample_board/InputField";
-import { TextAreaField } from "../../atoms/sample_board/TextAreaField";
+import { InputField } from "../atoms/BoardNoticeInputField";
+import { TextAreaField } from "../atoms/BoardNoticeTextAreaField";
 
 export const Create = ({
   heading = "게시글 작성",
   onSubmit,
   showAuthor = true,
   styleProps,
+  initialValues = {},
+  buttonText = "작성하기",
 }) => {
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
+  const [title, setTitle] = useState(initialValues.title || "");
+  const [content, setContent] = useState(initialValues.content || "");
   const [author, setAuthor] = useState("");
+  const [image, setImage] = useState(null);
   const navigate = useNavigate();
+
+  const handleImageChange = (e) => {
+    setImage(e.target.files[0]);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    onSubmit({ title, content, author });
+    onSubmit({ title, content, author, image });
   };
 
   return (
@@ -47,8 +54,9 @@ export const Create = ({
             styleProps={styleProps.inputField}
           />
         )}
+        <input type="file" onChange={handleImageChange} />
         <button type="submit" style={styleProps.submitButton}>
-          작성하기
+          {buttonText}
         </button>
       </form>
     </div>

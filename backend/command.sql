@@ -21,3 +21,7 @@ CREATE TABLE `Notice` (
 
 INSERT INTO Admin (Admin_id, Admin_password, Admin_name, Admin_nickname, Admin_email, Admin_profile,Admin_role)
 VALUES ('test', 'test', 'test', 'test', 'test', 'test',"1");
+
+INSERT INTO Notice (Notice_title, Notice_content, Notice_writer, Notice_image)
+VALUES ('제목1', '내용1', '작성자1', '이미지URL1'),
+       ('제목2', '내용2', '작성자2', '이미지URL2'),
