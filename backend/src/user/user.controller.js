@@ -140,15 +140,23 @@ class UserController {
   async putProfile(req, res, next) {
     try {
       const userProfileFormRequestDTO = new UserProfileFormRequestDTO(req);
-      const result = await this.service.userInfoUpdate(
+      const { updateUser, token } = await this.service.userInfoUpdate(
         userProfileFormRequestDTO
       );
+      res.clearCookie("authorization");
       req.user.Users_nickname = userProfileFormRequestDTO.userNickname;
       req.user.Users_name = userProfileFormRequestDTO.userName;
       req.user.Users_email = userProfileFormRequestDTO.userEmail;
+      res.cookie("authorization", token, {
+        maxAge: 60 * 60 * 10000,
+        httpOnly: true,
+        path: "/",
+      });
 
-      const token = setJWTToken(req.user);
-      res.status(201).json(new Created(token));
+      // const token = setJWTToken(req.user);
+      // res.status(201).json(new Created(token));
+
+      return res.send(updateUser);
     } catch (e) {
       next(e);
     }
