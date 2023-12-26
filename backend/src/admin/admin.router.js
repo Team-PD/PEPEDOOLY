@@ -25,3 +25,4 @@ adminRouter.post("/image", upload.single("image"), (req, res) => {
 });
 
 module.exports = adminRouter;
+
