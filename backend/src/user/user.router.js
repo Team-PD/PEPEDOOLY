@@ -22,11 +22,9 @@ userRouter.get("/", getUsers);
 // 유저 탈퇴
 userRouter.delete("/:id", deleteUser);
 
-userRouter.post("/profile", postProfile);
-// userRouter.post("profile", upload.single("profile"), postProfile);
-
 // 유저 정보 수정s
-userRouter.post("profile", upload.single("profile"), putProfile);
+userRouter.put("/profile", putProfile);
+// userRouter.post("profile", upload.single("profile"), postProfile);
 
 // 유저 대시보드
 // userRouter.get("/user", getProfile);

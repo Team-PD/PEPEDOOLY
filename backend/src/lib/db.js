@@ -14,13 +14,13 @@ const sequelize = new Sequelize(
 );
 
 const entityList = [
-    `../admin/admin`,
-    `../notice/notice`,
-    `../comment/comment`,
-    "../user/user",
-    `../board/board`,
-    "../board/images",
-    "../board/likes",
+  `../admin/admin`,
+  `../notice/notice`,
+  `../comment/comment`,
+  "../user/user",
+  `../board/board`,
+  "../board/images",
+  "../board/likes",
 ];
 
 entityList.forEach((entity) => {
@@ -29,14 +29,13 @@ entityList.forEach((entity) => {
 });
 
 db["Comment"].hasMany(db["Comment"], {
-
-    as: "Replies",
-    foreignKey: "ParentCommentId",
+  as: "Replies",
+  foreignKey: "ParentCommentId",
 });
 db["Comment"].belongsTo(db["Comment"], {
-    as: "ParentComment",
-    foreignKey: "ParentCommentId",
-}); */
+  as: "ParentComment",
+  foreignKey: "ParentCommentId",
+});
 
 // 모델 간 관계 설정
 Object.keys(db).forEach((modelName) => {

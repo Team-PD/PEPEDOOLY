@@ -108,15 +108,15 @@ function App() {
         <LoginWith>OR LOGIN WITH</LoginWith>
         <HorizontalRule />
         <IconsContainer>
-          <Icon color={FacebookBackground}>
+          {/* <Icon color={FacebookBackground}>
             <FaFacebookF />
-          </Icon>
+          </Icon> */}
           <Icon color={FaGithubBackground} onClick={handleGitHubLogin}>
             <FaGithub />
           </Icon>
-          <Icon color={TwitterBackground}>
+          {/* <Icon color={TwitterBackground}>
             <FaTwitter />
-          </Icon>
+          </Icon> */}
           {/* <Icon color={TwitterBackground}>
           <SiWebtrees onClick={() => web3auth.connect()} />
         </Icon> */}
