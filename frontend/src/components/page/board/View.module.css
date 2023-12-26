@@ -44,8 +44,9 @@
 }
 
 .imageContainer {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  justify-content: center;
+  grid-template-columns: 1fr; /* 한 줄에 하나의 이미지만 표시 */
   gap: 10px;
   margin-top: 20px;
 }
@@ -54,6 +55,8 @@
   max-width: 100%;
   height: auto;
   border-radius: 8px;
+  display: block;
+  margin: 0 auto; /* 상하 마진은 0, 좌우 마진은 자동으로 설정 */
 }
 
 .footer {

@@ -21,8 +21,8 @@ router.post("/", upload.array("image", 5), boardController.createBoard);
 router.get("/:id", boardController.getBoard);
 router.put("/:id", boardController.updateBoard);
 router.delete("/:id", boardController.deleteBoard);
-// router.get("/:id/likes", boardController.getLikes);
-router.post("/:id/like", boardController.addLike);
+router.get("/:id/counts", boardController.getLikeDislikeCounts);
+router.post("/:id/like", boardController.addLike); // 추천 및 비추천 관련 API
 // router.delete("/:id/like", boardController.removeLike);
 
 module.exports = router;

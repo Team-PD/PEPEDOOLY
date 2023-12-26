@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faThumbsUp } from "@fortawesome/free-solid-svg-icons";
-import { faThumbsDown } from "@fortawesome/free-solid-svg-icons";
-import { faHandcuffs } from "@fortawesome/free-solid-svg-icons";
+import {
+  faThumbsUp,
+  faThumbsDown,
+  faHandcuffs,
+} from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 // innerModule
 import styles from "./View.module.css";
@@ -42,7 +44,23 @@ const View = () => {
 
   //
   //
-  // 추천, 비추천, 신고 버튼
+  // ===== 추천, 비추천, 신고 버튼 =====
+
+  const updateLikeDislikeCounts = async () => {
+    try {
+      const countsResponse = await axios.get(
+        `http://localhost:4000/boards/${id}/counts`
+      );
+      setBoard((prevState) => ({
+        ...prevState,
+        recommendCount: countsResponse.data.recommendCount,
+        nonRecommendCount: countsResponse.data.nonRecommendCount,
+      }));
+    } catch (error) {
+      console.error("Error updating like counts:", error);
+    }
+  };
+
   const handleLikeButtonClick = async () => {
     if (!user.isLoggedIn) {
       console.error("로그인 한 유저만 추천할 수 있습니다.");
@@ -51,17 +69,29 @@ const View = () => {
 
     try {
       const { Users_id } = user.userData;
-      await axios.post(`http://localhost:4000/boards/${id}/like`, {
-        Boards_id: id,
-        Users_id,
-      });
-      // 상태 업데이트로 UI에 반영
-      setBoard((prevState) => ({
-        ...prevState,
-        recommendCount: prevState.recommendCount + 1,
-      }));
+      const response = await axios.post(
+        `http://localhost:4000/boards/${id}/like`,
+        {
+          Boards_id: id,
+          Users_id,
+          isDislike: false,
+        }
+      );
+
+      console.log("View.jsx response : ", response);
+      if (response.data.message) {
+        alert(response.data.message); // 서버로부터 받은 메시지를 경고창으로 표시
+        return;
+      }
+
+      // Update the like and dislike counts
+      updateLikeDislikeCounts();
     } catch (error) {
-      console.error("Error liking the post:", error);
+      if (error.response && error.response.status === 409) {
+        alert(error.response.data.message);
+      } else {
+        console.error("Error liking the post:", error);
+      }
     }
   };
 
@@ -73,26 +103,35 @@ const View = () => {
 
     try {
       const { Users_id } = user.userData;
-      await axios.post(`http://localhost:4000/boards/${id}/dislike`, {
-        // API 경로 및 요청 본문은 서버 구현에 맞게 조정
-        Boards_id: id,
-        Users_id,
-        isDislike: true, // 비추천 표시
-      });
-      // 상태 업데이트로 UI에 반영
-      setBoard((prevState) => ({
-        ...prevState,
-        nonRecommendCount: prevState.nonRecommendCount + 1, // 비추천 수 업데이트
-      }));
+      const response = await axios.post(
+        `http://localhost:4000/boards/${id}/like`,
+        {
+          Boards_id: id,
+          Users_id,
+          isDislike: true,
+        }
+      );
+
+      if (response.data.message) {
+        alert(response.data.message); // 서버로부터 받은 메시지를 경고창으로 표시
+        return;
+      }
+
+      // Update the like and dislike counts
+      updateLikeDislikeCounts();
     } catch (error) {
-      console.error("Error disliking the post:", error);
+      if (error.response && error.response.status === 409) {
+        alert(error.response.data.message);
+      } else {
+        console.error("Error liking the post:", error);
+      }
     }
   };
 
   //
   //
   //
-  // 수정, 삭제, 목록 버튼
+  // ===== 수정, 삭제, 목록 버튼 =====
   const handleUpdateButtonClick = () => {
     navigate(`/board/modify/${id}`); // 수정 페이지로 이동
   };

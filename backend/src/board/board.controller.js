@@ -44,9 +44,39 @@ const getBoard = async (req, res) => {
   }
 };
 
+// board.controller.js
+
+// updateBoard 함수 수정
 const updateBoard = async (req, res) => {
   try {
-    await boardService.updateBoard(req.params.id, req.body);
+    const id = req.params.id;
+    const { Boards_title, Boards_content, existingImages } = req.body;
+
+    // 게시글 내용 업데이트
+    await db.Boards.update(
+      { Boards_title, Boards_content },
+      { where: { Boards_id: id } }
+    );
+
+    // 새로운 이미지 처리
+    if (req.files && req.files.length > 0) {
+      const newImagesData = req.files.map((file) => ({
+        Boards_id: id,
+        Images_url: `${req.protocol}://${req.get("host")}/uploads/${
+          file.filename
+        }`,
+      }));
+      await db.Images.bulkCreate(newImagesData);
+    }
+
+    // 기존 이미지 처리 (예시: 기존 이미지 ID를 클라이언트에서 전달받은 경우)
+    if (existingImages) {
+      const existingImagesIds = existingImages.split(",").map(Number);
+      await db.Images.destroy({
+        where: { Images_id: { [Op.notIn]: existingImagesIds }, Boards_id: id },
+      });
+    }
+
     res.send("Board updated successfully");
   } catch (error) {
     res.status(500).send(error.message);
@@ -62,9 +92,9 @@ const deleteBoard = async (req, res) => {
   }
 };
 
-// 좋아요 로직
+// ===== 추천 및 비추천 로직 =====
 const addLike = async (req, res) => {
-  const { Boards_id, Users_id, isDislike } = req.body; // isDislike 추가
+  const { Boards_id, Users_id, isDislike } = req.body;
 
   try {
     const existingLike = await Likes.findOne({
@@ -72,11 +102,31 @@ const addLike = async (req, res) => {
     });
 
     if (existingLike) {
-      return res.status(409).send("You already reacted to this post.");
+      if (existingLike.isDislike === isDislike) {
+        const message = isDislike
+          ? "이미 비추천을 한 게시물입니다."
+          : "이미 추천을 한 게시물입니다.";
+        return res.status(409).json({ message });
+      }
+
+      // 추천/비추천 전환 로직
+      existingLike.isDislike = isDislike;
+      await existingLike.save();
+      return res.status(200).json({ updated: true, isDislike });
     }
 
     const like = await Likes.create({ Boards_id, Users_id, isDislike });
-    res.status(201).json(like);
+    res.status(201).json({ updated: false });
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+};
+
+const getLikeDislikeCounts = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const counts = await boardService.getLikeDislikeCounts(id);
+    res.json(counts);
   } catch (error) {
     res.status(500).send(error.message);
   }
@@ -89,4 +139,5 @@ module.exports = {
   updateBoard,
   deleteBoard,
   addLike,
+  getLikeDislikeCounts,
 };
