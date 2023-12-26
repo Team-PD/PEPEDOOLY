@@ -6,19 +6,6 @@ import FieldContainer from "./FieldContainer";
 import ButtonContainer from "./ButtonContainer";
 import styled from "styled-components";
 
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
-const FieldContainerWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%; // 추가
-`;
-
 const ADMIN_EDIT_URL = `http://localhost:4000/admin/edit`;
 const ADMIN_IMAGE_URL = `http://localhost:4000/admin/image`;
 
@@ -57,7 +44,8 @@ const Info = ({ isEdit }) => {
 
   const createFormData = () => {
     const formData = new FormData();
-    const file = document.querySelector('input[type="file"]').files[0];
+    const fileInput = document.querySelector('input[type="file"]');
+    const file = fileInput ? fileInput.files[0] : null;
     if (file) {
       formData.append("image", file);
     }
@@ -93,6 +81,7 @@ const Info = ({ isEdit }) => {
       console.error("No file selected");
       return;
     }
+
     const formData = new FormData();
     formData.append("image", file);
     axios
@@ -125,5 +114,18 @@ const Info = ({ isEdit }) => {
     </>
   );
 };
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const FieldContainerWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+`;
 
 export default Info;

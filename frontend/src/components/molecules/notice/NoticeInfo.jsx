@@ -10,12 +10,24 @@ const InfoContainer = styled.div`
   color: #666;
 `;
 
+const WriterContainer = styled.div`
+  margin-bottom: 30px;
+`;
+
+const ContentContainer = styled.div`
+  text-align: left;
+`;
+
 const NoticeInfo = ({ notice }) => (
   <InfoContainer>
     <Title>{notice.noticeTitle}</Title>
-    <Writer>User: {notice.noticeWriter}</Writer>
-    <CreatedAt>{notice.noticeCreatedAt}</CreatedAt>
-    <Content>{notice.noticeContent}</Content>
+    <WriterContainer>
+      <Writer>User: {notice.noticeWriter}</Writer>
+      <CreatedAt>{notice.noticeCreatedAt}</CreatedAt>
+    </WriterContainer>
+    <ContentContainer>
+      <Content>{notice.noticeContent}</Content>
+    </ContentContainer>
   </InfoContainer>
 );
 

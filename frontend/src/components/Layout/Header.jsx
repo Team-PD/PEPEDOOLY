@@ -90,7 +90,7 @@ const Header = () => {
       await axios.get("http://localhost:4000/admin/logout", {
         withCredentials: true,
       });
-      logout(); // Recoil 상태 업데이트
+      logout();
       navigate("/");
     } catch (error) {
       console.error("로그아웃 요청 실패", error);

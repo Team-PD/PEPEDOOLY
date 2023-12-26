@@ -10,6 +10,7 @@ const DetailContainer = styled.div`
   margin-bottom: 20px;
   background-color: #f9f9f9;
   border-radius: 8px;
+  height: calc(100vh - 80px - 200px);
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 `;
 

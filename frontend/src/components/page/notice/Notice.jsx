@@ -24,7 +24,7 @@ const Notice = () => {
     async function fetchNotices() {
       try {
         const response = await axios.get("http://localhost:4000/notice");
-        setNotices(response.data);
+        setNotices(response.data.reverse());
       } catch (error) {
         console.error("Error fetching data:", error);
       }
