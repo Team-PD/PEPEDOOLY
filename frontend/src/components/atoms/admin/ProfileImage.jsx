@@ -6,14 +6,17 @@ const StyledImg = styled.img`
   border-radius: 20px;
 `;
 
-const ProfileImage = ({ onImageChange, admin, isEdit }) => (
-  <div>
-    {/* {admin && (
-      <StyledImg id="profile-img" class="user-pfp" src={admin.Admin_profile} />
-    )}
-    {isEdit && <input type="file" onChange={onImageChange} />} */}
-    <StyledImg src="/assets/cat.jpg" />
-  </div>
-);
+const ProfileImage = ({ onImageChange, admin, isEdit }) => {
+  const imageUrl = admin ? admin.Admin_profile.replace(/\\/g, "/") : null;
+  console.log(imageUrl);
+  return (
+    <div>
+      {imageUrl && (
+        <StyledImg id="profile-img" class="user-pfp" src={imageUrl} />
+      )}
+      {isEdit && <input type="file" onChange={onImageChange} />}
+    </div>
+  );
+};
 
 export default ProfileImage;

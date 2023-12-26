@@ -24,6 +24,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.DATE,
         defaultValue: sequelize.literal("now()"),
       },
+      Notice_image: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
     },
     {
       freezeTableName: true,

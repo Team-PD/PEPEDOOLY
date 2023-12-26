@@ -16,27 +16,37 @@ class CommentService {
                 ParentCommentId: requestDTO.ParentCommentId,
             });
 
-            return new CommentResponseDTO(comment);
+            const fullComment = await this.commentRepository.findByPk(comment.Comments_uid, {
+                include: [{ model: db.Users, as: "CommentUser" }],
+            });
+
+            return new CommentResponseDTO(fullComment);
         } catch (e) {
             throw e;
         }
     }
 
-    async getComments(boardId) {
+    async getServiceComments(boardId) {
         try {
             const comments = await this.commentRepository.findAll({
                 include: [
                     {
-                        model: db.User,
-                        attributes: ["nickname", "profile"],
+                        model: db.Users,
+                        attributes: ["Users_nickname"],
+                        as: "CommentUser",
                     },
+                    // {
+                    //     model: db.Boards,
+                    //     as: "CommentBoard",
+                    // },
                     {
                         model: this.commentRepository,
                         as: "Replies",
                         include: [
                             {
-                                model: db.User,
-                                attributes: ["nickname", "profile"],
+                                model: db.Users,
+                                attributes: ["Users_nickname"],
+                                as: "ReplyUser",
                             },
                         ],
                     },

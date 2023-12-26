@@ -6,7 +6,7 @@ const FooterStyle = styled.footer`
   font-size: 15px;
   width: 100%;
   height: 200px;
-  padding-bottom: 10px;
+  /* padding-bottom: 10px; */
   background-color: #073407;
   color: yellow;
   display: flex;

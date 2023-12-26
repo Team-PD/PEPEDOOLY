@@ -26,7 +26,10 @@ export const useLoginCheck = () => {
     );
     console.log("검증데이터", userData);
 
-    if (typeof userData == "object") setLoggedInUser(userData.payload);
+    if (typeof userData == "object") {
+      console.log(userData.payload);
+      setLoggedInUser(userData.payload);
+    }
 
     // 값에따라 데이터를 바꾸든
     // 로그인 재유도를 해야함

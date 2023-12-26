@@ -1,45 +1,40 @@
 const BaseDTO = require("../../lib/base.dto");
 
 class CommentViewResponseDTO extends BaseDTO {
-  Comments_uid;
-  Comments_content;
-  Comments_created_at;
-  Boards_id;
-  Users_uid;
-  UserNickname;
-  UserProfile;
-  Replies = [];
+    Comments_uid;
+    Comments_content;
+    Comments_created_at;
+    Boards_id;
+    Users_uid;
+    UserNickname;
+    UserProfile;
+    Replies = [];
 
-  constructor(comment) {
-    super();
+    constructor(comment) {
+        super();
 
-    this.Comments_uid = comment.dataValues.Comments_uid;
-    this.Comments_content = comment.dataValues.Comments_content;
-    this.Comments_created_at = comment.dataValues.Comments_created_at;
-    this.Boards_id = comment.dataValues.Boards_id;
-    this.Users_uid = comment.dataValues.Users_uid;
-    this.UserNickname = comment.dataValues.UserNickname;
-    this.UserProfile = comment.dataValues.UserProfile;
+        this.Comments_uid = comment.Comments_uid;
+        this.Comments_content = comment.Comments_content;
+        this.Comments_created_at = comment.Comments_created_at;
+        this.Boards_id = comment.Boards_id;
+        this.Users_uid = comment.Users_uid;
+        this.UserNickname = comment.User ? comment.CommentUser.Users_nickname : null;
+        this.UserProfile = comment.User ? comment.CommentUser.profile : null;
 
-    if (
-      comment.dataValues.Replies &&
-      Array.isArray(comment.dataValues.Replies)
-    ) {
-      this.Replies = comment.dataValues.Replies.map((reply) => {
-        return {
-          Comments_uid: reply.dataValues.Comments_uid,
-          Comments_content: reply.dataValues.Comments_content,
-          Comments_created_at: reply.dataValues.Comments_created_at,
-          UserNickname: reply.dataValues.User.nickname,
-          UserProfile: reply.dataValues.User.profile,
-        };
-      });
+        if (comment.Replies) {
+            this.Replies = comment.Replies.map((reply) => {
+                return {
+                    Comments_uid: reply.Comments_uid,
+                    Comments_content: reply.Comments_content,
+                    Comments_created_at: reply.Comments_created_at,
+                    UserNickname: reply.ReplyUser ? reply.ReplyUser.Users_nickname : null,
+                    UserProfile: reply.ReplyUser ? reply.ReplyUser.profile : null,
+                };
+            });
+        }
     }
-
-    this.validate(this);
-  }
 }
 
 module.exports = {
-  CommentViewResponseDTO,
+    CommentViewResponseDTO,
 };

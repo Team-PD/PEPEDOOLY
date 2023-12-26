@@ -12,3 +12,11 @@ export const userState = atom({
     userData: null,
   },
 });
+
+// export const adminState = atom({
+//   key: "adminState",
+//   default: {
+//     isLoggedIn: false,
+//     adminData:  null,
+//   },
+// });

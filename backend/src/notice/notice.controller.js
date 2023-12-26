@@ -12,22 +12,14 @@ class NoticeController {
 
   async postNotice(req, res, next) {
     try {
-      const adminId = req.admin;
-      if (!adminId) {
-        throw new Error("Invalid admin ID");
-      }
-
-      const noticeCreateRequestDTO = new NoticeCreateRequestDTO(
-        req.body,
-        req.admin
-      );
+      const noticeCreateRequestDTO = new NoticeCreateRequestDTO(req.body);
       const noticeCreateResponseDTO = await this.service.createNotice(
         noticeCreateRequestDTO
       );
       res.status(201).json(noticeCreateResponseDTO);
     } catch (e) {
       console.error("postNotice Error", e);
-      next(e);
+      res.status(500).json({ error: "Internal Server Error" });
     }
   }
 
@@ -37,20 +29,20 @@ class NoticeController {
       res.status(200).json(noticeFindAllResponseDTO);
     } catch (e) {
       console.error("getAllNotice Error", e);
-      next(e);
+      res.status(500).json({ error: "Internal Server Error" });
     }
   }
 
   async getNotice(req, res, next) {
     try {
-      const noticeFindRequestDTO = new NoticeFindRequestDTO(req.body);
+      const noticeFindRequestDTO = new NoticeFindRequestDTO(req.params);
       const noticeFindResponseDTO = await this.service.findNotice(
         noticeFindRequestDTO
       );
       res.status(200).json(noticeFindResponseDTO);
     } catch (e) {
       console.error("getNotice Error", e);
-      next(e);
+      res.status(500).json({ error: "Internal Server Error" });
     }
   }
 
@@ -63,7 +55,7 @@ class NoticeController {
       res.status(200).json(noticeUpdateResponseDTO);
     } catch (e) {
       console.error("putNotice Error", e);
-      next(e);
+      res.status(500).json({ error: "Internal Server Error" });
     }
   }
 
@@ -76,7 +68,7 @@ class NoticeController {
       res.status(200).json(noticeDeleteResponseDTO);
     } catch (e) {
       console.error("deleteNotice Error", e);
-      next(e);
+      res.status(500).json({ error: "Internal Server Error" });
     }
   }
 }

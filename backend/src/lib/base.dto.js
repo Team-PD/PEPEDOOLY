@@ -6,7 +6,7 @@ class BaseDto {
       throw new BadRequest("Body 타입이 올바르지 않음");
 
     for (const key in props) {
-      if (props[key] === undefined || props[key] === "") {
+      if (key !== "image" && (props[key] === undefined || props[key] === "")) {
         throw new BadRequest(`${key} 속성이 비어있음`);
       }
     }

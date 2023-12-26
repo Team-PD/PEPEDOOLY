@@ -10,5 +10,5 @@ const commentController = new CommentController(commentService);
 console.log("Comments model:", Comments);
 
 module.exports = {
-  commentController,
+    commentController,
 };

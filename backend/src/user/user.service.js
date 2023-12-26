@@ -60,14 +60,22 @@ class UserService {
 
       if (provider === "kakao") {
         const kakao = new Kakao(code);
+        console.log("카카오 서비스", kakao);
         userInfo = await kakao.getSocialUserInfo();
+        console.log("카카오 서비스 userInfo", userInfo);
         user = this.userRepository.build(kakao.buildUser(userInfo));
+        console.log("카카오 서비스 user", user);
       }
 
       if (provider === "github") {
         const github = new Github(code);
-        userInfo = await kakao.getSocialUserInfo();
+        console.log("깃허브 서비스", github);
+        userInfo = await github.getSocialUserInfo();
+        console.log("깃허브 서비스 userInfo", userInfo);
         user = this.userRepository.build(github.buildUser(userInfo));
+        console.log("깃허브 서비스 user", user);
+
+        return { userResult: user, token: setJWTToken(user) };
       }
 
       if (provider === "login") {
@@ -97,7 +105,7 @@ class UserService {
           throw new BadRequest("아이디 혹은 비밀번호를 확인해주세요.");
 
         const { dataValues: user } = result;
-        console.log(result);
+        console.log("서비스 리조트", result);
         // const { Users_name, Users_nickname, Users_email } = result.dataValues;
         // console.log(Users_name);
         // console.log(Users_email);
@@ -115,7 +123,7 @@ class UserService {
         return { userResult: result, token: setJWTToken(user) };
       }
     } catch (e) {
-      console.log(e);
+      console.log("이이이ㅣ이", e);
       throw e;
     }
   }

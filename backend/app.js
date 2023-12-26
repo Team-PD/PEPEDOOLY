@@ -9,6 +9,8 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 app.use("/uploads", express.static("uploads"));
+app.use(express.static("backend/uploads"));
+
 
 const allowedOrigins = ["http://localhost:3000", "http://127.0.0.1:3000"];
 app.use(

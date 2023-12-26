@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useUserState } from "../../../hooks/useUserState";
 import styles from "./Create.module.css";
 
-export default function Create() {
+export default function Create({ heading = "게시글 작성" }) {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const { user } = useUserState(); // 사용자 정보를 가져옵니다.
@@ -53,7 +53,7 @@ export default function Create() {
 
   return (
     <div className={`createForm ${styles.animate}`}>
-      <h1 className={styles.heading}>게시글 작성</h1>
+      <h1 className={styles.heading}>{heading}</h1>
       <form onSubmit={handleSubmit} className={styles.form}>
         <div className={styles.inputContainer}>
           <label htmlFor="title">제목</label>
