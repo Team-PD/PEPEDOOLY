@@ -1,7 +1,11 @@
 import styled from "styled-components";
 
-export default function Icon({ color, children }) {
-  return <StyledIcon background={color}>{children}</StyledIcon>;
+export default function Icon({ color, children, onClick }) {
+  return (
+    <StyledIcon background={color} onClick={onClick}>
+      {children}
+    </StyledIcon>
+  );
 }
 
 const StyledIcon = styled.div`

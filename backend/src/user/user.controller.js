@@ -50,7 +50,7 @@ class UserController {
       console.log("login", req.body);
 
       if (provider === "kakao") code = req.query.code;
-      if (provider === "git") code = req.query.code;
+      if (provider === "github") code = req.query.code;
       if (provider === "login") {
         userLoginRequestDTO = new UserLoginRequestDTO(req.body);
       }
@@ -86,7 +86,13 @@ class UserController {
         httpOnly: true,
         path: "/",
       });
-      return res.send(userResult);
+      // return res.send(userResult);
+      if (provider === "login") {
+        return res.send(userResult);
+      } else {
+        return res.redirect(`http://localhost:3000?userResult=${userResult}`);
+      }
+
       // return res.redirect("http://localhost:3000");
       // return res.redircet(`localhost:3000?token=${token}`);
       // return res.redirect(
@@ -137,6 +143,11 @@ class UserController {
     } catch (e) {
       next(e);
     }
+  }
+
+  async deleteUser(req, res, next) {
+    try {
+    } catch (e) {}
   }
 }
 const setJWTToken = (data) => {

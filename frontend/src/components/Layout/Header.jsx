@@ -51,6 +51,8 @@ const RightMenu = styled.ul`
   margin: 0;
   padding: 0;
   animation: ${fadeIn} 0.5s ease-in-out;
+  gap: 15px;
+  align-items: center;
 `;
 
 const MenuItem = styled.li`
@@ -58,9 +60,19 @@ const MenuItem = styled.li`
   color: #fff;
   cursor: pointer;
   transition: color 0.3s ease-in-out;
-  &:hover {
-    color: #ff9900;
+  font-size: 18px;
+
+  a {
+    text-decoration: none;
+    color: inherit;
+    &:hover {
+      color: #ff9900;
+      background-color: #228b22; /* Darker green on hover */
+      text-decoration: none;
+    }
   }
+  font-size: 20px;
+  font-weight: bold;
 `;
 
 const Logout = styled.button`
@@ -102,7 +114,7 @@ const Header = () => {
           <Link to="/admin">어드민</Link>
         </MenuItem>
         <MenuItem>
-          <Link to="/dashboard">대시보드</Link>
+          <Link to="/userDash">대시보드</Link>
         </MenuItem>
         <MenuItem>
           <Link to="/login">로그인</Link>

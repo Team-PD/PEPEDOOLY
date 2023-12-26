@@ -31,6 +31,17 @@ function App() {
     movePage("/register");
   }
 
+  // 프론트엔드에서 GitHub 소셜 로그인 버튼 클릭 핸들러
+  async function handleGitHubLogin() {
+    window.location.href =
+      "https://github.com/login/oauth/authorize?client_id=Iv1.d0c507196eece316&redirect_uri=http://localhost:4000/users/login/github";
+
+    // const gitdata = await axios.get(
+    //   "https://github.com/login/oauth/authorize?client_id=Iv1.d0c507196eece316&redirect_uri=http://localhost:4000/users/login/github"
+    // ); // GitHub OAuth 인증 URL
+    // console.log(gitdata);
+  }
+
   function loginUser() {
     const loginData = {
       email,
@@ -100,7 +111,7 @@ function App() {
           <Icon color={FacebookBackground}>
             <FaFacebookF />
           </Icon>
-          <Icon color={FaGithubBackground}>
+          <Icon color={FaGithubBackground} onClick={handleGitHubLogin}>
             <FaGithub />
           </Icon>
           <Icon color={TwitterBackground}>
