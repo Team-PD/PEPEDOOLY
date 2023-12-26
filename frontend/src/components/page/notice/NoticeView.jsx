@@ -27,7 +27,9 @@ const NoticeView = () => {
 
   const handleDeleteButtonClick = async () => {
     try {
-      await axios.delete(`http://localhost:4000/notice/${id}`);
+      await axios.delete(`http://localhost:4000/notice/${id}`, {
+        data: { noticeId: id },
+      });
       navigate("/notice");
     } catch (error) {
       console.error("Notice View.jsx, Delete Error : ", error);
