@@ -1,4 +1,5 @@
 # 많은 데이터를 데이터베이스에 한꺼번에 넣고싶을때 사용.
+# 파이썬 확장프로그램 설치한 후에
 # 아래 명령어 입력해서 두 라이브러리 설치후에 파이썬 실행
 
 # pip install python-dotenv
@@ -33,7 +34,7 @@ cursor = cnx.cursor()
 
 # 공지사항
 query = "INSERT INTO Notice (Notice_title, Notice_content, Notice_writer, Notice_image) VALUES "
-for i in range(100):
+for i in range(200):
     query += "('제목', '내용', '작성자', '이미지URL'),"
 
 # 댓글

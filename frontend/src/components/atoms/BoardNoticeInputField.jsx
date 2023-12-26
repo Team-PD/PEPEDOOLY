@@ -1,4 +1,3 @@
-// InputField.jsx
 import React from "react";
 
 export const InputField = ({
