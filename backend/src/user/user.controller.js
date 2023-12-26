@@ -104,6 +104,15 @@ class UserController {
     }
   }
 
+  async getUsers(req, res, next) {
+    try {
+      const users = await this.service.findAllUsers();
+      res.status(200).json(users);
+    } catch (e) {
+      next(e);
+    }
+  }
+
   async postProfile(req, res, next) {
     try {
       const userProfileImageRequestDTO = new UserProfileImageRequestDTO(req);
@@ -147,7 +156,6 @@ class UserController {
 
   async deleteUser(req, res, next) {
     try {
-      console.log("딜리트 리퀘스트", req);
       console.log("딜리트", req.params.id);
       await this.service.deleteUser(req.params.id);
 
