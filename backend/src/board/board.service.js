@@ -48,10 +48,22 @@ const deleteBoard = async (id) => {
   return await boardRepository.deleteBoard(id);
 };
 
+// 추천 및 비추천 수 가져오기
+const getLikeDislikeCounts = async (boardId) => {
+  const recommendCount = await Likes.count({
+    where: { Boards_id: boardId, isDislike: false },
+  });
+  const nonRecommendCount = await Likes.count({
+    where: { Boards_id: boardId, isDislike: true },
+  });
+  return { recommendCount, nonRecommendCount };
+};
+
 module.exports = {
   createBoard,
   getBoardList,
   getBoardById,
   updateBoard,
   deleteBoard,
+  getLikeDislikeCounts,
 };

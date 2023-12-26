@@ -53,8 +53,8 @@
 /* 이미지 스타일 */
 .postImage {
   width: 100%; /* 컨테이너 너비에 맞게 */
-  max-height: 200px; /* 최대 높이 설정 */
-  object-fit: contain; /* 비율을 유지하며 적절히 축소 또는 확대 */
+  object-fit: cover; /* 변경 */
+  height: 200px; /* 추가: 명시적 높이 설정 */
   border-radius: 4px;
   transition: opacity 0.3s ease;
 }
@@ -64,11 +64,12 @@
 }
 
 /* 게시물 정보 스타일 */
-.post-info {
+.postInfo {
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
+  width: 100%;
 }
 
 .title {
@@ -83,6 +84,29 @@
   margin: 5px 0;
   color: #666;
   font-size: 0.9em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.greenColor {
+  color: #4caf50;
+}
+
+.redColor {
+  color: #f44336;
+}
+
+.yellowColor {
+  color: #c5b632;
+}
+
+.PostInfosWrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  gap: 0.8rem;
 }
 
 /* 페이지네이션 스타일 */

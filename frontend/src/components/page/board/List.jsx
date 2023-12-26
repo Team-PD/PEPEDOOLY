@@ -2,6 +2,13 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useUserState } from "../../../hooks/useUserState";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faEye,
+  faThumbsUp,
+  faThumbsDown,
+} from "@fortawesome/free-solid-svg-icons";
+// innerModule
 import styles from "./List.module.css";
 
 export default function List() {
@@ -11,6 +18,7 @@ export default function List() {
   const postsPerPage = 8;
   const navigate = useNavigate();
   const { user } = useUserState();
+  // console.log("List.jsx / user : ", user);
 
   useEffect(() => {
     async function fetchPosts() {
@@ -91,10 +99,34 @@ export default function List() {
               )}
               <h2 className={styles.title}>{post.Boards_title}</h2>
             </Link>
-            <div className={styles["post-info"]}>
-              <p className={styles.writer}>작성자: {post.Users_uid}</p>
-              <p className={styles.likes}>좋아요: {post.Boards_views}</p>
-              <p className={styles.views}>조회수: {post.Boards_views}</p>
+            <div className={styles.postInfo}>
+              <p className={styles.writer}>작성자: {post.Boards_writer}</p>
+              <div className={styles.PostInfosWrapper}>
+                {" "}
+                <p className={styles.likes}>
+                  {" "}
+                  <FontAwesomeIcon
+                    className={styles.greenColor}
+                    icon={faThumbsUp}
+                  />
+                  {post.recommendCount}
+                </p>
+                <p className={styles.likes}>
+                  {" "}
+                  <FontAwesomeIcon
+                    className={styles.redColor}
+                    icon={faThumbsDown}
+                  />
+                  {post.nonRecommendCount}
+                </p>
+                <p className={styles.views}>
+                  <FontAwesomeIcon
+                    className={styles.yellowColor}
+                    icon={faEye}
+                  />
+                  {post.Boards_views}
+                </p>
+              </div>
             </div>
           </div>
         ))}
