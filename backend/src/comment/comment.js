@@ -53,6 +53,7 @@ module.exports = (sequelize, DataTypes) => {
         Comment.belongsTo(models.Boards, {
             foreignKey: "Boards_id",
             as: "CommentBoard",
+            onDelete: "CASCADE",
         });
         Comment.belongsTo(models.Users, {
             foreignKey: "Users_uid",
