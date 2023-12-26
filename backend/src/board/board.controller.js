@@ -1,4 +1,7 @@
 const boardService = require("./board.service");
+const db = require("../lib/db.js");
+const Likes = db.Likes;
+const Images = db.Images;
 
 const getBoardList = async (req, res) => {
   try {
@@ -12,6 +15,17 @@ const getBoardList = async (req, res) => {
 const createBoard = async (req, res) => {
   try {
     const board = await boardService.createBoard(req.body);
+
+    if (req.files) {
+      const imagesData = req.files.map((file) => ({
+        Boards_id: board.Boards_id,
+        Images_url: `${req.protocol}://${req.get("host")}/uploads/${
+          file.filename
+        }`, // 파일 URL 생성
+      }));
+      await db.Images.bulkCreate(imagesData);
+    }
+
     res.status(201).json(board);
   } catch (error) {
     res.status(500).send(error.message);
@@ -48,10 +62,31 @@ const deleteBoard = async (req, res) => {
   }
 };
 
+// 좋아요 로직
+const addLike = async (req, res) => {
+  const { Boards_id, Users_id, isDislike } = req.body; // isDislike 추가
+
+  try {
+    const existingLike = await Likes.findOne({
+      where: { Boards_id, Users_id },
+    });
+
+    if (existingLike) {
+      return res.status(409).send("You already reacted to this post.");
+    }
+
+    const like = await Likes.create({ Boards_id, Users_id, isDislike });
+    res.status(201).json(like);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+};
+
 module.exports = {
   getBoardList,
   createBoard,
   getBoard,
   updateBoard,
   deleteBoard,
+  addLike,
 };

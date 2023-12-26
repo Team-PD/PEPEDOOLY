@@ -9,13 +9,13 @@ const sequelize = new Sequelize(process.env["DB_DATABASE"], process.env["DB_USER
 });
 
 const entityList = [
-    `../admin/admin`,
-    `../user/user`,
-    `../notice/notice`,
-    `../comment/comment`,
-    `../board/board`,
-    "../board/images",
-    "../board/likes",
+  `../admin/admin`,
+  `../notice/notice`,
+  // `../comment/comment`,
+  "../user/user",
+  `../board/board`,
+  "../board/images",
+  "../board/likes",
 ];
 
 entityList.forEach((entity) => {
