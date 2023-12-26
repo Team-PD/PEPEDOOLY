@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import styled, { createGlobalStyle } from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useUserState } from "../../hooks/useUserState";
+import axios from "axios";
+import Header from "../../components/Layout/Header";
+import Footer from "../../components/Layout/Footer";
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -14,7 +17,8 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 const Sidebar = styled.div`
-  position: fixed;
+  box-sizing: border-box;
+  /* position: fixed; */
   top: 0;
   left: 0;
   height: 100vh;
@@ -25,11 +29,14 @@ const Sidebar = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  z-index: 1;
 `;
 
 const MainContent = styled.div`
-  margin-left: 250px;
-  padding: 20px;
+  width: 100%;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
 `;
 
 const SidebarButton = styled.button`
@@ -50,6 +57,7 @@ const SidebarButton = styled.button`
 `;
 
 const UserInfoBox = styled.div`
+  flex: 1;
   background-color: ${(props) => (props.greenMode ? "#32CD32" : "#FF8C00")};
   color: ${(props) => (props.greenMode ? "#fff" : "#333")};
   padding: 20px;
@@ -62,6 +70,31 @@ const SidebarBottom = styled.div`
   flex-direction: column;
 `;
 
+const HomeButton = styled.button`
+  display: block;
+  padding: 12px 24px;
+  border: none;
+  background-color: ${(props) => (props.greenMode ? "#32CD32" : "#FF8C00")};
+  color: ${(props) => (props.greenMode ? "#fff" : "#333")};
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+  font-size: 18px;
+  margin-top: auto; /* 하단 정렬을 위해 margin-top: auto; 추가 */
+`;
+
+const Contents = styled.div`
+  display: flex;
+`;
+
+const DashBox = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+`;
+
+const Imgbox = styled.div`
+  flex: 1;
+`;
 const UserDash = () => {
   const { user } = useUserState();
   //   console.log("대시보드 유저:", user);
@@ -72,6 +105,7 @@ const UserDash = () => {
   useEffect(() => {
     console.log("대시보드유저:", user);
   }, [user]);
+
   const toggleColorMode = () => {
     setGreenMode(!greenMode);
   };
@@ -84,37 +118,81 @@ const UserDash = () => {
     navigate("/"); // "/" 경로로 이동
   };
 
+  const handleDeleteAccount = () => {
+    const confirmDelete = window.confirm(
+      "정말로 회원 탈퇴를 진행하시겠습니까?"
+    );
+
+    if (confirmDelete) {
+      axios
+        .delete("http://localhost:4000/users/delete")
+        .then((response) => {
+          console.log("회원 탈퇴 응답:", response.data);
+          // 회원 탈퇴 후 추가적인 처리 로직...
+          // 예를 들어, 로그아웃 등을 수행할 수 있습니다.
+          goToHome(); // 회원 탈퇴 후 메인 페이지로 이동
+        })
+        .catch((error) => {
+          console.error("회원 탈퇴 오류:", error);
+          // 오류 처리 등 추가 작업이 필요할 경우 이곳에 추가합니다.
+        });
+    }
+  };
+
   return (
     <>
       <GlobalStyle greenMode={greenMode} />
-      <Sidebar greenMode={greenMode}>
-        <div>
-          <h2>Sidebar</h2>
-          <button onClick={toggleColorMode}>
-            {greenMode ? "옐로우 모드로 전환" : "그린 모드로 전환"}
-          </button>
-          <SidebarButton greenMode={greenMode} onClick={toggleUserInfo}>
-            유저 정보
-          </SidebarButton>
-          <SidebarButton greenMode={greenMode}>내가 쓴 글</SidebarButton>
-          <SidebarButton greenMode={greenMode}>내가 쓴 댓글</SidebarButton>
-          <SidebarButton greenMode={greenMode}>회원 탈퇴</SidebarButton>
-        </div>
-        <SidebarBottom>
+      <Contents>
+        <Sidebar greenMode={greenMode}>
+          <div>
+            <h2>Sidebar</h2>
+            <button onClick={toggleColorMode}>
+              {greenMode ? "옐로우 모드로 전환" : "그린 모드로 전환"}
+            </button>
+            <SidebarButton greenMode={greenMode} onClick={toggleUserInfo}>
+              유저 정보
+            </SidebarButton>
+            <SidebarButton greenMode={greenMode}>내가 쓴 글</SidebarButton>
+            <SidebarButton greenMode={greenMode}>내가 쓴 댓글</SidebarButton>
+            <SidebarButton greenMode={greenMode} onClick={handleDeleteAccount}>
+              회원 탈퇴
+            </SidebarButton>{" "}
+            <div>
+              <HomeButton greenMode={greenMode} onClick={goToHome}>
+                홈으로 돌아가기
+              </HomeButton>
+            </div>
+          </div>
+          {/* <SidebarBottom>
           <div>
             <button onClick={goToHome}>홈으로 돌아가기</button>
           </div>
-        </SidebarBottom>
-      </Sidebar>
-      <MainContent>
-        <h1>Pepedooly</h1>
-        <p>여기에 내용을 추가하세요.</p>
-        <UserInfoBox greenMode={greenMode} show={showUserInfo}>
-          <p>이름: {user?.userData?.Users_name}</p>
-          <p>이메일: {user?.userData?.Users_email}</p>
-          <p>닉네임: {user?.userData?.Users_nickname}</p>
-        </UserInfoBox>
-      </MainContent>
+        </SidebarBottom> */}
+        </Sidebar>
+
+        <MainContent>
+          <Header />
+          <DashBox>
+            <Imgbox>
+              <h1>Pepedooly</h1>
+              <p>
+                <img
+                  src={process.env.PUBLIC_URL + "/assets/PepeDooly.svg"}
+                  alt="PepeDoooly"
+                  style={{ width: "500px", height: "500px" }}
+                />
+              </p>
+            </Imgbox>
+            <UserInfoBox greenMode={greenMode} show={showUserInfo}>
+              <p>이름: {user?.userData?.Users_name}</p>
+              <p>이메일: {user?.userData?.Users_email}</p>
+              <p>닉네임: {user?.userData?.Users_nickname}</p>
+              <button>수정하기</button>
+            </UserInfoBox>
+          </DashBox>
+          <Footer />
+        </MainContent>
+      </Contents>
     </>
   );
 };

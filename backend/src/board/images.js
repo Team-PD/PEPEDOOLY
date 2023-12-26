@@ -1,5 +1,3 @@
-// models/Images.js
-
 module.exports = (sequelize, DataTypes) => {
   const Images = sequelize.define(
     "Images",
@@ -13,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-          model: "Boards", // 'Boards' 모델을 참조합니다.
+          model: "Boards",
           key: "Boards_id",
         },
       },
@@ -35,8 +33,9 @@ module.exports = (sequelize, DataTypes) => {
 
   Images.associate = function (models) {
     Images.belongsTo(models.Boards, {
-      foreignKey: "Boards_id", // 'Boards_id'를 외래 키로 사용합니다.
+      foreignKey: "Boards_id",
       as: "Board",
+      onDelete: "CASCADE",
     });
   };
 

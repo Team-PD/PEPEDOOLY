@@ -7,9 +7,9 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         autoIncrement: true,
       },
-      Users_uid: {
+      Users_id: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
       },
       Boards_title: {
         type: DataTypes.STRING(255),
@@ -37,9 +37,23 @@ module.exports = (sequelize, DataTypes) => {
   );
 
   Boards.associate = function (models) {
+    // 이미지와 좋아요 모델에 CASCADE 옵션 추가
     Boards.hasMany(models.Images, {
-      foreignKey: "Boards_id", // 'Boards_id'를 외래 키로 지정합니다.
+      foreignKey: "Boards_id",
       as: "Images",
+      onDelete: "CASCADE",
+    });
+    Boards.hasMany(models.Likes, {
+      foreignKey: "Boards_id",
+      as: "Likes",
+      onDelete: "CASCADE",
+    });
+
+    // 유저 모델 관계 설정에 SET NULL 옵션 추가
+    Boards.belongsTo(models.Users, {
+      foreignKey: "Users_id",
+      as: "Users",
+      onDelete: "SET NULL",
     });
   };
 

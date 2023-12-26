@@ -14,10 +14,12 @@ module.exports = (sequelize, DataTypes) => {
       //   allowNull: true,
       // },
 
-      // Users_id: {
-      //   type: DataTypes.STRING(255),
-      //   allowNull: false,
-      // },
+      Users_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        primaryKey: true,
+        autoIncrement: true,
+      },
       Users_password: {
         type: DataTypes.STRING,
         allowNull: false,
