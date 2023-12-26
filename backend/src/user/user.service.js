@@ -5,6 +5,7 @@ const jwt = new JWT();
 const { Op, where } = require("sequelize");
 const { BadRequest } = require("../lib/customException");
 const { UserSignupResponseDTO } = require("./dto/user.signup.response.dto");
+const { UserResponseDTO } = require("./dto/user.fetch.response.dto");
 const bcrypt = require("bcryptjs");
 const db = require("../lib/db");
 
@@ -153,6 +154,15 @@ class UserService {
         }
       );
       return filePath;
+    } catch (e) {
+      throw e;
+    }
+  }
+
+  async findAllUsers() {
+    try {
+      const users = await this.userRepository.findAll();
+      return users.map((user) => new UserResponseDTO(user.dataValues));
     } catch (e) {
       throw e;
     }

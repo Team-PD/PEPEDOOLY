@@ -31,15 +31,13 @@ class AdminController {
     }
   }
 
-  async putAdmin(req, res) {
+  async putAdmin(req, res, next) {
     try {
       const file = req.file;
-      if (!file) {
-        return res
-          .status(400)
-          .json({ success: false, error: "No file uploaded" });
+      let imageUrl = "";
+      if (file) {
+        imageUrl = "/" + file.path;
       }
-      const imageUrl = "/" + file.path;
       const adminData = { Admin_profile: imageUrl, ...req.body };
       const { updatedAdmin, token } = await this.service.updateAdmin(adminData);
       res.clearCookie("authorization");
@@ -49,9 +47,10 @@ class AdminController {
         path: "/",
       });
       return res.send(updatedAdmin);
-    } catch (error) {
-      console.error("Error updating admin info:", error);
-      res.status(500).json({ success: false, error: error.message });
+    } catch (e) {
+      next(e);
+      console.error("Error updating admin info:", e);
+      res.status(500).json({ success: false, e: e.message });
     }
   }
 }

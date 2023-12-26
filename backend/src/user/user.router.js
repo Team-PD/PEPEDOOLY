@@ -8,6 +8,7 @@ const postSignup = userController.postSignup.bind(userController);
 const postProfile = userController.postProfile.bind(userController);
 const putProfile = userController.putProfile.bind(userController);
 const deleteUser = userController.deleteUser.bind(userController);
+const getUsers = userController.getUsers.bind(userController);
 
 // const getProfile = userController.getProfile.bind(userController);
 
@@ -17,6 +18,7 @@ userRouter.post("/signup", postSignup);
 userRouter.post("/login/:provider", login);
 userRouter.get("/login/:provider", login);
 
+userRouter.get("/", getUsers);
 // 유저 탈퇴
 userRouter.delete("/:id", deleteUser);
 
