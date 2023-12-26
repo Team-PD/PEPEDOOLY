@@ -4,6 +4,7 @@ class CommentResponseDTO extends BaseDTO {
     Comments_uid;
     Comments_content;
     Comments_created_at;
+    Users_uid;
     UserNickname;
     UserProfile;
 
@@ -12,8 +13,9 @@ class CommentResponseDTO extends BaseDTO {
         this.Comments_uid = comment.Comments_uid;
         this.Comments_content = comment.Comments_content;
         this.Comments_created_at = comment.Comments_created_at;
-        this.UserNickname = comment.User ? comment.CommentUser.Users_nickname : null;
-        this.UserProfile = comment.User ? comment.CommentUser.profile : null;
+        this.Users_uid = comment.CommentUser ? comment.CommentUser.Users_uid : null;
+        this.UserNickname = comment.CommentUser ? comment.CommentUser.Users_nickname : null;
+        this.UserProfile = comment.CommentUser ? comment.CommentUser.profile : null;
     }
 }
 

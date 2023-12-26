@@ -18,8 +18,8 @@ class CommentViewResponseDTO extends BaseDTO {
         this.Comments_created_at = comment.Comments_created_at;
         this.Boards_id = comment.Boards_id;
         this.Users_uid = comment.Users_uid;
-        this.UserNickname = comment.User ? comment.CommentUser.Users_nickname : null;
-        this.UserProfile = comment.User ? comment.CommentUser.profile : null;
+        this.UserNickname = comment.CommentUser ? comment.CommentUser.Users_nickname : null;
+        this.UserProfile = comment.CommentUser ? comment.CommentUser.profile : null;
 
         if (comment.Replies) {
             this.Replies = comment.Replies.map((reply) => {

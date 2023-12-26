@@ -10,37 +10,38 @@ import axios from "axios";
 // innerModule
 import styles from "./View.module.css";
 import { useUserState } from "../../../hooks/useUserState";
+import Comments from "../../organisms/comments/Comments";
 
 const View = () => {
-  const [board, setBoard] = useState(null);
-  const { id } = useParams();
-  const navigate = useNavigate();
-  const { user } = useUserState();
+    const [board, setBoard] = useState(null);
+    const { id } = useParams();
+    const navigate = useNavigate();
+    const { user } = useUserState();
 
-  useEffect(() => {
-    const fetchBoard = async () => {
-      try {
-        const { data } = await axios.get(`http://localhost:4000/boards/${id}`);
-        console.log("view.jsx data : ", data);
-        setBoard(data); // 서버로부터 받은 데이터를 상태에 저장
-      } catch (error) {
-        console.error("Error fetching the board:", error);
-      }
+    useEffect(() => {
+        const fetchBoard = async () => {
+            try {
+                const { data } = await axios.get(`http://localhost:4000/boards/${id}`);
+                console.log("view.jsx data : ", data);
+                setBoard(data); // 서버로부터 받은 데이터를 상태에 저장
+            } catch (error) {
+                console.error("Error fetching the board:", error);
+            }
+        };
+
+        fetchBoard();
+    }, [id]);
+
+    const formatDate = (dateString) => {
+        const options = {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+            hour: "2-digit",
+            minute: "2-digit",
+        };
+        return new Date(dateString).toLocaleDateString("ko-KR", options);
     };
-
-    fetchBoard();
-  }, [id]);
-
-  const formatDate = (dateString) => {
-    const options = {
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-      hour: "2-digit",
-      minute: "2-digit",
-    };
-    return new Date(dateString).toLocaleDateString("ko-KR", options);
-  };
 
   //
   //
@@ -95,11 +96,12 @@ const View = () => {
     }
   };
 
-  const handleDislikeButtonClick = async () => {
-    if (!user.isLoggedIn) {
-      console.error("로그인 한 유저만 비추천할 수 있습니다.");
-      return;
-    }
+
+    const handleDislikeButtonClick = async () => {
+        if (!user.isLoggedIn) {
+            console.error("로그인 한 유저만 비추천할 수 있습니다.");
+            return;
+        }
 
     try {
       const { Users_id } = user.userData;
@@ -148,62 +150,51 @@ const View = () => {
   };
   if (!board) return <div className={styles.loading}>Loading...</div>;
 
-  //
-  //
-  //
-  return (
-    <div className={styles.container}>
-      <div className={styles.header}>
-        <h1 className={styles.title}>{board.Boards_title}</h1>
-        <div className={styles.info}>
-          <span className={styles.userId}>
-            작성자 : {board.Users.Users_nickname}
-          </span>
-          <span>조회수 : {board.Boards_views}</span>
-          <span className={styles.createdAt}>
-            {formatDate(board.Boards_created_at)}
-          </span>
+
+    //
+    //
+    //
+    return (
+        <div className={styles.container}>
+            <div className={styles.header}>
+                <h1 className={styles.title}>{board.Boards_title}</h1>
+                <div className={styles.info}>
+                    <span className={styles.userId}>작성자 : {board.Users.Users_nickname}</span>
+                    <span>조회수 : {board.Boards_views}</span>
+                    <span className={styles.createdAt}>{formatDate(board.Boards_created_at)}</span>
+                </div>
+            </div>
+            <div className={styles.imageContainer}>
+                {board.Images &&
+                    board.Images.map((image, index) => (
+                        <img key={index} src={image.Images_url} alt={`Image ${index}`} className={styles.postImage} />
+                    ))}
+            </div>
+            <p className={styles.content}>{board.Boards_content}</p>
+            <div className={styles.footer}>
+                <button className={`${styles.button} ${styles.recommendButton}`} onClick={handleLikeButtonClick}>
+                    <FontAwesomeIcon className={styles.greenColor} icon={faThumbsUp} />
+                    추천 {board.recommendCount}
+                </button>
+                <button className={`${styles.button} ${styles.nonRecommendButton}`} onClick={handleDislikeButtonClick}>
+                    <FontAwesomeIcon className={styles.redColor} icon={faThumbsDown} />
+                    비추천 {board.nonRecommendCount}
+                </button>
+                <button className={`${styles.button} ${styles.reportButton}`}>
+                    <FontAwesomeIcon className={styles.yellowColor} icon={faHandcuffs} />
+                    신고
+                </button>
+            </div>
+            <div className={styles.buttonGroup}>
+                <button onClick={handleUpdateButtonClick}>글 수정</button>
+                <button onClick={handleDeleteButtonClick}>글 삭제</button>
+                <button onClick={handleListButtonClick}>목록으로</button>
+            </div>
+            <div className={styles.commentsContainer}>
+                <Comments boardId={id} user={user} />
+            </div>
         </div>
-      </div>
-      <div className={styles.imageContainer}>
-        {board.Images &&
-          board.Images.map((image, index) => (
-            <img
-              key={index}
-              src={image.Images_url}
-              alt={`Image ${index}`}
-              className={styles.postImage}
-            />
-          ))}
-      </div>
-      <p className={styles.content}>{board.Boards_content}</p>
-      <div className={styles.footer}>
-        <button
-          className={`${styles.button} ${styles.recommendButton}`}
-          onClick={handleLikeButtonClick}
-        >
-          <FontAwesomeIcon className={styles.greenColor} icon={faThumbsUp} />
-          추천 {board.recommendCount}
-        </button>
-        <button
-          className={`${styles.button} ${styles.nonRecommendButton}`}
-          onClick={handleDislikeButtonClick}
-        >
-          <FontAwesomeIcon className={styles.redColor} icon={faThumbsDown} />
-          비추천 {board.nonRecommendCount}
-        </button>
-        <button className={`${styles.button} ${styles.reportButton}`}>
-          <FontAwesomeIcon className={styles.yellowColor} icon={faHandcuffs} />
-          신고
-        </button>
-      </div>
-      <div className={styles.buttonGroup}>
-        <button onClick={handleUpdateButtonClick}>글 수정</button>
-        <button onClick={handleDeleteButtonClick}>글 삭제</button>
-        <button onClick={handleListButtonClick}>목록으로</button>
-      </div>
-    </div>
-  );
+    );
 };
 
 export default View;

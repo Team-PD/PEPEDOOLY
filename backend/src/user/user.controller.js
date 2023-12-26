@@ -104,6 +104,15 @@ class UserController {
     }
   }
 
+  async getUsers(req, res, next) {
+    try {
+      const users = await this.service.findAllUsers();
+      res.status(200).json(users);
+    } catch (e) {
+      next(e);
+    }
+  }
+
   async postProfile(req, res, next) {
     try {
       const userProfileImageRequestDTO = new UserProfileImageRequestDTO(req);
@@ -131,15 +140,23 @@ class UserController {
   async putProfile(req, res, next) {
     try {
       const userProfileFormRequestDTO = new UserProfileFormRequestDTO(req);
-      const result = await this.service.userInfoUpdate(
+      const { updateUser, token } = await this.service.userInfoUpdate(
         userProfileFormRequestDTO
       );
+      res.clearCookie("authorization");
       req.user.Users_nickname = userProfileFormRequestDTO.userNickname;
       req.user.Users_name = userProfileFormRequestDTO.userName;
       req.user.Users_email = userProfileFormRequestDTO.userEmail;
+      res.cookie("authorization", token, {
+        maxAge: 60 * 60 * 10000,
+        httpOnly: true,
+        path: "/",
+      });
 
-      const token = setJWTToken(req.user);
-      res.status(201).json(new Created(token));
+      // const token = setJWTToken(req.user);
+      // res.status(201).json(new Created(token));
+
+      return res.send(updateUser);
     } catch (e) {
       next(e);
     }
@@ -147,7 +164,15 @@ class UserController {
 
   async deleteUser(req, res, next) {
     try {
-    } catch (e) {}
+      console.log("딜리트", req.params.id);
+      await this.service.deleteUser(req.params.id);
+
+      res.clearCookie("authorization").send("로그아웃되었습니다.");
+      // res.status(200).json(userDelete);
+    } catch (e) {
+      console.log("딜리트 메세지", e);
+      res.status(500).json({ error: "Internal Server Error" });
+    }
   }
 }
 const setJWTToken = (data) => {

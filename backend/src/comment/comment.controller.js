@@ -15,7 +15,7 @@ class CommentController {
             console.log(result);
             return res.status(201).json(result);
         } catch (e) {
-            next(e);
+            next(new Error("Invalid request"));
         }
     }
 
