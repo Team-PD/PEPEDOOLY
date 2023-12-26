@@ -181,6 +181,21 @@ class UserService {
       throw e;
     }
   }
+
+  async deleteUser(userId) {
+    try {
+      const deletedRowCount = await this.userRepository.destroy({
+        where: { id: userId },
+      });
+      if (deletedRowCount === 0) {
+        throw new Error("Notice not found");
+      }
+      return { message: "Notice deletion successful" };
+    } catch (e) {
+      console.error("Service deleteNotice Error", e);
+      throw new Error(e.message);
+    }
+  }
 }
 
 const setJWTToken = (data) => {

@@ -147,7 +147,16 @@ class UserController {
 
   async deleteUser(req, res, next) {
     try {
-    } catch (e) {}
+      console.log("딜리트 리퀘스트", req);
+      console.log("딜리트", req.params.id);
+      await this.service.deleteUser(req.params.id);
+
+      res.clearCookie("authorization").send("로그아웃되었습니다.");
+      // res.status(200).json(userDelete);
+    } catch (e) {
+      console.log("딜리트 메세지", e);
+      res.status(500).json({ error: "Internal Server Error" });
+    }
   }
 }
 const setJWTToken = (data) => {
