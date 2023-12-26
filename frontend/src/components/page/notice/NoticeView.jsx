@@ -4,6 +4,7 @@ import axios from "axios";
 import Header from "../../Layout/Header";
 import Footer from "../../Layout/Footer";
 import NoticeDetail from "../../organisms/notice/NoticeDetail";
+import styled from "styled-components";
 
 const NoticeView = () => {
   const [notice, setNotice] = useState(null);
