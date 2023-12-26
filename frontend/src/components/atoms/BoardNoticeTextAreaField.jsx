@@ -1,4 +1,3 @@
-// TextAreaField.jsx
 import React from "react";
 
 export const TextAreaField = ({ id, label, value, onChange, styleProps }) => {

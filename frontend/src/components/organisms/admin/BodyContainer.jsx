@@ -1,5 +1,5 @@
 import Info from "../../molecules/admin/Info";
-import { Notice } from "../../molecules/admin/Notice";
+import { NoticeCreate } from "../../molecules/NoticeCreate";
 import { Manage } from "../../molecules/admin/Manage";
 import styled from "styled-components";
 
@@ -15,7 +15,7 @@ const BodyContainer = ({ menu }) => {
   return (
     <Container>
       {menu === "info" && <Info />}
-      {menu === "notice" && <Notice />}
+      {menu === "notice" && <NoticeCreate />}
       {menu === "manage" && <Manage />}
     </Container>
   );

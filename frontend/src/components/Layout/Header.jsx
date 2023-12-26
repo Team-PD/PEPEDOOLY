@@ -107,6 +107,9 @@ const Header = () => {
         <MenuItem>
           <Link to="/login">로그인</Link>
         </MenuItem>
+        <MenuItem>
+          <Link to="/notice">공지사항</Link>
+        </MenuItem>
       </RightMenu>
     </HeaderStyle>
   );
