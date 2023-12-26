@@ -18,8 +18,11 @@ adminRouter.post("/image", upload.single("image"), (req, res) => {
       .json({ success: false, message: "No file uploaded" });
   }
 
-  const imageUrl = "/uploads/" + req.file.filename;
+  const imageUrl = `${req.protocol}://${req.get("host")}/uploads/${
+    req.file.filename
+  }`;
   res.json({ success: true, imageUrl });
 });
 
 module.exports = adminRouter;
+

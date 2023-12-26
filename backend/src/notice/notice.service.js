@@ -28,9 +28,9 @@ class NoticeService {
   async findAllNotice() {
     try {
       const notices = await this.notice.findAll();
-      return notices.map((notice) => {
-        return new NoticeFindAllResponseDTO(notice.dataValues);
-      });
+      return notices.map(
+        (notice) => new NoticeFindAllResponseDTO(notice.dataValues)
+      );
     } catch (e) {
       console.error("Service findAllNotice Error", e);
       throw new Error(e.message);

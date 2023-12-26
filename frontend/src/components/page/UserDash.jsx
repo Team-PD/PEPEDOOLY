@@ -96,7 +96,7 @@ const Imgbox = styled.div`
   flex: 1;
 `;
 const UserDash = () => {
-  const { user } = useUserState();
+  const { user, logout } = useUserState();
   //   console.log("대시보드 유저:", user);
   const [greenMode, setGreenMode] = useState(true);
   const [showUserInfo, setShowUserInfo] = useState(false);
@@ -123,13 +123,17 @@ const UserDash = () => {
       "정말로 회원 탈퇴를 진행하시겠습니까?"
     );
 
+    console.log("대시보드 유저 아이디", user);
     if (confirmDelete) {
       axios
-        .delete("http://localhost:4000/users/delete")
+        .delete(`http://localhost:4000/users/${user.userData.id}`, {
+          withCredentials: true,
+        })
         .then((response) => {
           console.log("회원 탈퇴 응답:", response.data);
           // 회원 탈퇴 후 추가적인 처리 로직...
           // 예를 들어, 로그아웃 등을 수행할 수 있습니다.
+          logout();
           goToHome(); // 회원 탈퇴 후 메인 페이지로 이동
         })
         .catch((error) => {

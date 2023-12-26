@@ -5,6 +5,7 @@ const jwt = new JWT();
 const { Op, where } = require("sequelize");
 const { BadRequest } = require("../lib/customException");
 const { UserSignupResponseDTO } = require("./dto/user.signup.response.dto");
+const { UserResponseDTO } = require("./dto/user.fetch.response.dto");
 const bcrypt = require("bcryptjs");
 const db = require("../lib/db");
 
@@ -158,6 +159,15 @@ class UserService {
     }
   }
 
+  async findAllUsers() {
+    try {
+      const users = await this.userRepository.findAll();
+      return users.map((user) => new UserResponseDTO(user.dataValues));
+    } catch (e) {
+      throw e;
+    }
+  }
+
   async userInfoUpdate(requestDTO) {
     try {
       const salt = bcrypt.genSaltSync(10);
@@ -179,6 +189,21 @@ class UserService {
       return result;
     } catch (e) {
       throw e;
+    }
+  }
+
+  async deleteUser(userId) {
+    try {
+      const deletedRowCount = await this.userRepository.destroy({
+        where: { id: userId },
+      });
+      if (deletedRowCount === 0) {
+        throw new Error("Notice not found");
+      }
+      return { message: "Notice deletion successful" };
+    } catch (e) {
+      console.error("Service deleteNotice Error", e);
+      throw new Error(e.message);
     }
   }
 }
