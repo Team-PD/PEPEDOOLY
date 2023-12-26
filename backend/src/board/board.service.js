@@ -1,11 +1,12 @@
 const boardRepository = require("./board.repository");
+const db = require("../lib/db.js");
+const Likes = db.Likes;
 
 const getBoardList = async () => {
   return await boardRepository.getBoardList();
 };
 
 const createBoard = async (boardData) => {
-  // 여기에서 필요한 데이터 검증이나 변환 로직을 추가할 수 있습니다.
   return await boardRepository.createBoard(boardData);
 };
 
@@ -13,20 +14,33 @@ const getBoardById = async (id) => {
   const board = await boardRepository.getBoardById(id);
   if (!board) return null;
 
-  // 조회수 증가
-  board.Board_views++;
+  // 추천수 계산
+  const recommendCount = await Likes.count({
+    where: {
+      Boards_id: id,
+      isDislike: false,
+    },
+  });
+
+  // 비추천수 계산
+  const nonRecommendCount = await Likes.count({
+    where: {
+      Boards_id: id,
+      isDislike: true,
+    },
+  });
+
+  board.Boards_views++;
   await board.save();
 
   return {
-    title: board.Boards_title,
-    content: board.Boards_content,
-    createdAt: board.Boards_created_at,
-    views: board.Board_views,
+    ...board.dataValues, // 기존 게시글 정보
+    recommendCount,
+    nonRecommendCount,
   };
 };
 
 const updateBoard = async (id, boardData) => {
-  // 데이터 검증이나 추가 로직을 여기에 구현할 수 있습니다.
   return await boardRepository.updateBoard(id, boardData);
 };
 
