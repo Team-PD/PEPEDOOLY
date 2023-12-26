@@ -9,13 +9,13 @@ const sequelize = new Sequelize(process.env["DB_DATABASE"], process.env["DB_USER
 });
 
 const entityList = [
-  `../admin/admin`,
-  `../notice/notice`,
-  // `../comment/comment`,
-  "../user/user",
-  `../board/board`,
-  "../board/images",
-  "../board/likes",
+    `../admin/admin`,
+    `../notice/notice`,
+    `../comment/comment`,
+    "../user/user",
+    `../board/board`,
+    "../board/images",
+    "../board/likes",
 ];
 
 entityList.forEach((entity) => {
@@ -23,7 +23,6 @@ entityList.forEach((entity) => {
     db[model.name] = model;
 });
 
-// db["Comment"].belongsTo(db["Users"], { foreignKey: "Users_uid", as: "CommentUser" });
 db["Comment"].hasMany(db["Comment"], {
     as: "Replies",
     foreignKey: "ParentCommentId",

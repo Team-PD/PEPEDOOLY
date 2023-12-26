@@ -1,0 +1,20 @@
+.commentsList {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.commentItem {
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.commentActions {
+    display: flex;
+    gap: 5px;
+}
