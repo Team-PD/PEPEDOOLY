@@ -2,6 +2,7 @@ const boardService = require("./board.service");
 const db = require("../lib/db.js");
 const Likes = db.Likes;
 const Images = db.Images;
+const { Op } = require("sequelize");
 
 const getBoardList = async (req, res) => {
   try {
@@ -48,7 +49,7 @@ const getBoard = async (req, res) => {
 const updateBoard = async (req, res) => {
   try {
     const id = req.params.id;
-    const { Boards_title, Boards_content, existingImages } = req.body;
+    const { Boards_title, Boards_content } = req.body;
 
     // 게시글 내용 업데이트
     await db.Boards.update(
@@ -67,16 +68,18 @@ const updateBoard = async (req, res) => {
       await db.Images.bulkCreate(newImagesData);
     }
 
-    // 기존 이미지 처리 (예시: 기존 이미지 ID를 클라이언트에서 전달받은 경우)
-    if (existingImages) {
-      const existingImagesIds = existingImages.split(",").map(Number);
+    // 삭제된 이미지 처리
+    // 클라이언트에서 보낸 삭제할 이미지 ID 목록을 처리
+    if (req.body.deletedImages) {
+      const deletedImagesIds = req.body.deletedImages.split(",").map(Number);
       await db.Images.destroy({
-        where: { Images_id: { [Op.notIn]: existingImagesIds }, Boards_id: id },
+        where: { Images_uid: { [Op.in]: deletedImagesIds }, Boards_id: id },
       });
     }
 
     res.send("Board updated successfully");
   } catch (error) {
+    console.error("Update Error: ", error);
     res.status(500).send(error.message);
   }
 };

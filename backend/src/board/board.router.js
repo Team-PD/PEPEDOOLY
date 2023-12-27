@@ -19,7 +19,7 @@ const upload = multer({ storage: storage });
 router.get("/", boardController.getBoardList);
 router.post("/", upload.array("image", 5), boardController.createBoard);
 router.get("/:id", boardController.getBoard);
-router.put("/:id", boardController.updateBoard);
+router.put("/:id", upload.array("images", 5), boardController.updateBoard);
 router.delete("/:id", boardController.deleteBoard);
 router.get("/:id/counts", boardController.getLikeDislikeCounts);
 router.post("/:id/like", boardController.addLike); // 추천 및 비추천 관련 API

@@ -6,19 +6,20 @@ import styles from "./Modify.module.css";
 const Modify = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [images, setImages] = useState([]); // 이미지 상태 추가
+  const [images, setImages] = useState([]);
+  const [deletedImages, setDeletedImages] = useState([]);
   const { id } = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchBoard = async () => {
       const { data } = await axios.get(`http://localhost:4000/boards/${id}`);
-      console.log("Modify.jsx / data : ", data);
       setTitle(data.Boards_title);
       setContent(data.Boards_content);
-      // 이미지 상태 설정 로직 추가
       if (data.Images) {
-        setImages(data.Images.map((image) => image.Images_url));
+        setImages(
+          data.Images.map((image) => ({ ...image, preview: image.Images_url }))
+        );
       }
     };
 
@@ -34,7 +35,13 @@ const Modify = () => {
   };
 
   const removeImage = (index) => {
-    setImages(images.filter((_, idx) => idx !== index));
+    const newImages = images.filter((_, idx) => idx !== index);
+    const deletedImage = images[index];
+
+    if (deletedImage && deletedImage.Images_uid) {
+      setDeletedImages([...deletedImages, deletedImage.Images_uid]);
+    }
+    setImages(newImages);
   };
 
   const handleSubmit = async (e) => {
@@ -43,19 +50,15 @@ const Modify = () => {
     formData.append("Boards_title", title);
     formData.append("Boards_content", content);
 
-    // 새 이미지만 FormData에 추가
     images.forEach((image) => {
       if (image.file) {
-        formData.append("image", image.file);
+        formData.append("images", image.file); // 필드 이름 'images'
       }
     });
 
-    // 기존 이미지의 ID를 추가 (예시)
-    const existingImagesIds = images
-      .filter((img) => !img.file)
-      .map((img) => img.id)
-      .join(",");
-    formData.append("existingImages", existingImagesIds);
+    if (deletedImages.length > 0) {
+      formData.append("deletedImages", deletedImages.join(","));
+    }
 
     try {
       await axios.put(`http://localhost:4000/boards/${id}`, formData, {
@@ -70,38 +73,57 @@ const Modify = () => {
   };
 
   return (
-    <div className={styles.container}>
-      <h1>글 수정</h1>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          className={styles.titleInput}
-        />
-        <textarea
-          value={content}
-          onChange={(e) => setContent(e.target.value)}
-          className={styles.contentInput}
-        />
-        <input type="file" multiple onChange={handleImageChange} />
-        <div className={styles.imagePreviewContainer}>
-          {images.map((image, index) => (
-            <div key={index} className={styles.imagePreview}>
-              <img
-                src={image.preview ? image.preview : image}
-                alt={`preview ${index}`}
-                className={styles.image}
-              />
-              <button
-                type="button"
-                className={styles.removeButton}
-                onClick={() => removeImage(index)}
-              >
-                X
-              </button>
-            </div>
-          ))}
+    <div className={`${styles.modifyForm} ${styles.animate}`}>
+      {" "}
+      {/* 수정된 클래스 이름 사용 */}
+      <h1 className={styles.heading}>게시글 수정</h1>
+      <form onSubmit={handleSubmit} className={styles.form}>
+        <div className={styles.inputContainer}>
+          <label htmlFor="title">제목</label>
+          <input
+            type="text"
+            id="title"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            className={styles.input}
+          />
+        </div>
+        <div className={styles.inputContainer}>
+          <label htmlFor="content">내용</label>
+          <textarea
+            id="content"
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+            className={`${styles.input} ${styles.textarea}`}
+          />
+        </div>
+        <div className={styles.inputContainer}>
+          <label htmlFor="image">이미지 첨부 (최대 5개)</label>
+          <input
+            type="file"
+            id="image"
+            multiple
+            onChange={handleImageChange}
+            className={styles.input}
+          />
+          <div className={styles.imagePreviewContainer}>
+            {images.map((image, index) => (
+              <div key={index} className={styles.imagePreview}>
+                <img
+                  src={image.preview ? image.preview : image}
+                  alt={`preview ${index}`}
+                  className={styles.image}
+                />
+                <button
+                  type="button"
+                  className={styles.removeButton}
+                  onClick={() => removeImage(index)}
+                >
+                  X
+                </button>
+              </div>
+            ))}
+          </div>
         </div>
         <button type="submit" className={styles.submitButton}>
           수정
