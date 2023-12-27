@@ -9,10 +9,18 @@ module.exports = (sequelize, DataTypes) => {
       },
       Boards_id: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
         references: {
           model: "Boards",
           key: "Boards_id",
+        },
+      },
+      Notice_id: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        references: {
+          model: "Notice",
+          key: "Notice_id",
         },
       },
       Images_url: {
@@ -35,6 +43,12 @@ module.exports = (sequelize, DataTypes) => {
     Images.belongsTo(models.Boards, {
       foreignKey: "Boards_id",
       as: "Board",
+      onDelete: "CASCADE",
+    });
+
+    Images.belongsTo(models.Notice, {
+      foreignKey: "Notice_id",
+      as: "Notice",
       onDelete: "CASCADE",
     });
   };

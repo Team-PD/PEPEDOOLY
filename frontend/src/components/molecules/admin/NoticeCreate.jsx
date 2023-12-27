@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import { useUserState } from "../../../hooks/useUserState";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -7,35 +8,40 @@ import { styleProps } from "../../atoms/BoardNoticeStyleProps";
 export const NoticeCreate = (props) => {
   const { user } = useUserState();
   const navigate = useNavigate();
+  const [images, setImages] = useState([]);
 
-  const handleSubmit = async ({ title, content, image }) => {
+  const handleImageChange = (e) => {
+    setImages([...images, ...e.target.files].slice(0, 5));
+  };
+
+  const removeImage = (index) => {
+    setImages(images.filter((_, idx) => idx !== index));
+  };
+
+  const handleSubmit = async ({ title, content }) => {
     const { Admin_id, Admin_nickname } = user.userData;
-    let imageUrl = "";
+
+    const formData = new FormData();
+    formData.append("noticeTitle", title);
+    formData.append("noticeContent", content);
+    formData.append("adminId", Admin_id);
+    formData.append("adminNickname", Admin_nickname);
+    images.forEach((image) => {
+      return formData.append(`image`, image);
+    });
 
     try {
-      if (image) {
-        const imageFormData = new FormData();
-        imageFormData.append("image", image);
-        const imageResponse = await axios.post(
-          "http://localhost:4000/notice/image",
-          imageFormData,
-          { withCredentials: true }
-        );
-        imageUrl = imageResponse.data.imageUrl;
-      }
-
       const response = await axios.post(
         "http://localhost:4000/notice/create",
+        formData,
         {
-          noticeTitle: title,
-          noticeContent: content,
-          adminId: Admin_id,
-          adminNickname: Admin_nickname,
-          image: imageUrl,
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
         },
         { withCredentials: true }
       );
-
+      console.log(response);
       if (response.status !== 201) {
         throw new Error("Error creating post");
       }
@@ -46,13 +52,14 @@ export const NoticeCreate = (props) => {
   };
 
   return (
-    <>
-      <Create
-        {...props}
-        onSubmit={handleSubmit}
-        showAuthor={false}
-        styleProps={styleProps}
-      />
-    </>
+    <Create
+      {...props}
+      onSubmit={handleSubmit}
+      showAuthor={false}
+      styleProps={styleProps}
+      handleImageChange={handleImageChange}
+      removeImage={removeImage}
+      images={images}
+    />
   );
 };

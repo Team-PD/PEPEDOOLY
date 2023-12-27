@@ -10,7 +10,7 @@ export const Manage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [currentGroup, setCurrentGroup] = useState(0);
   const usersPerPage = 10;
-  const pagesPerGroup = 5; // 페이지 그룹당 페이지 수를 5로 설정
+  const pagesPerGroup = 5;
 
   const startPage = currentGroup * pagesPerGroup + 1;
   const endPage = Math.min(
@@ -33,6 +33,7 @@ export const Manage = () => {
   const handleDelete = async (id) => {
     if (window.confirm("정말로 삭제하시겠습니까?")) {
       await axios.delete(`http://localhost:4000/users/${id}`);
+      setUsers(users.filter((user) => user.id !== id));
     }
   };
 

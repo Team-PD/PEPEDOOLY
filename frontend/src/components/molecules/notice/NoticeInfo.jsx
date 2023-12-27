@@ -26,7 +26,7 @@ const NoticeInfo = ({ notice }) => (
       <CreatedAt>{notice.noticeCreatedAt}</CreatedAt>
     </WriterContainer>
     <ContentContainer>
-      <Content>{notice.noticeContent}</Content>
+      <Content noticeContent={notice.noticeContent} images={notice.images} />
     </ContentContainer>
   </InfoContainer>
 );

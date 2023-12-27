@@ -1,7 +1,9 @@
 const express = require("express");
 const noticeRouter = express.Router();
+const multer = require("multer");
+const path = require("path");
+const crypto = require("crypto");
 const { noticeController } = require("./notice.module");
-const upload = require("../lib/upload");
 
 const postNotice = noticeController.postNotice.bind(noticeController);
 const getAllNotice = noticeController.getAllNotice.bind(noticeController);
@@ -9,17 +11,17 @@ const getNotice = noticeController.getNotice.bind(noticeController);
 const putNotice = noticeController.putNotice.bind(noticeController);
 const deleteNotice = noticeController.deleteNotice.bind(noticeController);
 
-noticeRouter.post("/image", upload.single("image"), (req, res) => {
-  if (!req.file) {
-    return res
-      .status(400)
-      .json({ success: false, message: "No file uploaded" });
-  }
-
-  const imageUrl = "/uploads/" + req.file.filename;
-  res.json({ success: true, imageUrl });
+const storage = multer.diskStorage({
+  destination: "uploads/",
+  filename: function (req, file, callback) {
+    const ext = path.extname(file.originalname);
+    const uniqueSuffix = crypto.randomBytes(18).toString("hex");
+    callback(null, `${uniqueSuffix}${ext}`);
+  },
 });
-noticeRouter.post("/create", upload.any(), postNotice);
+const upload = multer({ storage: storage });
+
+noticeRouter.post("/create", upload.array("image", 5), postNotice);
 noticeRouter.get("/", getAllNotice);
 noticeRouter.get("/:id", getNotice);
 noticeRouter.put("/edit/:id", putNotice);

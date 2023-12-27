@@ -19,7 +19,6 @@ const NoticeView = () => {
 
     fetchNotice();
   }, [id]);
-
   if (!notice) return <div>Loading...</div>;
 
   const handleUpdateButtonClick = () => {
@@ -46,6 +45,7 @@ const NoticeView = () => {
       <Header />
       <NoticeDetail
         notice={notice}
+        images={notice.images} // 이미지 정보 전달
         onEdit={handleUpdateButtonClick}
         onDelete={handleDeleteButtonClick}
         onList={handleListButtonClick}

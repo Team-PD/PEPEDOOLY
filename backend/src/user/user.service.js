@@ -195,7 +195,7 @@ class UserService {
   async deleteUser(userId) {
     try {
       const deletedRowCount = await this.userRepository.destroy({
-        where: { id: userId },
+        where: { Users_id: userId },
       });
       if (deletedRowCount === 0) {
         throw new Error("Notice not found");
