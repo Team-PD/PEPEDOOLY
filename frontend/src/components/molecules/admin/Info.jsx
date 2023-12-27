@@ -20,10 +20,35 @@ const Info = ({ isEdit }) => {
   useEffect(() => {
     if (user) {
       setFields([
-        { id: 1, label: "Admin_id", value: Admin_id || "" },
-        { id: 2, label: "Admin_name", value: Admin_name || "" },
-        { id: 3, label: "Admin_nickname", value: Admin_nickname || "" },
-        { id: 4, label: "Admin_password", value: "", isPassword: true },
+        {
+          id: 1,
+          name: "아이디",
+          type: "noEdit",
+          label: "Admin_id",
+          value: Admin_id || "",
+        },
+        {
+          id: 2,
+          name: "이름",
+          label: "Admin_name",
+          type: "noEdit",
+          value: Admin_name || "",
+        },
+        {
+          id: 3,
+          name: "닉네임",
+          label: "Admin_nickname",
+          value: Admin_nickname || "",
+        },
+        {
+          id: 4,
+          name: "비밀번호",
+          label: "Admin_password",
+          type: "password",
+          label: "Admin_password",
+          value: "",
+          isPassword: true,
+        },
       ]);
     }
   }, [user]);
@@ -36,6 +61,11 @@ const Info = ({ isEdit }) => {
 
   const handleEditClick = () => {
     if (isEditState) {
+      const passwordField = fields.find((field) => field.name === "비밀번호");
+      if (passwordField && passwordField.value.length < 3) {
+        alert("비밀번호를 3글자 이상 입력해주세요.");
+        return;
+      }
       const formData = createFormData();
       updateAdminInfo(formData);
     }

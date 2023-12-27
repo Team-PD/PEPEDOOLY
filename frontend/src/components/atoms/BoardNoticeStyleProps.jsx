@@ -1,7 +1,7 @@
 export const styleProps = {
   formContainer: {
     width: "100%",
-    maxWidth: "80%",
+    maxWidth: "100%",
     overflow: "auto",
     margin: "20px",
     padding: "5px",
