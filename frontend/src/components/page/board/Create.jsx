@@ -3,6 +3,8 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useUserState } from "../../../hooks/useUserState";
 import styles from "./Create.module.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
 export default function Create({ heading = "게시글 작성" }) {
   const [title, setTitle] = useState("");
@@ -10,6 +12,10 @@ export default function Create({ heading = "게시글 작성" }) {
   const { user } = useUserState(); // 사용자 정보를 가져옵니다.
   const [images, setImages] = useState([]);
   const navigate = useNavigate();
+
+  const handleBack = () => {
+    navigate("/board"); // 뒤로가기 버튼 클릭 시 /board로 이동
+  };
 
   const handdleImageChange = (e) => {
     setImages([...images, ...e.target.files].slice(0, 5));
@@ -53,7 +59,12 @@ export default function Create({ heading = "게시글 작성" }) {
 
   return (
     <div className={`${styles.createForm} ${styles.animate}`}>
-      <h1 className={styles.heading}>{heading}</h1>
+      <div className={styles.createHeader}>
+        <button className={styles.backButton} onClick={handleBack}>
+          <FontAwesomeIcon icon={faArrowLeft} />
+        </button>
+        <h1 className={styles.heading}>{heading}</h1>
+      </div>
       <form onSubmit={handleSubmit} className={styles.form}>
         <div className={styles.inputContainer}>
           <label htmlFor="title">제목</label>

@@ -27,7 +27,6 @@ const HeaderStyle = styled.nav`
   position: relative;
   border-bottom: 2px solid #fff;
   border-radius: 10px;
-
   @media screen and (max-width: 768px) {
     height: 60px;
     font-size: 13px;

@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import styles from "./Modify.module.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
 const Modify = () => {
   const [title, setTitle] = useState("");
@@ -25,6 +27,10 @@ const Modify = () => {
 
     fetchBoard();
   }, [id]);
+
+  const handleBack = () => {
+    navigate(`/board/view/${id}`);
+  };
 
   const handleImageChange = (e) => {
     const newFiles = Array.from(e.target.files).map((file) => ({
@@ -74,9 +80,13 @@ const Modify = () => {
 
   return (
     <div className={`${styles.modifyForm} ${styles.animate}`}>
-      {" "}
-      {/* 수정된 클래스 이름 사용 */}
-      <h1 className={styles.heading}>게시글 수정</h1>
+      <div className={styles.modifyHeader}>
+        <button className={styles.backButton} onClick={handleBack}>
+          <FontAwesomeIcon icon={faArrowLeft} />
+        </button>
+        <h1 className={styles.heading}>게시글 수정</h1>
+      </div>
+
       <form onSubmit={handleSubmit} className={styles.form}>
         <div className={styles.inputContainer}>
           <label htmlFor="title">제목</label>

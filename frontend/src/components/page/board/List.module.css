@@ -1,3 +1,18 @@
+.boardContainer {
+  height: 100vh;
+  margin: auto;
+  padding-top: 2rem;
+  background: linear-gradient(
+    to bottom,
+    rgba(85, 215, 85, 0.4) 0%,
+    rgba(7, 52, 7, 0.8) 100%
+  );
+}
+
+.boardTitle {
+  margin-top: 0;
+}
+
 .createButton {
   background-color: #4caf50;
   color: white;
@@ -14,9 +29,10 @@
 }
 
 .board {
-  max-width: 1200px; /* 넓이 조정 */
+  max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
+  padding-top: 0;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
