@@ -1,46 +1,50 @@
 .container {
-    border: 1px solid #ddd;
-    padding: 2rem 8rem 2rem 8rem;
-    margin-bottom: 20px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    min-width: 800px;
+  border: 1px solid #ddd;
+  padding: 2rem 2rem 2rem 2rem;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 800px;
+  border: 1px solid #ddd;
+  width: 80%;
+  margin: 2rem auto;
 }
 
 .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 15px;
-    /* width: 80%; */
-    /* padding: 0 8rem 0 8rem; */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  /* width: 80%; */
+  /* padding: 0 8rem 0 8rem; */
+  padding-bottom: 20px;
+  border-bottom: 1px solid #ddd;
 }
 
 .title {
-    font-size: 24px;
-    color: #333;
-    margin: 0;
+  font-size: 24px;
+  color: #333;
+  margin: 0;
 }
 
 .info {
-    font-size: 14px;
-    color: #666;
-    display: flex;
-    gap: 1rem;
+  font-size: 14px;
+  color: #666;
+  display: flex;
+  gap: 1rem;
 }
 
 /* content */
 .content {
-    font-size: 16px;
-    line-height: 1.6;
-    margin-bottom: 20px;
-    color: #333;
-    word-wrap: break-word; /* 단어가 경계를 넘어갈 때 자동으로 줄바꿈 */
-    overflow-wrap: break-word; /* 긴 단어가 경계를 넘어갈 때 줄바꿈 */
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 20px;
+  color: #333;
+  word-wrap: break-word; /* 단어가 경계를 넘어갈 때 자동으로 줄바꿈 */
+  overflow-wrap: break-word; /* 긴 단어가 경계를 넘어갈 때 줄바꿈 */
 }
 
 .imageContainer {
@@ -57,99 +61,98 @@
   border-radius: 8px;
   display: block;
   margin: 0 auto; /* 상하 마진은 0, 좌우 마진은 자동으로 설정 */
-
 }
 
 .footer {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    font-size: 14px;
-    color: #666;
-    margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 20px;
 }
 
 /* button group design */
 
 .buttonGroup {
-    text-align: center;
+  text-align: center;
 }
 
 .buttonGroup button {
-    background-color: #4caf50;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-right: 10px;
-    transition: background-color 0.3s;
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 10px;
+  transition: background-color 0.3s;
 }
 
 .buttonGroup button:hover {
-    background-color: #0056b3;
+  background-color: #0056b3;
 }
 
 .loading {
-    text-align: center;
-    padding: 20px;
-    font-size: 20px;
+  text-align: center;
+  padding: 20px;
+  font-size: 20px;
 }
 
 .greenColor {
-    color: #4caf50;
+  color: #4caf50;
 }
 
 .redColor {
-    color: #f44336;
+  color: #f44336;
 }
 
 .yellowColor {
-    color: #c5b632;
+  color: #c5b632;
 }
 
 .recommendButton {
-    background-color: #f3f3f3;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 5px;
+  background-color: #f3f3f3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
 }
 
 .nonRecommendButton {
-    background-color: #f3f3f3;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 5px;
+  background-color: #f3f3f3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
 }
 
 .reportButton {
-    background-color: #f3f3f3;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 5px;
+  background-color: #f3f3f3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
 }
 
 .button {
-    padding: 10px 15px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 
-    &:hover {
-        transform: scale(1.1);
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    }
+  &:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  }
 }
 
 .commentsContainer {
-    margin-top: 20px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    padding: 1rem;
+  margin-top: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
 }
