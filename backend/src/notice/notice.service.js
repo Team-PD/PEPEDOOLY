@@ -4,18 +4,20 @@ const {
   NoticeFindResponseDTO,
 } = require("./dto/notice.dto");
 class NoticeService {
-  constructor(Notice) {
+  constructor(Notice, Images) {
     this.notice = Notice;
+    this.images = Images;
   }
 
   async createNotice(noticeCreateRequestDTO) {
+    const { noticeTitle, noticeContent, adminId, noticeWriter } =
+      noticeCreateRequestDTO;
     try {
       const notice = await this.notice.create({
-        Notice_title: noticeCreateRequestDTO.noticeTitle,
-        Notice_content: noticeCreateRequestDTO.noticeContent,
-        Admin_id: noticeCreateRequestDTO.adminId,
-        Notice_writer: noticeCreateRequestDTO.noticeWriter,
-        Notice_image: noticeCreateRequestDTO.image,
+        Notice_title: noticeTitle,
+        Notice_content: noticeContent,
+        Admin_id: adminId,
+        Notice_writer: noticeWriter,
       });
 
       return new NoticeCreateResponseDTO(notice);
@@ -41,6 +43,13 @@ class NoticeService {
     try {
       const notice = await this.notice.findOne({
         where: { Notice_id: noticeFindRequestDTO.noticeId },
+        include: [
+          {
+            model: this.images,
+            as: "Images",
+            attributes: ["Images_uid", "Images_url"],
+          },
+        ],
       });
       if (!notice) {
         throw new Error("Notice not found");

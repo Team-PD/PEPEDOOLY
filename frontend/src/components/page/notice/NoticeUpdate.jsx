@@ -35,7 +35,6 @@ export const NoticeUpdate = (props) => {
           { withCredentials: true }
         );
         imageUrl = imageResponse.data.imageUrl;
-        console.log(imageUrl);
       }
 
       const response = await axios.put(

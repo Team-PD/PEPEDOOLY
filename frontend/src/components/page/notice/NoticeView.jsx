@@ -4,6 +4,7 @@ import axios from "axios";
 import Header from "../../Layout/Header";
 import Footer from "../../Layout/Footer";
 import NoticeDetail from "../../organisms/notice/NoticeDetail";
+import styled from "styled-components";
 
 const NoticeView = () => {
   const [notice, setNotice] = useState(null);
@@ -18,7 +19,6 @@ const NoticeView = () => {
 
     fetchNotice();
   }, [id]);
-
   if (!notice) return <div>Loading...</div>;
 
   const handleUpdateButtonClick = () => {
@@ -45,6 +45,7 @@ const NoticeView = () => {
       <Header />
       <NoticeDetail
         notice={notice}
+        images={notice.images} // 이미지 정보 전달
         onEdit={handleUpdateButtonClick}
         onDelete={handleDeleteButtonClick}
         onList={handleListButtonClick}

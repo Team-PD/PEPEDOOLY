@@ -2,12 +2,11 @@ const BaseDTO = require("../../lib/base.dto");
 const { BadRequest } = require("../../lib/customException");
 
 class NoticeCreateRequestDTO extends BaseDTO {
-  constructor({ noticeTitle, noticeContent, adminId, image, adminNickname }) {
+  constructor({ noticeTitle, noticeContent, adminId, adminNickname }) {
     super();
     this.noticeTitle = noticeTitle;
     this.noticeContent = noticeContent;
     this.adminId = adminId;
-    this.image = image;
     this.noticeWriter = adminNickname; // Notice_writer 필드 설정
 
     this.validate(this, BadRequest);
@@ -60,6 +59,7 @@ class NoticeFindResponseDTO extends BaseDTO {
   noticeContent;
   noticeWriter;
   noticeCreatedAt;
+  images;
 
   constructor(response) {
     super();
@@ -68,6 +68,10 @@ class NoticeFindResponseDTO extends BaseDTO {
     this.noticeContent = response.Notice_content;
     this.noticeWriter = response.Notice_writer;
     this.noticeCreatedAt = this.toDate(response.Notice_created_at);
+    this.images = response.Images.map((image) => ({
+      imageUid: image.Images_uid,
+      imageUrl: image.Images_url,
+    }));
 
     this.validate(this, BadRequest);
   }

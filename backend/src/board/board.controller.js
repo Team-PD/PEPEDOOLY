@@ -15,7 +15,6 @@ const getBoardList = async (req, res) => {
 const createBoard = async (req, res) => {
   try {
     const board = await boardService.createBoard(req.body);
-
     if (req.files) {
       const imagesData = req.files.map((file) => ({
         Boards_id: board.Boards_id,
@@ -25,7 +24,6 @@ const createBoard = async (req, res) => {
       }));
       await db.Images.bulkCreate(imagesData);
     }
-
     res.status(201).json(board);
   } catch (error) {
     res.status(500).send(error.message);

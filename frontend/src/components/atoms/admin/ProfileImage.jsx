@@ -7,8 +7,9 @@ const StyledImg = styled.img`
 `;
 
 const ProfileImage = ({ onImageChange, admin, isEdit }) => {
-  const imageUrl = admin ? admin.Admin_profile.replace(/\\/g, "/") : null;
-  console.log(imageUrl);
+  const imageUrl = admin
+    ? admin.Admin_profile /* .replace(/\\/g, "/") */
+    : null;
   return (
     <div>
       {imageUrl && (

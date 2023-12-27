@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  return sequelize.define(
+  const Notice = sequelize.define(
     "Notice",
     {
       Notice_id: {
@@ -24,14 +24,20 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.DATE,
         defaultValue: sequelize.literal("now()"),
       },
-      Notice_image: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
     },
     {
       freezeTableName: true,
       timestamps: false,
     }
   );
+
+  Notice.associate = function (models) {
+    Notice.hasMany(models.Images, {
+      foreignKey: "Notice_id",
+      as: "Images",
+      onDelete: "CASCADE",
+    });
+  };
+
+  return Notice;
 };
