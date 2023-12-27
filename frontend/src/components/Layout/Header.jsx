@@ -56,7 +56,7 @@ const RightMenu = styled.ul`
 `;
 
 const MenuItem = styled.li`
-  margin-left: 20px;
+  margin: 15px;
   color: #fff;
   cursor: pointer;
   transition: color 0.3s ease-in-out;
@@ -83,7 +83,7 @@ const Logout = styled.button`
 const Header = () => {
   const navigate = useNavigate();
 
-  const { logout } = useUserState();
+  const { user, logout } = useUserState();
 
   const handleLogout = async () => {
     try {
@@ -105,23 +105,28 @@ const Header = () => {
           alt="PepeDoooly"
         />
       </LogoLink>
-      <Logout onClick={handleLogout}>로그아웃</Logout>
       <RightMenu>
-        <MenuItem>
-          <Link to="/board">게시판</Link>
-        </MenuItem>
-        <MenuItem>
-          <Link to="/admin">어드민</Link>
-        </MenuItem>
-        <MenuItem>
-          <Link to="/userDash">대시보드</Link>
-        </MenuItem>
-        <MenuItem>
-          <Link to="/login">로그인</Link>
-        </MenuItem>
         <MenuItem>
           <Link to="/notice">공지사항</Link>
         </MenuItem>
+        <MenuItem>
+          <Link to="/board">게시판</Link>
+        </MenuItem>{" "}
+        <MenuItem>
+          <Link to="/userDash">대시보드</Link>
+        </MenuItem>
+        {user.userData && user.userData.Admin_role && (
+          <MenuItem>
+            <Link to="/admin">어드민</Link>
+          </MenuItem>
+        )}
+        {user.isLoggedIn ? (
+          <MenuItem onClick={handleLogout}>로그아웃</MenuItem>
+        ) : (
+          <MenuItem>
+            <Link to="/login">로그인</Link>
+          </MenuItem>
+        )}
       </RightMenu>
     </HeaderStyle>
   );
