@@ -23,7 +23,6 @@ entityList.forEach((entity) => {
     db[model.name] = model;
 });
 
-
 db["Comment"].hasMany(db["Comment"], {
     as: "Replies",
     foreignKey: "ParentCommentId",
@@ -32,7 +31,6 @@ db["Comment"].belongsTo(db["Comment"], {
     as: "ParentComment",
     foreignKey: "ParentCommentId",
 });
-
 
 // 모델 간 관계 설정
 Object.keys(db).forEach((modelName) => {

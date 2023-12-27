@@ -12,6 +12,10 @@
 # production
 /build
 
+# Uploads (게시판 이미지 업로드 폴더 무시)
+uploads/
+
+
 # misc
 .DS_Store
 .env.local

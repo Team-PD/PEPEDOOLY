@@ -4,7 +4,7 @@ const { BadRequest } = require("../../lib/customException");
 class UserResponseDTO extends baseDTO {
   constructor(user) {
     super();
-    this.id = user.id;
+    this.id = user.Users_id;
     this.email = user.Users_email;
     this.name = user.Users_name;
     this.nickname = user.Users_nickname;

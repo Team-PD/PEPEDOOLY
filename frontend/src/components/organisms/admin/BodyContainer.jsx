@@ -1,5 +1,5 @@
 import Info from "../../molecules/admin/Info";
-import { NoticeCreate } from "../../molecules/NoticeCreate";
+import { NoticeCreate } from "../../molecules/admin/NoticeCreate";
 import { Manage } from "../../molecules/admin/Manage";
 import styled from "styled-components";
 
@@ -8,7 +8,6 @@ const Container = styled.div`
   justify-content: center;
   position: relative;
   height: 100vh;
-  padding: 20px;
 `;
 
 const BodyContainer = ({ menu }) => {

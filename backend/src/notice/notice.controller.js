@@ -6,16 +6,39 @@ const {
 } = require("./dto/notice.dto");
 
 class NoticeController {
-  constructor(service) {
+  constructor(service, Images) {
     this.service = service;
+    this.images = Images;
   }
 
   async postNotice(req, res, next) {
     try {
+      console.log(req.body);
       const noticeCreateRequestDTO = new NoticeCreateRequestDTO(req.body);
       const noticeCreateResponseDTO = await this.service.createNotice(
         noticeCreateRequestDTO
       );
+      console.log(req.files);
+      if (req.files) {
+        const imagesData = req.files.map((file) => {
+          let imageData = {
+            Images_url: `${req.protocol}://${req.get("host")}/uploads/${
+              file.filename
+            }`,
+          };
+
+          if (noticeCreateResponseDTO.noticeId) {
+            imageData.Notice_id = noticeCreateResponseDTO.noticeId;
+          } else if (noticeCreateResponseDTO.boardId) {
+            imageData.Boards_id = noticeCreateResponseDTO.boardId;
+          }
+
+          return imageData;
+        });
+
+        await this.images.bulkCreate(imagesData);
+      }
+
       res.status(201).json(noticeCreateResponseDTO);
     } catch (e) {
       console.error("postNotice Error", e);

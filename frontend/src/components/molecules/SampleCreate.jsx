@@ -11,20 +11,17 @@ export const Create = ({
   styleProps,
   initialValues = {},
   buttonText = "작성하기",
+  handleImageChange, // 추가
+  images, // 추가
 }) => {
   const [title, setTitle] = useState(initialValues.title || "");
   const [content, setContent] = useState(initialValues.content || "");
   const [author, setAuthor] = useState("");
-  const [image, setImage] = useState(null);
   const navigate = useNavigate();
-
-  const handleImageChange = (e) => {
-    setImage(e.target.files[0]);
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    onSubmit({ title, content, author, image });
+    onSubmit({ title, content, author, images }); // 수정
   };
 
   return (
@@ -54,7 +51,7 @@ export const Create = ({
             styleProps={styleProps.inputField}
           />
         )}
-        <input type="file" onChange={handleImageChange} />
+        <input type="file" multiple onChange={handleImageChange} /> {/* 수정 */}
         <button type="submit" style={styleProps.submitButton}>
           {buttonText}
         </button>

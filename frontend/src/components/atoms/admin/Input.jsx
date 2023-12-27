@@ -1,3 +1,4 @@
+// frontend/src/components/atoms/admin/Input.jsx
 import styled from "styled-components";
 
 const StyledInput = styled.input`
@@ -12,6 +13,13 @@ const StyledInput = styled.input`
   text-align: center;
 `;
 
-export const Input = ({ onChange, value }) => {
-  return <StyledInput onChange={onChange} value={value} />;
+export const Input = ({ onChange, value, readOnly, required }) => {
+  return (
+    <StyledInput
+      onChange={onChange}
+      value={value}
+      readOnly={readOnly}
+      required={required}
+    />
+  );
 };

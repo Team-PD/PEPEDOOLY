@@ -37,6 +37,12 @@ query = "INSERT INTO Notice (Notice_title, Notice_content, Notice_writer, Notice
 for i in range(200):
     query += "('제목', '내용', '작성자', '이미지URL'),"
 
+
+# 유저
+""" query = "INSERT INTO Users (Users_password, Users_name, Users_nickname, Users_provider, Users_created_at, Users_email) Values"
+for i in range(150):
+    query += "('123', '123', '123', '123', NOW(), 'your_email@example.com')," """
+
 # 댓글
 """ query = "INSERT INTO Comments (Users_uid, Boards_id, Comments_content, ParentCommentId) VALUES "
 for i in range(100):
