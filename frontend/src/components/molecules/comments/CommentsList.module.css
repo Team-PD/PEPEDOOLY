@@ -10,11 +10,43 @@
     border-radius: 4px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     display: flex;
-    align-items: center;
-    justify-content: space-between;
+    flex-direction: column;
+    align-items: flex-start;
 }
 
 .commentActions {
     display: flex;
     gap: 5px;
+    align-self: flex-end;
+}
+
+.replyToggle {
+    align-self: flex-end;
+    margin-top: 5px;
+}
+
+.replyBtn {
+    font-size: 0.8em;
+    padding: 3px 6px;
+    background-color: #f0f0f0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.replyBtn:hover {
+    background-color: #e0e0e0;
+}
+
+.replyForm,
+.replyItem {
+    margin-top: 10px;
+    margin-left: 20px;
+    width: calc(100% - 20px);
+}
+
+.replyActions {
+    display: flex;
+    gap: 5px;
+    align-self: flex-end;
 }

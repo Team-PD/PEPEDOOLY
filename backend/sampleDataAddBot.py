@@ -4,7 +4,7 @@
 
 # pip install python-dotenv
 # pip install mysql-connector-python
-# python sampleDataAddBot.py 
+# python sampleDataAddBot.py
 
 import os
 from dotenv import load_dotenv
@@ -36,6 +36,7 @@ cursor = cnx.cursor()
 query = "INSERT INTO Notice (Notice_title, Notice_content, Notice_writer, Notice_image) VALUES "
 for i in range(200):
     query += "('제목', '내용', '작성자', '이미지URL'),"
+
 
 # 유저
 """ query = "INSERT INTO Users (Users_password, Users_name, Users_nickname, Users_provider, Users_created_at, Users_email) Values"

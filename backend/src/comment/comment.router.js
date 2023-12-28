@@ -12,4 +12,9 @@ commentRouter.post("/", postComment);
 commentRouter.put("/:commentId", updateComment);
 commentRouter.delete("/:commentId", deleteComment);
 
+commentRouter.post("/:commentId/reply", (req, res, next) => {
+    req.body.ParentCommentId = req.params.commentId;
+    postComment(req, res, next);
+});
+
 module.exports = commentRouter;
