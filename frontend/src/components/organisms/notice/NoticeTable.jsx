@@ -10,6 +10,7 @@ const NoticeTable = ({
   nextGroup,
   paginate,
   totalPage,
+  currentPage,
 }) => (
   <>
     <Table notices={notices} />
@@ -20,6 +21,7 @@ const NoticeTable = ({
       nextGroup={nextGroup}
       paginate={paginate}
       totalPage={totalPage}
+      currentPage={currentPage}
     />
   </>
 );

@@ -65,6 +65,7 @@ export const NoticeUpdate = (props) => {
       <Header />
       <Create
         {...props}
+        heading={"공지사항 수정"}
         onSubmit={handleSubmit}
         showAuthor={false}
         styleProps={styleProps}
