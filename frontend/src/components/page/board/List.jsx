@@ -78,98 +78,100 @@ export default function List() {
   };
 
   return (
-    <div className={styles.board}>
-      <h1>게시판</h1>
-      <div className={styles.posts}>
-        {currentPosts.map((post) => (
-          <div key={post.Boards_id} className={styles.post}>
-            <Link to={`/board/view/${post.Boards_id}`}>
-              {post.Images && post.Images.length > 0 ? (
-                <img
-                  src={post.Images[0].Images_url} // 첫 번째 이미지 사용
-                  alt="Post"
-                  className={styles.postImage}
-                />
-              ) : (
-                <img
-                  src="https://ichef.bbci.co.uk/images/ic/640x360/p0gvfn2w.jpg" // 기본 이미지 URL
-                  alt="Default"
-                  className={styles.postImage}
-                />
-              )}
-              <h2 className={styles.title}>{post.Boards_title}</h2>
-            </Link>
-            <div className={styles.postInfo}>
-              <p className={styles.writer}>작성자: {post.Boards_writer}</p>
-              <div className={styles.PostInfosWrapper}>
-                {" "}
-                <p className={styles.likes}>
+    <div className={styles.boardContainer}>
+      <div className={`${styles.board} ${styles.animate}`}>
+        <h1 className={styles.boardTitle}>Pepedooly MemeHub</h1>
+        <div className={styles.posts}>
+          {currentPosts.map((post) => (
+            <div key={post.Boards_id} className={styles.post}>
+              <Link to={`/board/view/${post.Boards_id}`}>
+                {post.Images && post.Images.length > 0 ? (
+                  <img
+                    src={post.Images[0].Images_url} // 첫 번째 이미지 사용
+                    alt="Post"
+                    className={styles.postImage}
+                  />
+                ) : (
+                  <img
+                    src="https://ichef.bbci.co.uk/images/ic/640x360/p0gvfn2w.jpg" // 기본 이미지 URL
+                    alt="Default"
+                    className={styles.postImage}
+                  />
+                )}
+                <h2 className={styles.title}>{post.Boards_title}</h2>
+              </Link>
+              <div className={styles.postInfo}>
+                <p className={styles.writer}>작성자: {post.Boards_writer}</p>
+                <div className={styles.PostInfosWrapper}>
                   {" "}
-                  <FontAwesomeIcon
-                    className={styles.greenColor}
-                    icon={faThumbsUp}
-                  />
-                  {post.recommendCount}
-                </p>
-                <p className={styles.likes}>
-                  {" "}
-                  <FontAwesomeIcon
-                    className={styles.redColor}
-                    icon={faThumbsDown}
-                  />
-                  {post.nonRecommendCount}
-                </p>
-                <p className={styles.views}>
-                  <FontAwesomeIcon
-                    className={styles.yellowColor}
-                    icon={faEye}
-                  />
-                  {post.Boards_views}
-                </p>
+                  <p className={styles.likes}>
+                    {" "}
+                    <FontAwesomeIcon
+                      className={styles.greenColor}
+                      icon={faThumbsUp}
+                    />
+                    {post.recommendCount}
+                  </p>
+                  <p className={styles.likes}>
+                    {" "}
+                    <FontAwesomeIcon
+                      className={styles.redColor}
+                      icon={faThumbsDown}
+                    />
+                    {post.nonRecommendCount}
+                  </p>
+                  <p className={styles.views}>
+                    <FontAwesomeIcon
+                      className={styles.yellowColor}
+                      icon={faEye}
+                    />
+                    {post.Boards_views}
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
-      </div>
-      <nav className={styles.pagination}>
-        <button
-          onClick={handlePrevGroup}
-          disabled={currentGroup === 1}
-          className={styles.pageArrow}
-        >
-          &laquo;
-        </button>
-        {pageNumbers.map((number) => (
+          ))}
+        </div>
+        <nav className={styles.pagination}>
           <button
-            key={number}
-            onClick={() => paginate(number)}
-            className={`${styles.pageNumber} ${
-              currentPage === number ? styles.activePage : ""
-            }`}
+            onClick={handlePrevGroup}
+            disabled={currentGroup === 1}
+            className={styles.pageArrow}
           >
-            {number}
+            &laquo;
           </button>
-        ))}
-        <button
-          onClick={handleNextGroup}
-          disabled={currentGroup === maxPageGroup}
-          className={styles.pageArrow}
-        >
-          &raquo;
-        </button>
-      </nav>
-      <div className={styles.searchAndCreate}>
-        {/* 검색 기능 구현 예정 */}
-        <button
-          className={styles.createButton}
-          onClick={handleCreateButtonClick}
-        >
-          글 작성하기
-        </button>
+          {pageNumbers.map((number) => (
+            <button
+              key={number}
+              onClick={() => paginate(number)}
+              className={`${styles.pageNumber} ${
+                currentPage === number ? styles.activePage : ""
+              }`}
+            >
+              {number}
+            </button>
+          ))}
+          <button
+            onClick={handleNextGroup}
+            disabled={currentGroup === maxPageGroup}
+            className={styles.pageArrow}
+          >
+            &raquo;
+          </button>
+        </nav>
+        <div className={styles.searchAndCreate}>
+          {/* 검색 기능 구현 예정 */}
+          <button
+            className={styles.createButton}
+            onClick={handleCreateButtonClick}
+          >
+            글 작성하기
+          </button>
+        </div>
+        {showLoginAlert && (
+          <div className={styles.loginAlert}>로그인이 필요한 서비스입니다.</div>
+        )}
       </div>
-      {showLoginAlert && (
-        <div className={styles.loginAlert}>로그인이 필요한 서비스입니다.</div>
-      )}
     </div>
   );
 }

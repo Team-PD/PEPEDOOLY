@@ -21,8 +21,11 @@ router.post("/", upload.array("image", 5), boardController.createBoard);
 router.get("/:id", boardController.getBoard);
 router.put("/:id", upload.array("images", 5), boardController.updateBoard);
 router.delete("/:id", boardController.deleteBoard);
+// ===== 게시글 추천 및 비추천 관련 API =====
 router.get("/:id/counts", boardController.getLikeDislikeCounts);
 router.post("/:id/like", boardController.addLike); // 추천 및 비추천 관련 API
+// ===== 내가 쓴 글 API =====
+router.get("/user/:userId", boardController.getUserBoards);
 // router.delete("/:id/like", boardController.removeLike);
 
 module.exports = router;

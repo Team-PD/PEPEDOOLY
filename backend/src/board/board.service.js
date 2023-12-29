@@ -1,6 +1,7 @@
 const boardRepository = require("./board.repository");
 const db = require("../lib/db.js");
 const Likes = db.Likes;
+const Boards = db.Boards;
 
 const getBoardList = async () => {
   return await boardRepository.getBoardList();
@@ -59,6 +60,14 @@ const getLikeDislikeCounts = async (boardId) => {
   return { recommendCount, nonRecommendCount };
 };
 
+// ===== 내가 쓴 글 API =====
+const getBoardsByUserId = async (userId) => {
+  return await Boards.findAll({
+    where: { Users_id: userId },
+    // 기타 필요한 include 및 정렬 옵션
+  });
+};
+
 module.exports = {
   createBoard,
   getBoardList,
@@ -66,4 +75,5 @@ module.exports = {
   updateBoard,
   deleteBoard,
   getLikeDislikeCounts,
+  getBoardsByUserId,
 };

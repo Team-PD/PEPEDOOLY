@@ -3,6 +3,8 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useUserState } from "../../../hooks/useUserState";
 import styles from "./Create.module.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
 export default function Create({ heading = "게시글 작성" }) {
   const [title, setTitle] = useState("");
@@ -10,6 +12,10 @@ export default function Create({ heading = "게시글 작성" }) {
   const { user } = useUserState(); // 사용자 정보를 가져옵니다.
   const [images, setImages] = useState([]);
   const navigate = useNavigate();
+
+  const handleBack = () => {
+    navigate("/board"); // 뒤로가기 버튼 클릭 시 /board로 이동
+  };
 
   const handdleImageChange = (e) => {
     setImages([...images, ...e.target.files].slice(0, 5));
@@ -52,60 +58,67 @@ export default function Create({ heading = "게시글 작성" }) {
   };
 
   return (
-    <div className={`${styles.createForm} ${styles.animate}`}>
-      <h1 className={styles.heading}>{heading}</h1>
-      <form onSubmit={handleSubmit} className={styles.form}>
-        <div className={styles.inputContainer}>
-          <label htmlFor="title">제목</label>
-          <input
-            type="text"
-            id="title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            className={styles.input}
-          />
+    <div className={styles.boardContainer}>
+      <div className={`${styles.createForm} ${styles.animate}`}>
+        <div className={styles.createHeader}>
+          <button className={styles.backButton} onClick={handleBack}>
+            <FontAwesomeIcon icon={faArrowLeft} />
+          </button>
+          <h1 className={styles.heading}>{heading}</h1>
         </div>
-        <div className={styles.inputContainer}>
-          <label htmlFor="content">내용</label>
-          <textarea
-            id="content"
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-            className={styles.input}
-          />
-        </div>
-        <div className={styles.inputContainer}>
-          <label htmlFor="image">이미지 첨부 (최대 5개)</label>
-          <input
-            type="file"
-            id="image"
-            multiple
-            onChange={handdleImageChange}
-            className={styles.input}
-          />
-          <div className={styles.imagePreviewContainer}>
-            {images.map((image, index) => (
-              <div key={index} className={styles.imagePreview}>
-                <img
-                  src={URL.createObjectURL(image)}
-                  alt={`preview ${index}`}
-                  className={styles.image}
-                />
-                <button
-                  type="button"
-                  className={styles.removeButton}
-                  onClick={() => removeImage(index)}
-                >
-                  X
-                </button>
-              </div>
-            ))}
+        <form onSubmit={handleSubmit} className={styles.form}>
+          <div className={styles.inputContainer}>
+            <label htmlFor="title">제목</label>
+            <input
+              type="text"
+              id="title"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              className={styles.input}
+            />
           </div>
-        </div>
-        <button type="submit" className={styles.submitButton}>
-          작성하기
-        </button>
-      </form>
+          <div className={styles.inputContainer}>
+            <label htmlFor="content">내용</label>
+            <textarea
+              id="content"
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+              className={styles.input}
+            />
+          </div>
+          <div className={styles.inputContainer}>
+            <label htmlFor="image">이미지 첨부 (최대 5개)</label>
+            <input
+              type="file"
+              id="image"
+              multiple
+              onChange={handdleImageChange}
+              className={styles.input}
+            />
+            <div className={styles.imagePreviewContainer}>
+              {images.map((image, index) => (
+                <div key={index} className={styles.imagePreview}>
+                  <img
+                    src={URL.createObjectURL(image)}
+                    alt={`preview ${index}`}
+                    className={styles.image}
+                  />
+                  <button
+                    type="button"
+                    className={styles.removeButton}
+                    onClick={() => removeImage(index)}
+                  >
+                    X
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+          <button type="submit" className={styles.submitButton}>
+            작성하기
+          </button>
+        </form>
+      </div>
     </div>
   );
 }

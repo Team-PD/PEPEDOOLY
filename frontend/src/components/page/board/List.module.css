@@ -1,3 +1,21 @@
+.boardContainer {
+  /* height: 80vh; */
+  margin: auto;
+  padding-top: 20px;
+  /* padding-bottom: 5rem; */
+  background: linear-gradient(
+    to bottom,
+    rgba(59, 221, 59, 1) 0%,
+    rgba(7, 52, 7, 1) 100%
+  );
+  min-height: 85vh;
+}
+
+.boardTitle {
+  margin-top: 0;
+  margin-bottom: 3rem;
+}
+
 .createButton {
   background-color: #4caf50;
   color: white;
@@ -14,9 +32,10 @@
 }
 
 .board {
-  max-width: 1200px; /* 넓이 조정 */
+  max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
+  padding-top: 0;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
@@ -34,7 +53,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  border: 1px solid #eaeaea;
+  /* border: 1px solid #eaeaea; */
   border-radius: 8px;
   background-color: white;
   overflow: hidden; /* 이미지가 컨테이너를 넘어가지 않도록 설정 */
@@ -170,5 +189,20 @@
 @media (max-width: 480px) {
   .posts {
     grid-template-columns: 1fr; /* 가장 작은 화면에서는 1열로 표시 */
+  }
+}
+
+.animate {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }

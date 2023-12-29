@@ -1,0 +1,133 @@
+.boardContainer {
+  margin: auto;
+  padding-top: 20px;
+  background: linear-gradient(
+    to bottom,
+    rgba(59, 221, 59, 1) 0%,
+    rgba(7, 52, 7, 1) 100%
+  );
+  min-height: 85vh;
+}
+
+.boardTitle {
+  margin-top: 0;
+  margin-bottom: 3rem;
+}
+
+.board {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  padding-top: 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.posts {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.post {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 8px;
+  background-color: white;
+  overflow: hidden;
+  transition: transform 0.3s ease-in-out;
+}
+
+.post:hover {
+  transform: scale(1.05);
+}
+
+.post a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.postImage {
+  width: 100%;
+  object-fit: cover;
+  height: 200px;
+  border-radius: 4px;
+  transition: opacity 0.3s ease;
+}
+
+.postInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+}
+
+.title {
+  margin: 10px 0 5px;
+  color: #333;
+  font-size: 1.2em;
+}
+
+.writer,
+.likes,
+.views {
+  margin: 5px 0;
+  color: #666;
+  font-size: 0.9em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.greenColor {
+  color: #4caf50;
+}
+
+.redColor {
+  color: #f44336;
+}
+
+.yellowColor {
+  color: #c5b632;
+}
+
+.PostInfosWrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  gap: 0.8rem;
+}
+
+.animate {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 미디어 쿼리를 통한 반응형 디자인 */
+@media (max-width: 768px) {
+  .posts {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .post {
+    margin-bottom: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .posts {
+    grid-template-columns: 1fr;
+  }
+}

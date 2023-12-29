@@ -69,7 +69,7 @@ const getBoardById = async (id) => {
       {
         model: Users,
         as: "Users",
-        attributes: ["Users_nickname"],
+        attributes: ["Users_id", "Users_nickname"],
       },
       {
         model: Images,

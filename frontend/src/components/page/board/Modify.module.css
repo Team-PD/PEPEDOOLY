@@ -1,24 +1,51 @@
+.boardContainer {
+  /* height: 80vh; */
+  margin: auto;
+  padding-top: 20px;
+  /* padding-bottom: 5rem; */
+  background: linear-gradient(
+    to bottom,
+    rgba(59, 221, 59, 1) 0%,
+    rgba(7, 52, 7, 1) 100%
+  );
+  min-height: 85vh;
+}
 .modifyForm {
-  /* Create의 .createForm과 유사하게 스타일링 */
-  height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  margin: 0 auto;
-  width: 80%;
+  justify-content: flex-start; /* 상단에서 시작 */
+  margin: 0 auto; /* 중앙 정렬 */
+  width: 80%; /* 전체 너비의 80%만 사용 */
   max-width: 800px;
+  min-height: 60vh;
+  /* margin-bottom: 50px; */
+}
+
+.modifyHeader {
+  margin-top: 0;
+  position: relative;
+}
+
+.backButton {
+  position: absolute;
+  top: 30%;
+  left: -200%;
+  border: none;
+  background-color: transparent;
+  color: #073407;
+  cursor: pointer;
+  font-size: 2rem;
 }
 
 .heading {
-  /* Create의 .heading과 유사하게 스타일링 */
   text-align: center;
   color: #000000;
   margin-bottom: 30px;
+  margin: 1rem 0 1rem 0;
 }
 
 .form {
-  /* Create의 .form과 유사하게 스타일링 */
   background-color: white;
   padding: 20px;
   border-radius: 8px;
@@ -28,12 +55,10 @@
 }
 
 .inputContainer {
-  /* Create의 .inputContainer와 유사하게 스타일링 */
   margin-bottom: 20px;
 }
 
 .input {
-  /* Create의 .input과 유사하게 스타일링 */
   width: 100%;
   padding: 12px;
   border: 2px solid #ccc;
@@ -115,7 +140,6 @@
 }
 
 .animate {
-  /* Create의 .animate와 유사하게 애니메이션 적용 */
   animation: fadeIn 0.5s ease-in-out;
 }
 
