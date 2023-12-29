@@ -49,6 +49,7 @@ const Notice = () => {
         prevGroup={prevGroup}
         nextGroup={nextGroup}
         paginate={paginate}
+        currentPage={currentPage}
         totalPage={Math.ceil(notices.length / noticesPerPage)}
       />
       <Footer />

@@ -13,17 +13,19 @@ const PaginationItem = styled.li`
 `;
 
 const PaginationLink = styled.a`
-  background-color: #4caf50;
-  color: white;
+  background-color: ${(props) =>
+    props.className === "active" ? "#4caf50" : "white"};
+  color: ${(props) => (props.className === "active" ? "white" : "#007bff")};
   padding: 10px 15px;
-  border: none;
+  border: 1.2px solid #4caf50;
   border-radius: 4px;
   cursor: pointer;
   margin-right: 10px;
   transition: background-color 0.3s;
 
   &:hover {
-    background-color: #0056b3;
+    background-color: ${(props) =>
+      props.className === "active" ? "#4caf50" : "#4caf50"};
   }
 `;
 
