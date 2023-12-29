@@ -137,46 +137,65 @@ class UserService {
     }
   }
 
-  async profileUpload(requestDTO) {
-    try {
-      let domain;
-      domain = `${PROTOCOL}://${BACKEND_SERVER_IP}:${BACKEND_SERVER_PORT}/`;
+  // async profileUpload(requestDTO) {
+  //   try {
+  //     let domain;
+  //     domain = `${PROTOCOL}://${BACKEND_SERVER_IP}:${BACKEND_SERVER_PORT}/`;
 
-      const filePath = domain + requestDTO.profile.filename;
+  //     const filePath = domain + requestDTO.profile.filename;
 
-      const [result] = await this.userRepository.update(
-        { Users_profile: filePath },
-        {
-          where: {
-            Users_uid: requestDTO.userUid,
-          },
-        }
-      );
-      return filePath;
-    } catch (e) {
-      throw e;
-    }
-  }
+  //     const [result] = await this.userRepository.update(
+  //       { Users_profile: filePath },
+  //       {
+  //         where: {
+  //           Users_uid: requestDTO.userUid,
+  //         },
+  //       }
+  //     );
+  //     return filePath;
+  //   } catch (e) {
+  //     throw e;
+  //   }
+  // }
 
   async userInfoUpdate(requestDTO) {
     try {
-      const salt = bcrypt.genSaltSync(10);
-      const result = await this.userRepository.update(
+      // const salt = bcrypt.genSaltSync(10);
+      // console.log(requestDTO);
+      console.log("리쿠디", requestDTO);
+      const upDateresult = await this.userRepository.update(
         {
           Users_nickname: requestDTO.userNickname,
           Users_name: requestDTO.userName,
-          Users_email: requestDTO.userEmail,
-          Users_password: requestDTO.userPassword
-            ? bcrypt.hashSync(requestDTO.userPassword, salt)
-            : "password",
+          // Users_email: requestDTO.userEmail,
+          // Users_password: requestDTO.userPassword
+          //   ? bcrypt.hashSync(requestDTO.userPassword, salt)
+          //   : "password",
         },
         {
-          where: {
-            Users_uid: requestDTO.userUid,
-          },
+          where:
+            //  {
+            // [Op.and]: [
+            { Users_id: requestDTO.userid },
+          // { Users_provider: "local" },
+          // ],
+          // },
         }
       );
-      return result;
+      console.log("리쿠디", requestDTO);
+
+      const result = await this.userRepository.findOne({
+        where: {
+          Users_id: requestDTO.userid,
+        },
+      });
+
+      console.log("업데이트 리조트", result);
+      return {
+        updateUser: result.dataValues,
+        token: setJWTToken(result.dataValues),
+      };
+      // return result;
     } catch (e) {
       throw e;
     }
@@ -185,7 +204,7 @@ class UserService {
   async deleteUser(userId) {
     try {
       const deletedRowCount = await this.userRepository.destroy({
-        where: { id: userId },
+        where: { Users_id: userId },
       });
       if (deletedRowCount === 0) {
         throw new Error("Notice not found");

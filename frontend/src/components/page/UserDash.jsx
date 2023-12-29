@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled, { createGlobalStyle } from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useUserState } from "../../hooks/useUserState";
@@ -96,11 +96,13 @@ const Imgbox = styled.div`
   flex: 1;
 `;
 const UserDash = () => {
-  const { user, logout } = useUserState();
+  const { user, logout, setLoggedInUser } = useUserState();
   //   console.log("대시보드 유저:", user);
   const [greenMode, setGreenMode] = useState(true);
   const [showUserInfo, setShowUserInfo] = useState(false);
   const navigate = useNavigate(); // React Router의 useNavigate 훅을 사용하여 페이지 이동 기능을 가져옴
+  const [userModify, setUserModify] = useState(false);
+  const updateUserFrom = useRef();
 
   useEffect(() => {
     console.log("대시보드유저:", user);
@@ -118,6 +120,60 @@ const UserDash = () => {
     navigate("/"); // "/" 경로로 이동
   };
 
+  const handleUpdate = (e) => {
+    console.log(updateUserFrom.current.Users_email);
+    const {
+      Users_email: { value: Users_emailValue },
+      Users_name: { value: Users_nameValue },
+      Users_nickname: { value: Users_nicknameValue },
+    } = updateUserFrom.current;
+    const { Users_id } = user.userData;
+    console.log("유데이터", Users_id);
+    setLoggedInUser({
+      Users_email: Users_emailValue,
+      Users_name: Users_nameValue,
+      Users_nickname: Users_nicknameValue,
+      Users_id: Users_id,
+    });
+  };
+
+  const updateUser = (e) => {
+    e.preventDefault();
+    const confirmUpdate = window.confirm(
+      "정말로 회원 수정을 진행하시겠습니까?"
+    );
+    console.log(user);
+    if (confirmUpdate) {
+      const userDataToUpdate = {
+        // 수정하려는 사용자 정보의 필드를 업데이트합니다.
+        // 예를 들어, Users_name, Users_email, Users_nickname 등을 업데이트할 수 있습니다.
+        Users_name: user.userData.Users_name,
+        Users_email: user.userData.Users_email,
+        Users_nickname: user.userData.Users_nickname,
+        Users_id: user.userData.Users_id,
+      };
+
+      console.log("데타 투", userDataToUpdate);
+
+      axios
+        .put(
+          `http://localhost:4000/users/profile/${user.userData.Users_id}`,
+          userDataToUpdate,
+          {
+            withCredentials: true,
+          }
+        )
+        .then((response) => {
+          console.log("회원 수정 응답:", response.data);
+          // 수정 완료 후 추가적인 로직...
+        })
+        .catch((error) => {
+          console.error("회원 수정 오류:", error);
+          // 오류 처리 등 추가 작업이 필요할 경우 이곳에 추가합니다.
+        });
+    }
+  };
+
   const handleDeleteAccount = () => {
     const confirmDelete = window.confirm(
       "정말로 회원 탈퇴를 진행하시겠습니까?"
@@ -126,7 +182,7 @@ const UserDash = () => {
     console.log("대시보드 유저 아이디", user);
     if (confirmDelete) {
       axios
-        .delete(`http://localhost:4000/users/${user.userData.id}`, {
+        .delete(`http://localhost:4000/users/${user.userData.Users_id}`, {
           withCredentials: true,
         })
         .then((response) => {
@@ -181,17 +237,75 @@ const UserDash = () => {
               <h1>Pepedooly</h1>
               <p>
                 <img
-                  src={process.env.PUBLIC_URL + "/assets/PepeDooly.svg"}
+                  src={process.env.PUBLIC_URL + "/assets/epepdooly.png"}
                   alt="PepeDoooly"
                   style={{ width: "500px", height: "500px" }}
                 />
               </p>
             </Imgbox>
             <UserInfoBox greenMode={greenMode} show={showUserInfo}>
-              <p>이름: {user?.userData?.Users_name}</p>
-              <p>이메일: {user?.userData?.Users_email}</p>
-              <p>닉네임: {user?.userData?.Users_nickname}</p>
-              <button>수정하기</button>
+              <form onSubmit={updateUser} ref={updateUserFrom}>
+                {userModify ? (
+                  <>
+                    <p>이름:</p>
+                    <input
+                      defaultValue={user?.userData?.Users_name}
+                      name="Users_name"
+                      onChange={(e) => handleUpdate(e, "Users_name")}
+                    />
+                  </>
+                ) : (
+                  <>
+                    <p>이름:</p>
+                    <div> {user?.userData?.Users_name} </div>
+                  </>
+                )}
+                {userModify ? (
+                  <>
+                    <p>이메일:</p>
+                    <input
+                      defaultValue={user?.userData?.Users_email}
+                      name="Users_email"
+                      onChange={(e) => handleUpdate(e, "Users_email")}
+                    />
+                  </>
+                ) : (
+                  <>
+                    <p>이메일:</p>
+                    <div> {user?.userData?.Users_email} </div>
+                  </>
+                )}
+                {userModify ? (
+                  <>
+                    <p>닉네임:</p>
+                    <input
+                      defaultValue={user?.userData?.Users_nickname}
+                      name="Users_nickname"
+                      onChange={(e) => handleUpdate(e, "Users_nickname")}
+                    />
+                  </>
+                ) : (
+                  <>
+                    <p>닉네임:</p>
+                    <div> {user?.userData?.Users_nickname} </div>
+                  </>
+                )}
+                <InputBox></InputBox>
+                {userModify ? (
+                  <>
+                    <button>저장하기</button>
+                  </>
+                ) : (
+                  <></>
+                )}
+              </form>
+              {userModify ? (
+                <></>
+              ) : (
+                <>
+                  <button onClick={() => setUserModify(true)}>수정하기</button>
+                </>
+              )}
             </UserInfoBox>
           </DashBox>
           <Footer />

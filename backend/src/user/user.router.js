@@ -5,7 +5,7 @@ const upload = require("../lib/upload");
 const { userController } = require("./user.module");
 const login = userController.login.bind(userController);
 const postSignup = userController.postSignup.bind(userController);
-const postProfile = userController.postProfile.bind(userController);
+// const postProfile = userController.postProfile.bind(userController);
 const putProfile = userController.putProfile.bind(userController);
 const deleteUser = userController.deleteUser.bind(userController);
 
@@ -20,7 +20,8 @@ userRouter.get("/login/:provider", login);
 // 유저 탈퇴
 userRouter.delete("/:id", deleteUser);
 
-userRouter.post("/profile", postProfile);
+// 유저 정보 수정s
+userRouter.put("/profile/:id", putProfile);
 // userRouter.post("profile", upload.single("profile"), postProfile);
 
 // 유저 정보 수정s

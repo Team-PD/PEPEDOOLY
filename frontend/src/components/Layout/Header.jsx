@@ -101,7 +101,7 @@ const Header = () => {
     <HeaderStyle>
       <LogoLink to="/">
         <Logo
-          src={process.env.PUBLIC_URL + "/assets/PepeDooly.svg"}
+          src={process.env.PUBLIC_URL + "/assets/epepdooly.png"}
           alt="PepeDoooly"
         />
       </LogoLink>

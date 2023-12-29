@@ -2,23 +2,24 @@ const baseDTO = require("../../lib/base.dto");
 const { BadRequest } = require("../../lib/customException");
 
 class UserProfileFormRequestDTO extends baseDTO {
-  userUid;
+  userid;
   userNickname;
   userName;
   userEmail;
   // userPassword
 
-  constructor(req) {
+  constructor(body) {
     super();
-    this.userUid = req.user.Users_uid;
-    this.userNickname = req.body.userNickname;
-    this.userName = req.body.userName;
-    this.userEmail = req.body.userEmail;
-    if (req.user.Users_provider === "local") {
-      if (req.body.userPassword[0] !== req.body.userPassword[1])
-        throw new BadRequest("비밀번호가 일치하지 않습니다.");
-      this.userPassword = req.body.userPassword[0];
-    }
+    console.log(body);
+    this.userid = body.Users_id;
+    this.userNickname = body.Users_nickname;
+    this.userName = body.Users_name;
+    this.userEmail = body.Users_email;
+    // if (req.user.Users_provider === "local") {
+    //   if (req.body.userPassword[0] !== req.body.userPassword[1])
+    //     throw new BadRequest("비밀번호가 일치하지 않습니다.");
+    //   this.userPassword = req.body.userPassword[0];
+    // }
     this.validate(this, BadRequest);
   }
 }
