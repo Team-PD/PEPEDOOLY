@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const FooterStyle = styled.footer`
-  position: fixed;
+  /* position: fixed; */
   bottom: 0;
   font-size: 15px;
   width: 100%;
