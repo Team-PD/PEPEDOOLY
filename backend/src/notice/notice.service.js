@@ -63,17 +63,21 @@ class NoticeService {
 
   async updateNotice(noticeUpdateRequestDTO) {
     try {
-      const { noticeId, noticeTitle, noticeContent } = noticeUpdateRequestDTO;
-      await this.notice.update(
-        {
-          Notice_title: noticeTitle,
-          Notice_content: noticeContent,
-          Notice_image: image,
-        },
-        {
-          where: { Notice_id: noticeId },
-        }
-      );
+      const { noticeId, noticeTitle, noticeContent, image } =
+        noticeUpdateRequestDTO;
+      const updateData = {
+        Notice_title: noticeTitle,
+        Notice_content: noticeContent,
+      };
+
+      if (image) {
+        updateData.Notice_image = image;
+      }
+
+      await this.notice.update(updateData, {
+        where: { Notice_id: noticeId },
+      });
+
       return { message: "Update successful", noticeId: noticeId };
     } catch (e) {
       console.error("Service updateNotice Error", e);

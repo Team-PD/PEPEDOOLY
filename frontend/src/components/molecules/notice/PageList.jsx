@@ -16,15 +16,21 @@ const PageList = ({
   nextGroup,
   paginate,
   totalPage,
+  currentPage,
 }) => (
   <StyledPageList>
-    {startPage > 0 && <PageButton onClick={prevGroup}>이전</PageButton>}
+    {startPage > 1 && <PageButton onClick={prevGroup}>이전</PageButton>}
     {Array.from(
       { length: endPage - startPage + 1 },
       (_, i) => startPage + i
     ).map((number) => (
       <li key={number}>
-        <PageButton onClick={() => paginate(number)}>{number}</PageButton>
+        <PageButton
+          onClick={() => paginate(number)}
+          active={number === currentPage}
+        >
+          {number}
+        </PageButton>
       </li>
     ))}
     {endPage < totalPage && <PageButton onClick={nextGroup}>다음</PageButton>}

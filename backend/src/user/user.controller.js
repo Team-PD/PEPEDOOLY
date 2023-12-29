@@ -115,43 +115,60 @@ class UserController {
 
   async postProfile(req, res, next) {
     try {
-      const userProfileImageRequestDTO = new UserProfileImageRequestDTO(req);
-
-      const result = await this.service.profileUpload(
-        userProfileImageRequestDTO
-      );
-      req.user.Users_profile = result;
-      const token = setJWTToken(req.user);
-
-      res.cookie("authorization", token, {
-        maxAge: 60 * 60 * 1000,
-        httpOnly: true,
-        path: "/",
-        sameSite: "none",
-        secure: true,
-      });
-
-      res.status(201).json(new Created(result));
+      const users = await this.service.findAllUsers();
+      res.status(200).json(users);
     } catch (e) {
       next(e);
     }
   }
 
+  // async postProfile(req, res, next) {
+  //   try {
+  //     const userProfileImageRequestDTO = new UserProfileImageRequestDTO(req);
+  //     const result = await this.service.profileUpload(
+  //       userProfileImageRequestDTO
+  //     );
+  //     req.user.Users_profile = result;
+  //     const token = setJWTToken(req.user);
+
+  //     res.cookie("authorization", token, {
+  //       maxAge: 60 * 60 * 1000,
+  //       httpOnly: true,
+  //       path: "/",
+  //       sameSite: "none",
+  //       secure: true,
+  //     });
+
+  //     res.status(201).json(new Created(result));
+  //   } catch (e) {
+  //     next(e);
+  //   }
+  // }
+
   async putProfile(req, res, next) {
     try {
-      const userProfileFormRequestDTO = new UserProfileFormRequestDTO(req);
+      console.log("수정수정:", req.body);
+      // console.log("리쿠", req);
+      const userProfileFormRequestDTO = new UserProfileFormRequestDTO(req.body);
+      console.log("씨발", userProfileFormRequestDTO);
       const { updateUser, token } = await this.service.userInfoUpdate(
         userProfileFormRequestDTO
       );
+      console.log("1234", updateUser);
       res.clearCookie("authorization");
-      req.user.Users_nickname = userProfileFormRequestDTO.userNickname;
-      req.user.Users_name = userProfileFormRequestDTO.userName;
-      req.user.Users_email = userProfileFormRequestDTO.userEmail;
+      // req.user.Users_nickname = updateUser.Users_nickname;
+      // req.user.Users_name = updateUser.userName;
+      // req.user.Users_email = updateUser.Users_email;
+
+      console.log(updateUser, token);
       res.cookie("authorization", token, {
         maxAge: 60 * 60 * 10000,
         httpOnly: true,
         path: "/",
       });
+
+      console.log("엡데이이이ㅣㅇ", updateUser);
+      console.log("엡데이이이ㅣㅇ", token);
 
       // const token = setJWTToken(req.user);
       // res.status(201).json(new Created(token));

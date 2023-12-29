@@ -54,6 +54,7 @@ export const NoticeCreate = (props) => {
   return (
     <Create
       {...props}
+      heading={"공지사항 작성"}
       onSubmit={handleSubmit}
       showAuthor={false}
       styleProps={styleProps}

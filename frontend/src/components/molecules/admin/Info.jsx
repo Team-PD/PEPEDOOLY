@@ -62,8 +62,13 @@ const Info = ({ isEdit }) => {
   const handleEditClick = () => {
     if (isEditState) {
       const passwordField = fields.find((field) => field.name === "비밀번호");
-      if (passwordField && passwordField.value.length < 3) {
-        alert("비밀번호를 3글자 이상 입력해주세요.");
+      const nicknameField = fields.find((field) => field.name === "닉네임");
+      if (passwordField && passwordField.value.length < 4) {
+        alert("비밀번호를 4글자 이상 입력해주세요.");
+        return;
+      }
+      if (nicknameField && nicknameField.value === "") {
+        alert("닉네임을 입력해주세요.");
         return;
       }
       const formData = createFormData();
