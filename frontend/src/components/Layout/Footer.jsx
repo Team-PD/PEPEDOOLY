@@ -2,11 +2,12 @@ import React from "react";
 import styled from "styled-components";
 
 const FooterStyle = styled.footer`
-  position: fixed;
-  bottom: 0;
+  /* position: fixed; */
+  /* bottom: 0; */
   font-size: 15px;
   width: 100%;
   height: 200px;
+  min-height: 10vh;
   /* padding-bottom: 10px; */
   background-color: #073407;
   color: yellow;

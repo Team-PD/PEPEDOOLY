@@ -1,3 +1,16 @@
+.boardContainer {
+  /* height: 80vh; */
+  margin: auto;
+  padding-top: 20px;
+  /* padding-bottom: 5rem; */
+  background: linear-gradient(
+    to bottom,
+    rgba(59, 221, 59, 1) 0%,
+    rgba(7, 52, 7, 1) 100%
+  );
+  min-height: 85vh;
+}
+
 .container {
   border: 1px solid #ddd;
   padding: 2rem 2rem 2rem 2rem;
@@ -11,7 +24,7 @@
   border: 1px solid #ddd;
   width: 80%;
   margin: 2rem auto;
-  margin-bottom: 220px;
+  margin-bottom: 0px;
 }
 
 .header {
@@ -46,6 +59,7 @@
   color: #333;
   word-wrap: break-word; /* 단어가 경계를 넘어갈 때 자동으로 줄바꿈 */
   overflow-wrap: break-word; /* 긴 단어가 경계를 넘어갈 때 줄바꿈 */
+  min-height: 20rem;
 }
 
 .imageContainer {
@@ -152,8 +166,23 @@
 
 .commentsContainer {
   margin-top: 20px;
-  background-color: #fff;
+  background-color: #f9f9f9;
   border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
   padding: 1rem;
+}
+
+.animate {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

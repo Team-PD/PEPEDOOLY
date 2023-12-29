@@ -1,16 +1,19 @@
 .boardContainer {
-  height: 100vh;
+  /* height: 80vh; */
   margin: auto;
-  padding-top: 2rem;
+  padding-top: 20px;
+  /* padding-bottom: 5rem; */
   background: linear-gradient(
     to bottom,
-    rgba(85, 215, 85, 0.4) 0%,
-    rgba(7, 52, 7, 0.8) 100%
+    rgba(59, 221, 59, 1) 0%,
+    rgba(7, 52, 7, 1) 100%
   );
+  min-height: 85vh;
 }
 
 .boardTitle {
   margin-top: 0;
+  margin-bottom: 3rem;
 }
 
 .createButton {
@@ -50,7 +53,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  border: 1px solid #eaeaea;
+  /* border: 1px solid #eaeaea; */
   border-radius: 8px;
   background-color: white;
   overflow: hidden; /* 이미지가 컨테이너를 넘어가지 않도록 설정 */
@@ -186,5 +189,20 @@
 @media (max-width: 480px) {
   .posts {
     grid-template-columns: 1fr; /* 가장 작은 화면에서는 1열로 표시 */
+  }
+}
+
+.animate {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }

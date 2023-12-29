@@ -133,6 +133,17 @@ const getLikeDislikeCounts = async (req, res) => {
   }
 };
 
+// ===== 내가 쓴 글 API =====
+const getUserBoards = async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const userBoards = await boardService.getBoardsByUserId(userId);
+    res.json(userBoards);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+};
+
 module.exports = {
   getBoardList,
   createBoard,
@@ -141,4 +152,5 @@ module.exports = {
   deleteBoard,
   addLike,
   getLikeDislikeCounts,
+  getUserBoards,
 };

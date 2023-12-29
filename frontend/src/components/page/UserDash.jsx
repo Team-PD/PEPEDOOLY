@@ -111,6 +111,13 @@ const UserDash = () => {
   const [showUserInfo, setShowUserInfo] = useState(false);
   const navigate = useNavigate(); // React Router의 useNavigate 훅을 사용하여 페이지 이동 기능을 가져옴
   const [userModify, setUserModify] = useState(false);
+
+  // ===== TH 작성 코드 =====
+  const goToUserPosts = () => {
+    navigate("/userPosts"); // 여기서 "/user-posts"는 UserPosts 컴포넌트의 경로
+  };
+  // ========================
+
   useEffect(() => {
     console.log("대시보드유저:", user);
   }, [user]);
@@ -189,7 +196,9 @@ const UserDash = () => {
             <SidebarButton greenMode={greenMode} onClick={toggleUserInfo}>
               유저 정보
             </SidebarButton>
-            <SidebarButton greenMode={greenMode}>내가 쓴 글</SidebarButton>
+            <SidebarButton greenMode={greenMode} onClick={goToUserPosts}>
+              내가 쓴 글
+            </SidebarButton>
             <SidebarButton greenMode={greenMode}>내가 쓴 댓글</SidebarButton>
             <SidebarButton greenMode={greenMode} onClick={handleDeleteAccount}>
               회원 탈퇴

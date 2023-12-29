@@ -79,8 +79,8 @@ export default function List() {
 
   return (
     <div className={styles.boardContainer}>
-      <div className={styles.board}>
-        <h1 className={styles.boardTitle}>Meme 게시판</h1>
+      <div className={`${styles.board} ${styles.animate}`}>
+        <h1 className={styles.boardTitle}>Pepedooly MemeHub</h1>
         <div className={styles.posts}>
           {currentPosts.map((post) => (
             <div key={post.Boards_id} className={styles.post}>

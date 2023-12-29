@@ -9,6 +9,19 @@
   }
 }
 
+.boardContainer {
+  /* height: 80vh; */
+  margin: auto;
+  padding-top: 20px;
+  /* padding-bottom: 5rem; */
+  background: linear-gradient(
+    to bottom,
+    rgba(59, 221, 59, 1) 0%,
+    rgba(7, 52, 7, 1) 100%
+  );
+  min-height: 85vh;
+}
+
 .animate {
   animation: fadeIn 0.5s ease-in-out;
 }
@@ -24,7 +37,7 @@
   left: -200%;
   border: none;
   background-color: transparent;
-  color: #3bdd3b;
+  color: #073407;
   cursor: pointer;
   font-size: 2rem;
 }
@@ -89,8 +102,8 @@
   margin: 0 auto; /* 중앙 정렬 */
   width: 80%; /* 전체 너비의 80%만 사용 */
   max-width: 800px;
-  min-height: 100vh; /* 최소 높이를 화면 크기에 맞춤 */
-  margin-bottom: 50px; /* Footer와의 간격 유지 */
+  min-height: 60vh; /* 최소 높이를 화면 크기에 맞춤 */
+  /* margin-bottom: 50px; */
 }
 
 .inputContainer textarea {

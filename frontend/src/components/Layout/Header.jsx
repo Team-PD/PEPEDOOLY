@@ -20,13 +20,16 @@ const HeaderStyle = styled.nav`
   font-size: 15px;
   width: 100%;
   height: 80px;
+  min-height: 5vh;
   background-color: #3bdd3b;
   display: flex;
   justify-content: space-between;
   align-items: center;
   position: relative;
-  border-bottom: 2px solid #fff;
-  border-radius: 10px;
+  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
+  padding-bottom: 10px;
+  /* border-bottom: 1px solid #bcffb0; */
+  /* border-radius: 10px; */
   @media screen and (max-width: 768px) {
     height: 60px;
     font-size: 13px;

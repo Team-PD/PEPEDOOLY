@@ -15,6 +15,7 @@ import { useUserState } from "../../hooks/useUserState";
 import UserDash from "./UserDash";
 import NoticeView from "./notice/NoticeView";
 import { NoticeUpdate } from "./notice/NoticeUpdate";
+import UserPosts from "./UserPosts";
 // import Footer from "../Layout/Footer";
 
 const Main = () => {
@@ -72,6 +73,7 @@ const Main = () => {
         <Route path="/board/*" element={<Board />} />
         <Route path="/dashboard" element={<DashBoard />} />
         <Route path="/adminLogin" element={<AdminLogin />} />
+        <Route path="/userPosts" element={<UserPosts />} />
         {/* 
       <Header />
       <Footer /> */}

@@ -58,65 +58,67 @@ export default function Create({ heading = "게시글 작성" }) {
   };
 
   return (
-    <div className={`${styles.createForm} ${styles.animate}`}>
-      <div className={styles.createHeader}>
-        <button className={styles.backButton} onClick={handleBack}>
-          <FontAwesomeIcon icon={faArrowLeft} />
-        </button>
-        <h1 className={styles.heading}>{heading}</h1>
-      </div>
-      <form onSubmit={handleSubmit} className={styles.form}>
-        <div className={styles.inputContainer}>
-          <label htmlFor="title">제목</label>
-          <input
-            type="text"
-            id="title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            className={styles.input}
-          />
+    <div className={styles.boardContainer}>
+      <div className={`${styles.createForm} ${styles.animate}`}>
+        <div className={styles.createHeader}>
+          <button className={styles.backButton} onClick={handleBack}>
+            <FontAwesomeIcon icon={faArrowLeft} />
+          </button>
+          <h1 className={styles.heading}>{heading}</h1>
         </div>
-        <div className={styles.inputContainer}>
-          <label htmlFor="content">내용</label>
-          <textarea
-            id="content"
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-            className={styles.input}
-          />
-        </div>
-        <div className={styles.inputContainer}>
-          <label htmlFor="image">이미지 첨부 (최대 5개)</label>
-          <input
-            type="file"
-            id="image"
-            multiple
-            onChange={handdleImageChange}
-            className={styles.input}
-          />
-          <div className={styles.imagePreviewContainer}>
-            {images.map((image, index) => (
-              <div key={index} className={styles.imagePreview}>
-                <img
-                  src={URL.createObjectURL(image)}
-                  alt={`preview ${index}`}
-                  className={styles.image}
-                />
-                <button
-                  type="button"
-                  className={styles.removeButton}
-                  onClick={() => removeImage(index)}
-                >
-                  X
-                </button>
-              </div>
-            ))}
+        <form onSubmit={handleSubmit} className={styles.form}>
+          <div className={styles.inputContainer}>
+            <label htmlFor="title">제목</label>
+            <input
+              type="text"
+              id="title"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              className={styles.input}
+            />
           </div>
-        </div>
-        <button type="submit" className={styles.submitButton}>
-          작성하기
-        </button>
-      </form>
+          <div className={styles.inputContainer}>
+            <label htmlFor="content">내용</label>
+            <textarea
+              id="content"
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+              className={styles.input}
+            />
+          </div>
+          <div className={styles.inputContainer}>
+            <label htmlFor="image">이미지 첨부 (최대 5개)</label>
+            <input
+              type="file"
+              id="image"
+              multiple
+              onChange={handdleImageChange}
+              className={styles.input}
+            />
+            <div className={styles.imagePreviewContainer}>
+              {images.map((image, index) => (
+                <div key={index} className={styles.imagePreview}>
+                  <img
+                    src={URL.createObjectURL(image)}
+                    alt={`preview ${index}`}
+                    className={styles.image}
+                  />
+                  <button
+                    type="button"
+                    className={styles.removeButton}
+                    onClick={() => removeImage(index)}
+                  >
+                    X
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+          <button type="submit" className={styles.submitButton}>
+            작성하기
+          </button>
+        </form>
+      </div>
     </div>
   );
 }
