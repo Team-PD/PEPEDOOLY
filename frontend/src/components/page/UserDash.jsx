@@ -129,22 +129,40 @@ const UserDash = () => {
     navigate("/"); // "/" 경로로 이동
   };
 
-  const updateUser = () => {
+  const updateUser = (e) => {
+    e.preventDefault();
     const confirmUpdate = window.confirm(
       "정말로 회원 수정을 진행하시겠습니까?"
     );
-
+    console.log(user);
     if (confirmUpdate) {
+      const userDataToUpdate = {
+        // 수정하려는 사용자 정보의 필드를 업데이트합니다.
+        // 예를 들어, Users_name, Users_email, Users_nickname 등을 업데이트할 수 있습니다.
+        Users_name: user.userData.Users_name,
+        Users_email: user.userData.Users_email,
+        Users_nickname: user.userData.Users_nickname,
+        Users_id: user.userData.Users_id,
+      };
+
+      console.log("데타 투", userDataToUpdate);
+
       axios
-        .put(`http://localhost:4000/users/profile/${user.userData.id}`, {
-          withCredentials: true,
-        })
+        .put(
+          `http://localhost:4000/users/profile/${user.userData.Users_id}`,
+          userDataToUpdate,
+          {
+            withCredentials: true,
+          }
+        )
         .then((response) => {
           console.log("회원 수정 응답:", response.data);
-          logout();
+          // 수정 완료 후 추가적인 로직...
         })
         .catch((error) => {
-          console.error("회원 탈퇴 오류:", error);
+          console.error("회원 수정 오류:", error);
+
+          // 오류 처리 등 추가 작업이 필요할 경우 이곳에 추가합니다.
         });
     }
   };
