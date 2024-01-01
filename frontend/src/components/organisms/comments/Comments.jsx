@@ -28,7 +28,7 @@ export default function Comments({ boardId, user }) {
             try {
                 const response = await axios.get(`http://localhost:4000/comments/${boardId}`);
                 setComments(response.data);
-                console.log(response);
+                console.log("댓글 정보:", response);
             } catch (error) {
                 console.error("댓글 불러오기 실패", error);
             }
@@ -58,6 +58,7 @@ export default function Comments({ boardId, user }) {
             };
 
             let response;
+
             if (parentCommentId) {
                 // 대댓글 추가
                 response = await axios.post(`http://localhost:4000/comments/${parentCommentId}/reply`, payload, {
@@ -94,6 +95,44 @@ export default function Comments({ boardId, user }) {
             }
         } catch (error) {
             console.error("댓글 추가하기 실패", error);
+        }
+    };
+
+    const handleAddReply = async (replyContent, parentCommentId) => {
+        try {
+            if (!user || !user.isLoggedIn) {
+                setShowLoginAlert(true);
+                return;
+            }
+            const userId = user?.userData?.Users_id;
+
+            const payload = {
+                Comments_content: replyContent,
+                Users_uid: userId,
+                Boards_id: boardId, // 혹은 parentCommentId에 해당하는 Board ID
+            };
+
+            // 대댓글 추가 API 요청
+            const response = await axios.post(`http://localhost:4000/comments/${parentCommentId}/reply`, payload, {
+                headers: { Authorization: `Bearer ${token}` },
+            });
+
+            // 대댓글 추가 후 상태 업데이트
+            const newReply = {
+                ...response.data,
+                UserNickname: user?.userData?.Users_nickname,
+                Users_uid: userId,
+            };
+
+            setComments((prevComments) =>
+                prevComments.map((comment) =>
+                    comment.Comments_uid === parentCommentId
+                        ? { ...comment, Replies: [...(comment.Replies || []), newReply] }
+                        : comment
+                )
+            );
+        } catch (error) {
+            console.error("대댓글 추가 실패", error);
         }
     };
 
@@ -150,7 +189,7 @@ export default function Comments({ boardId, user }) {
                 editingCommentId={editingCommentId}
                 setEditingCommentId={setEditingCommentId}
                 user={user}
-                onAddReply={handleAddComment}
+                onAddReply={handleAddReply}
                 token={token}
                 setComments={setComments}
             />

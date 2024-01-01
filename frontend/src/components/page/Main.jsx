@@ -16,34 +16,33 @@ import UserDash from "./UserDash";
 import NoticeView from "./notice/NoticeView";
 import { NoticeUpdate } from "./notice/NoticeUpdate";
 import UserPosts from "./UserPosts";
+import UserComments from "./UserComments";
 // import Footer from "../Layout/Footer";
 
 const Main = () => {
-  const { user } = useUserState();
+    const { user } = useUserState();
 
-  const LoginRedirect = () => {
-    if (user.isLoggedIn) return <Navigate to={"/"} />;
-    return <Login />;
-  };
-  useEffect(() => {
-    console.log("메인페이지 : ", user);
-  }, []);
+    const LoginRedirect = () => {
+        if (user.isLoggedIn) return <Navigate to={"/"} />;
+        return <Login />;
+    };
+    useEffect(() => {
+        console.log("메인페이지 : ", user);
+    }, []);
 
-  const headerHandler = () => {
-    {
-      user && user.userData && (
-        <div>
-          메인페이지{" "}
-          {user && user.isLoggedIn && user.userData && (
-            <div>메인페이지 {user?.userData?.Users_nickname}</div>
-          )}
-        </div>
-      );
-    }
-  };
-  return (
-    <>
-      {/* <Header />
+    const headerHandler = () => {
+        {
+            user && user.userData && (
+                <div>
+                    메인페이지{" "}
+                    {user && user.isLoggedIn && user.userData && <div>메인페이지 {user?.userData?.Users_nickname}</div>}
+                </div>
+            );
+        }
+    };
+    return (
+        <>
+            {/* <Header />
       <div>
         <div>
           <div>
@@ -60,26 +59,27 @@ const Main = () => {
         </div>
       </div> */}
 
-      <Routes>
-        <Route path="/" element={<MainComponent />} />
-        <Route path="/userDash" element={<UserDash />} />
-        <Route path="/login" element={<LoginRedirect />} />
-        <Route path="/admin" element={<Admin />} />
-        <Route path="/notice" element={<Notice />} />
-        <Route path="/notice/:id" element={<NoticeView />} />
-        <Route path="notice/edit/:id" element={<NoticeUpdate />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/comments" element={<Comments />} />
-        <Route path="/board/*" element={<Board />} />
-        <Route path="/dashboard" element={<DashBoard />} />
-        <Route path="/adminLogin" element={<AdminLogin />} />
-        <Route path="/userPosts" element={<UserPosts />} />
-        {/* 
+            <Routes>
+                <Route path="/" element={<MainComponent />} />
+                <Route path="/userDash" element={<UserDash />} />
+                <Route path="/login" element={<LoginRedirect />} />
+                <Route path="/admin" element={<Admin />} />
+                <Route path="/notice" element={<Notice />} />
+                <Route path="/notice/:id" element={<NoticeView />} />
+                <Route path="notice/edit/:id" element={<NoticeUpdate />} />
+                <Route path="/register" element={<Register />} />
+                <Route path="/comments" element={<Comments />} />
+                <Route path="/board/*" element={<Board />} />
+                <Route path="/dashboard" element={<DashBoard />} />
+                <Route path="/adminLogin" element={<AdminLogin />} />
+                <Route path="/userPosts" element={<UserPosts />} />
+                <Route path="/userComments" element={<UserComments />} />
+                {/* 
       <Header />
       <Footer /> */}
-      </Routes>
-    </>
-  );
+            </Routes>
+        </>
+    );
 };
 
 export default Main;

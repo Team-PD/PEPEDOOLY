@@ -35,10 +35,6 @@ class CommentService {
                         attributes: ["Users_nickname"],
                         as: "CommentUser",
                     },
-                    // {
-                    //     model: db.Boards,
-                    //     as: "CommentBoard",
-                    // },
                     {
                         model: this.commentRepository,
                         as: "Replies",
@@ -53,8 +49,7 @@ class CommentService {
                 ],
                 where: {
                     Boards_id: boardId,
-                    // ParentCommentId: null,
-                    // 대댓글도 지금은 같이 조회하는데 위의 조건 넣으면 대댓글은 일단 조회를 안하고 따로 불러올 수 있음
+                    ParentCommentId: null, // 대댓글이 아닌 메인 댓글만 조회
                 },
                 order: [["Comments_created_at", "DESC"]],
             });
@@ -82,6 +77,22 @@ class CommentService {
         }
 
         await comment.destroy();
+    }
+
+    async getUserComments(userId) {
+        try {
+            const comments = await this.commentRepository.findAll({
+                where: { Users_uid: userId },
+                include: [
+                    // 필요한 연관 관계 포함
+                ],
+                order: [["Comments_created_at", "DESC"]],
+            });
+
+            return comments.map((comment) => new CommentViewResponseDTO(comment));
+        } catch (e) {
+            throw e;
+        }
     }
 }
 
