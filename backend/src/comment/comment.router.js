@@ -12,6 +12,10 @@ commentRouter.post("/", postComment);
 commentRouter.put("/:commentId", updateComment);
 commentRouter.delete("/:commentId", deleteComment);
 
+commentRouter.get("/user/:userId", (req, res, next) => {
+    commentController.getUserComments(req, res, next);
+});
+
 commentRouter.post("/:commentId/reply", (req, res, next) => {
     req.body.ParentCommentId = req.params.commentId;
     postComment(req, res, next);

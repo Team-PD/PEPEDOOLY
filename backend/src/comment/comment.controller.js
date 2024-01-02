@@ -49,6 +49,16 @@ class CommentController {
             next(e);
         }
     }
+
+    async getUserComments(req, res, next) {
+        try {
+            const userId = req.params.userId;
+            const comments = await this.service.getUserComments(userId);
+            return res.status(200).json(comments);
+        } catch (e) {
+            next(e);
+        }
+    }
 }
 
 module.exports = CommentController;
