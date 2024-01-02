@@ -3,9 +3,10 @@ import { useUserState } from "../../../hooks/useUserState";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { Create } from "../../molecules/SampleCreate";
-import { styleProps } from "../../atoms/BoardNoticeStyleProps";
+import { styleProps } from "../../atoms/NoticeUpdateStyleProps";
 import Header from "../../Layout/Header";
 import Footer from "../../Layout/Footer";
+import styled from "styled-components";
 
 export const NoticeUpdate = (props) => {
   const { user } = useUserState();
@@ -63,19 +64,25 @@ export const NoticeUpdate = (props) => {
   return (
     <>
       <Header />
-      <Create
-        {...props}
-        heading={"공지사항 수정"}
-        onSubmit={handleSubmit}
-        showAuthor={false}
-        styleProps={styleProps}
-        initialValues={{
-          title: notice.noticeTitle,
-          content: notice.noticeContent,
-        }}
-        buttonText="수정하기"
-      />
+      <PageContainer>
+        <Create
+          {...props}
+          heading={"공지사항 수정"}
+          onSubmit={handleSubmit}
+          showAuthor={false}
+          styleProps={styleProps}
+          initialValues={{
+            title: notice.noticeTitle,
+            content: notice.noticeContent,
+          }}
+          buttonText="수정하기"
+        />
+      </PageContainer>
       <Footer />
     </>
   );
 };
+
+const PageContainer = styled.div`
+  height: calc(100vh - 80px - 230px);
+`;

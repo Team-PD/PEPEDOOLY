@@ -3,6 +3,7 @@ import axios from "axios";
 import Header from "../../Layout/Header";
 import Footer from "../../Layout/Footer";
 import NoticeTable from "../../organisms/notice/NoticeTable";
+import styled from "styled-components";
 
 const Notice = () => {
   const [notices, setNotices] = useState([]);
@@ -41,20 +42,33 @@ const Notice = () => {
   return (
     <>
       <Header />
-      <h1>공지사항</h1>
-      <NoticeTable
-        notices={currentNotices}
-        startPage={startPage}
-        endPage={endPage}
-        prevGroup={prevGroup}
-        nextGroup={nextGroup}
-        paginate={paginate}
-        currentPage={currentPage}
-        totalPage={Math.ceil(notices.length / noticesPerPage)}
-      />
+      <TapleContainer>
+        <Title>공지사항</Title>
+        <NoticeTable
+          notices={currentNotices}
+          startPage={startPage}
+          endPage={endPage}
+          prevGroup={prevGroup}
+          nextGroup={nextGroup}
+          paginate={paginate}
+          currentPage={currentPage}
+          totalPage={Math.ceil(notices.length / noticesPerPage)}
+        />
+      </TapleContainer>
       <Footer />
     </>
   );
 };
+
+const TapleContainer = styled.div`
+  background-color: #d5ffcf;
+  height: calc(100vh - 80px - 210px);
+`;
+
+const Title = styled.div`
+  font-size: 30px;
+  font-weight: 900;
+  padding: 20px;
+`;
 
 export default Notice;

@@ -8,7 +8,7 @@ import { useUserState } from "../../../hooks/useUserState";
 
 const PageContainer = styled.div`
   display: flex;
-  height: calc(100vh - 80px - 200px);
+  height: calc(100vh - 80px - 210px);
 `;
 
 const Admin = () => {

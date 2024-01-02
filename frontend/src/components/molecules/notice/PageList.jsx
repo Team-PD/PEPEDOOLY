@@ -3,6 +3,7 @@ import styled from "styled-components";
 import PageButton from "../../atoms/notice/PageButton";
 
 const StyledPageList = styled.ul`
+  margin-top: 50px;
   list-style: none;
   display: flex;
   justify-content: center;

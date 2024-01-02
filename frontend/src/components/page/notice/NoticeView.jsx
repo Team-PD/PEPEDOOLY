@@ -43,16 +43,23 @@ const NoticeView = () => {
   return (
     <>
       <Header />
-      <NoticeDetail
-        notice={notice}
-        images={notice.images} // 이미지 정보 전달
-        onEdit={handleUpdateButtonClick}
-        onDelete={handleDeleteButtonClick}
-        onList={handleListButtonClick}
-      />
+      <PageContainer>
+        <NoticeDetail
+          notice={notice}
+          images={notice.images} // 이미지 정보 전달
+          onEdit={handleUpdateButtonClick}
+          onDelete={handleDeleteButtonClick}
+          onList={handleListButtonClick}
+        />
+      </PageContainer>
       <Footer />
     </>
   );
 };
+
+const PageContainer = styled.div`
+  background-color: #d5ffcf;
+  height: calc(100vh - 80px - 210px);
+`;
 
 export default NoticeView;
