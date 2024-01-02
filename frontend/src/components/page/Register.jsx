@@ -2,6 +2,7 @@ import styled from "styled-components";
 import Button from "../atoms/login/Button";
 import Input from "../atoms/login/Input";
 import Header from "../Layout/Header";
+import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
@@ -10,6 +11,7 @@ function App() {
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [nickName, setNickname] = useState("");
+  const movePage = useNavigate();
 
   function handleEmailChange(event) {
     console.log(event.target.value);
@@ -31,6 +33,10 @@ function App() {
     setNickname(event.target.value);
   }
 
+  function goRegister() {
+    movePage("/login");
+  }
+
   function signupUser(email, password, name, nickname) {
     const signupData = {
       email: email,
@@ -47,11 +53,14 @@ function App() {
       })
       .then((response) => {
         // 회원가입 성공 시 처리
+
         console.log("회원가입 성공", response.data);
+        goRegister("/login");
       })
       .catch((error) => {
         // 회원가입 실패 시 처리
         console.error("회원가입 실패", error);
+        movePage("/");
       });
   }
   return (
