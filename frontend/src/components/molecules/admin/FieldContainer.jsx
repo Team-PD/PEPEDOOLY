@@ -1,7 +1,5 @@
-// FieldContainer.jsx
 import React from "react";
 import styled from "styled-components";
-// import ProfileImage from "../../atoms/admin/ProfileImage";
 import FieldWrapper from "./FieldWrapper";
 
 const Container = styled.div`
@@ -14,19 +12,8 @@ const Container = styled.div`
   justify-content: center;
 `;
 
-const FieldContainer = ({
-  admin,
-  isEdit,
-  fields,
-  handleInputChangeLocal,
-  handleImageChange,
-}) => (
+const FieldContainer = ({ isEdit, fields, handleInputChangeLocal }) => (
   <Container>
-    {/* <ProfileImage
-      onImageChange={handleImageChange}
-      admin={admin}
-      isEdit={isEdit}
-    /> */}
     <FieldWrapper
       fields={fields}
       isEdit={isEdit}

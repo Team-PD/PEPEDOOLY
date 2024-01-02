@@ -1,4 +1,3 @@
-// Info.jsx
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useUserState } from "../../../hooks/useUserState";
@@ -11,9 +10,9 @@ const ADMIN_IMAGE_URL = `http://localhost:4000/admin/image`;
 
 const Info = ({ isEdit }) => {
   const [isEditState, setIsEdit] = useState(isEdit);
-  const [imageUrl, setImageUrl] = useState("");
+  const [setImageUrl] = useState("");
   const [fields, setFields] = useState([]);
-  const { user, setLoggedInUser } = useUserState();
+  const { user } = useUserState();
   const { Admin_id, Admin_name, Admin_nickname, Admin_uid } =
     (user && user.userData) || {};
 
@@ -101,8 +100,11 @@ const Info = ({ isEdit }) => {
         withCredentials: true,
       })
       .then((response) => {
-        setFields(response.data);
-        setLoggedInUser(response.data);
+        if (Array.isArray(response.data)) {
+          setFields(response.data);
+        } else {
+          console.error("Unexpected server response:", response.data);
+        }
       })
       .catch((error) => {
         console.error("Error updating admin info:", error);
@@ -111,7 +113,6 @@ const Info = ({ isEdit }) => {
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
-    console.log(file);
     if (!file) {
       console.error("No file selected");
       return;
@@ -128,7 +129,6 @@ const Info = ({ isEdit }) => {
         console.error("Error updating image:", error);
       });
   };
-
   return (
     <>
       <Container>

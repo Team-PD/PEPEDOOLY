@@ -9,6 +9,7 @@ const StyledTable = styled.table`
   margin-left: auto;
   margin-right: auto;
   border-collapse: collapse;
+  border: 1.5px dashed black;
 `;
 
 const Table = ({ notices }) => (

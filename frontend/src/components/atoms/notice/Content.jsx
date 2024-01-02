@@ -14,6 +14,8 @@ const ContentContainer = styled.div`
 const Image = styled.img`
   max-width: 30%;
   min-width: 30%;
+  max-height: 70%;
+  min-height: 70%;
   height: auto;
 `;
 
